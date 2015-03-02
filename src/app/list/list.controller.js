@@ -2,7 +2,7 @@
 
 angular.module('pickadoo')
     .controller('ListCtrl', function( $rootScope, $scope, $state ) {
-        $scope.open = function (item, index) {
-            $state.go('detail', {id:index});
+        $scope.open = function (item) {
+            $state.go('detail', {id:item.id});
         };
     });

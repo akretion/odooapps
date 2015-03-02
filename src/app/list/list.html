@@ -2,8 +2,8 @@
   <div class="row big-list">
     <div class="col-md-12 col-no-padding">
       <ul class="list-group list-group-striped">
-        <li class="list-group-item list-link no-radius" ng-repeat="item in items | filter:searchPicking" ng-click="open(item, $index)">
-        {{item.name}} + {{$index}}
+        <li class="list-group-item list-link no-radius" ng-repeat="item in items | filter:searchPicking" ng-click="open(item)">
+        {{item.id}} {{item.origin}} {{item.name}} {{item.partner}} {{item.carrier_method}} 
         </li>
       </ul>
     </div>

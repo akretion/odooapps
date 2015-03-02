@@ -1,7 +1,51 @@
 <div class="container-fluid">
-  <div class="row big-list">
-    <div class="col-md-12 col-no-padding">
-        {{item.name}}
+    <div class="panel panel-default col-md-12">
+      <div class="panel-heading">
+        <h2 class="panel-title">{{ item.name }}</h2>
+      </div>
+      <div class="panel-body">
+    <div class="panel panel-default col-md-6">
+      <div class="panel-heading">
+        <button class="btn btn-success dropdown-toggle pull-right" type="button"
+            ng-click="add_all()">Send All</button>
+        <h2 class="panel-title">To send</h2>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group list-group-striped">
+          <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in todoMoves">
+          {{move.name}} {{move.qty}} {{move.barcode}}
+            <button class="btn btn-success dropdown-toggle pull-right" type="button"
+                ng-click="move_add_all($index)">Add All</button>
+            <button class="btn btn-success dropdown-toggle pull-right" type="button"
+                ng-click="move_add_one($index)">Add One</button>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class="panel panel-default col-md-6">
+      <div class="panel-heading">
+        <h3 class="panel-title">Done</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group list-group-striped">
+          <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in processMoves">
+          {{move.name}} {{move.qty}} {{move.barcode}}
+            <button class="btn btn-danger dropdown-toggle pull-right" type="button"
+                ng-click="move_cancel_process($index)">Cancel</button>
+ 
+          </li>
+        </ul>
+      </div>
+   </div>
+</div>
+      <div class="panel-footer">
+            <button class="btn btn-danger dropdown-toggle" type="button"
+                ng-click="cancel()">Cancel</button>
+            <button class="btn btn-success dropdown-toggle pull-right" type="button"
+                ng-click="partial()">Partial</button>
+ 
+      </div>
   </div>
+</div>
+
 </div>
