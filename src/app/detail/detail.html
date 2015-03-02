@@ -15,9 +15,9 @@
           <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in todoMoves">
           {{move.name}} {{move.qty}} {{move.barcode}}
             <button class="btn btn-success dropdown-toggle pull-right" type="button"
-                ng-click="move_add_all($index)">Add All</button>
+                ng-click="move_add_all(move.id)">Add All</button>
             <button class="btn btn-success dropdown-toggle pull-right" type="button"
-                ng-click="move_add_one($index)">Add One</button>
+                ng-click="move_add_one(move.id)">Add One</button>
           </li>
         </ul>
       </div>
@@ -31,7 +31,7 @@
           <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in processMoves">
           {{move.name}} {{move.qty}} {{move.barcode}}
             <button class="btn btn-danger dropdown-toggle pull-right" type="button"
-                ng-click="move_cancel_process($index)">Cancel</button>
+                ng-click="move_cancel_process(move.id)">Cancel</button>
  
           </li>
         </ul>
