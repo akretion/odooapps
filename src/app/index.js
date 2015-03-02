@@ -29,7 +29,11 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
                 if ( ! $cookies.session_id && toState.name !== 'login' ) {
                     event.preventDefault();
                     $state.go('login');
-                } else if ( $cookies.session_id && toState.name === 'login') {
+                } else if ( $cookies.session_id
+                        && ( toState.name === 'login'
+                             || ( toState.name === 'detail' && fromState.name !== 'list' )
+                           )
+                          ) {
                     event.preventDefault();
                     $state.go('list');
                 }
