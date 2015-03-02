@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche'])
+angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI'])
   .config(function ($stateProvider, $urlRouterProvider, jsonRpcProvider) {
     $stateProvider
       .state('login', {
@@ -44,7 +44,7 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             if ( $cookies.session_id && $cookies.session_id !== "") {
                 console.log("Call Odoo for getting data", timekey);
                 jsonRpc.call('stock.picking.out', 'get_sync_data', [
-                    'pickadoo', $rootScope.timekey, [['type', '=', 'out']], 50
+                    'pickadoo', $rootScope.timekey, [['type', '=', 'out'], ['state', 'in', ['confirmed', 'assigned']]], 50
                 ], {}).then(
                     function(result) {
                         console.log(result);

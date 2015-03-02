@@ -1,4 +1,5 @@
 <div class="container-fluid">
+    <span us-spinner spinner-key="spinner-1"></span>
     <div class="panel panel-default col-md-12">
       <div class="panel-heading">
         <h2 class="panel-title">{{ item.name }}</h2>
@@ -7,7 +8,7 @@
     <div class="panel panel-default col-md-6">
       <div class="panel-heading">
         <button class="btn btn-success dropdown-toggle pull-right" type="button"
-            ng-click="add_all()">Send All</button>
+            ng-click="add_all()">Add All</button>
         <h2 class="panel-title">To send</h2>
       </div>
       <div class="panel-body">
@@ -42,7 +43,7 @@
             <button class="btn btn-danger dropdown-toggle" type="button"
                 ng-click="cancel()">Cancel</button>
             <button class="btn btn-success dropdown-toggle pull-right" type="button"
-                ng-click="partial()">Partial</button>
+                ng-click="validate()">Partial</button>
  
       </div>
   </div>

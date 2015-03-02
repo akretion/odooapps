@@ -1,19 +1,19 @@
 'use strict';
 
 angular.module('pickadoo')
-    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state ) {
+    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, blockUI) {
         $scope.item = $rootScope.items[$stateParams.id]
         $scope.todoMoves = $rootScope.items[$stateParams.id].moves
         $scope.processMoves = {}
 
         $scope.add_all = function() {
-            $scope.processMoves = $scope.todoMoves;
+            angular.extend($scope.processMoves, $scope.todoMoves);
             $scope.todoMoves = {}
         };
         $scope.move_add_all = function( id ) {
             $scope.processMoves[id] = $scope.todoMoves[id];
             delete $scope.todoMoves[id];
-            console.log($scope.todoMoves);
+
         };
         $scope.move_add_one = function( id ) {
             $scope.processMoves = $scope.todoMoves;
@@ -28,11 +28,23 @@ angular.module('pickadoo')
             $state.go('list');
         };
 
-        $scope.partial = function() {
-            console.log('Do partial');
+        $scope.validate = function() {
+            console.log('Validate Picking');
+            jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
+                .done(function(result) {
+                    console.log('picking done');
+                    console.log(result);
+                    delete $rootScope.items[$scope.item.id];
+                    $state.go('list');
+                })
         };
 
-
-
+        $scope.$watch('todoMoves', function (newValue, oldValue) {
+            console.log(newValue);
+            if ( angular.equals({}, newValue) ) {
+                console.log('We should validate the picking');
+                $scope.validate();
+            }
+        }, true);
 
     });
