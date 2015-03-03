@@ -1,10 +1,26 @@
+<div class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">
+        <span class="glyphicon glyphicon-home"></span> Pickadoo
+      </a>
+    </div>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchProduct">
+      </div>
+    </form>
+
+    <div class="item-name">
+        {{ item.name }}
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container-fluid">
     <span us-spinner spinner-key="spinner-1"></span>
-    <div class="panel panel-default col-md-12">
-      <div class="panel-heading">
-        <h2 class="panel-title">{{ item.name }}</h2>
-      </div>
-      <div class="panel-body">
     <div class="panel panel-default col-md-6">
       <div class="panel-heading">
         <button class="btn btn-success dropdown-toggle pull-right" type="button"
@@ -39,14 +55,17 @@
       </div>
    </div>
 </div>
-      <div class="panel-footer">
-            <button class="btn btn-danger dropdown-toggle" type="button"
-                ng-click="cancel()">Cancel</button>
-            <button class="btn btn-success dropdown-toggle pull-right" type="button"
-                ng-click="validate()">Partial</button>
- 
-      </div>
+
   </div>
 </div>
 
+</div>
+
+<div class="navbar navbar-fixed-bottom navbar-inverse">
+  <div class="container-fluid">
+    <button class="btn btn-danger btn-lg dropdown-toggle" type="button"
+        ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success btn-lg dropdown-toggle pull-right" type="button"
+        ng-click="validate()">Partial</button>
+  </div>
 </div>

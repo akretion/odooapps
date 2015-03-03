@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pickadoo')
-    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, blockUI) {
+    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal) {
         $scope.item = $rootScope.items[$stateParams.id]
         $scope.todoMoves = $rootScope.items[$stateParams.id].moves
         $scope.processMoves = {}
@@ -32,8 +32,6 @@ angular.module('pickadoo')
             console.log('Validate Picking');
             jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
                 .done(function(result) {
-                    console.log('picking done');
-                    console.log(result);
                     delete $rootScope.items[$scope.item.id];
                     $state.go('list');
                 })
