@@ -8,19 +8,35 @@
 
     <form class="navbar-form navbar-right" role="search">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchPicking">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchOrder">
       </div>
     </form>
+  </div>
 </div>
 
 <div class="container-fluid">
   <div class="row big-list">
     <div class="col-md-12 col-no-padding">
-      <ul class="list-group list-group-striped">
-        <li class="list-group-item list-link no-radius" ng-repeat="item in items | filter:searchPicking" ng-click="open(item)">
-        {{item.id}} {{item.origin}} {{item.name}} {{item.partner}} {{item.carrier_method}} 
-        </li>
-      </ul>
+        <table st-table="items" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Origin</th>
+                <th>Name</th>
+                <th>Partner</th>
+                <th>Carrier</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in items | filter: searchOrder" ng-click="open(item)">
+                <td>{{item.origin}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.partner}}</td>
+                <td>{{item.carrier_method}}</td>
+                <td>{{item.email}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
   </div>
 </div>

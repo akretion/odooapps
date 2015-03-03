@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI'])
+angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI', 'smart-table'])
   .config(function ($stateProvider, $urlRouterProvider, jsonRpcProvider, $modalProvider) {
     $stateProvider
       .state('login', {
