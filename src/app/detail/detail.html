@@ -30,7 +30,14 @@
       <div class="panel-body">
         <ul class="list-group list-group-striped">
           <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in todoMoves">
-          {{move.name}} {{move.qty}} {{move.barcode}}
+          <div>
+          <div class="col-md-6">
+              {{move.product.model}} - {{move.product.name}} - {{move.product.color}} - {{move.product.brand}} - {{move.product.collection}} - {{move.product.ean}}
+          </div>
+          <div class="col-md-1 qty">
+          {{move.qty}}
+          </div>
+          </div>
             <button class="btn btn-success dropdown-toggle pull-right" type="button"
                 ng-click="move_add_all(move.id)">Add All</button>
             <button class="btn btn-success dropdown-toggle pull-right" type="button"

@@ -16,8 +16,8 @@ angular.module('pickadoo')
 
         };
         $scope.move_add_one = function( id ) {
-            $scope.processMoves = $scope.todoMoves;
-            $scope.todoMoves = {}
+            $scope.processMoves[id] = $scope.todoMoves[id];
+            delete $scope.todoMoves[id];
         };
         $scope.move_cancel_process = function( id ) {
             $scope.todoMoves[id] = $scope.processMoves[id];
