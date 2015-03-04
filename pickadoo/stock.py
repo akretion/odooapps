@@ -32,26 +32,34 @@ class StockPickingOut(orm.Model):
         for move in picking.move_lines:
             data = self._prepare_move_information(cr, uid, move, context=context)
             moves[move.id] = data
+        partner = picking.final_partner_id or picking.partner_id
+        payment_code = picking.sale_id and picking.sale_id.payment_method_id.code or ""
         return {
             'id': picking.id,
             'name': picking.name,
             'origin': picking.sale_id and picking.sale_id.client_order_ref \
                       or picking.origin or '',
-            'partner': picking.partner_id.name or '',
+            'partner': partner.name,
             'carrier_method': picking.carrier_id.name or '',
             'order_date': picking.sale_id.date_order or '',
             'moves': moves,
+            'email': partner.email,
+            'paid': picking.paid,
+            'payment_method': payment_code,
         }
 
     def _prepare_move_information(self, cr, uid, move, context=None):
+        product = move.product_id
         return {
             'id': move.id,
-            'name': move.product_id.name,
-            'sku': move.product_id.default_code,
-            'loc_rack': move.product_id.loc_rack or '',
-            'loc_row': move.product_id.loc_row or '',
-            'loc_case': move.product_id.loc_case or '',
-            'barcode': move.product_id.ean13 or '',
+            'product': {
+                'model': product.base_default_code,
+                'name': product.name,
+                'color': product.color_id.name,
+                'collection': product.categ_id.name,
+                'brand': product.categ_brand_id.name,
+                'ean': product.ean13 or '',
+                },
             'qty': move.product_qty,
         }
 
@@ -76,7 +84,7 @@ class StockPickingOut(orm.Model):
         action_list = []
         for label in label_obj.browse(cr, uid, label_ids, context=context):
             action_list.append({
-                'url': 'http://localhost:8069/cups/printData',
+                'url': 'https://localhost/cups/printData',
                 'params': {
                     'args': ['zebra', label.datas],
                     'kwargs': {'options': {'raw': True}},
@@ -95,14 +103,13 @@ class StockPickingOut(orm.Model):
             action_a4 = {}
             cn = cn_obj.browse(cr, uid, cn_ids, context=context)[0]
             action_cn23 = {
-                'url' : 'http://localhost:8069/cups/printData',
+                'url' : 'https://localhost/cups/printData',
                 'params': {
                     'args': ['laser', cn.datas],
                     'kwargs': {'options': {'raw': True, 'copies': 3}},
                 }
             }
             action_list.insert(0, action_cn23)
-
         return {
             'type': 'ir.actions.act_proxy',
             'action_list': action_list,
@@ -112,4 +119,7 @@ class StockPickingOut(orm.Model):
         service = netsvc.LocalService('report.stock.picking.cn23')
         (result, format) = service.create(
             cr, uid, ids, {'model': 'stock.picking.out'}, context)
+        return True
+
+    def start_processing(self, cr, uid, ids, context=None):
         return True
