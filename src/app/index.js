@@ -27,7 +27,6 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         };
 
         $rootScope.items = {};
-        $state.go('list');
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
                 if ( ! $cookies.session_id && toState.name !== 'login' ) {
@@ -42,6 +41,9 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
                     $state.go('list');
                 }
             })
+
+        $state.go('login');
+
         $rootScope.timekey = ""
         // TODO move this code in odoo lib
         var getData = function (timekey) {
@@ -64,9 +66,7 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
                 }
             };
 
-        console.log("====== FIRST CALL ========");
         getData();
 
-        console.log("====== START ========");
         $interval(getData, 10000);
     });

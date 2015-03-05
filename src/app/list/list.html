@@ -25,6 +25,7 @@
                 <th>Partner</th>
                 <th>Carrier</th>
                 <th>Email</th>
+                <th>Payment Method</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@
                 <td>{{item.partner}}</td>
                 <td>{{item.carrier_method}}</td>
                 <td>{{item.email}}</td>
+                <td class="paid_status_{{item.paid}}">{{item.payment_method}}</td>
             </tr>
             </tbody>
         </table>
