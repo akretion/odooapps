@@ -1,13 +1,16 @@
 'use strict';
 angular.module('pickadoo')
     .controller('LoginCtrl', function ($rootScope, $scope, jsonRpc, $state) {
-        $scope.login = function (loginForm) {
-            jsonRpc.login('db', loginForm.loginInput.$modelValue, loginForm.passwordInput.$modelValue)
-                .done(function(data) {
+        $scope.login = function () {
+            jsonRpc.login('db', $scope.bucheUsername, $scope.buchePassword)
+                .then(function(data) {
                     $state.go('list');
-                })
-                .fail( function(data) {
-                    loginForm.result = {$error: 'credentials'};
-                })
+                }, function(reason) {
+                  $scope.bucheLoginForm.result = {
+                    $error: {
+                      credentials = true
+                    }
+                  }
+                });
         };
     });
