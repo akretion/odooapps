@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI', 'smart-table'])
-  .config(function ($stateProvider, $urlRouterProvider, jsonRpcProvider, $modalProvider, blockUIConfig) {
+angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI', 'smart-table', 'pascalprecht.translate'])
+  .config(function ($stateProvider, $urlRouterProvider, jsonRpcProvider, $modalProvider, blockUIConfig, $translateProvider) {
     $stateProvider
       .state('login', {
         url: '/login',
@@ -20,6 +20,9 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       }); 
     $urlRouterProvider.otherwise('/login');
     blockUIConfig.autoBlock = false;
+    $translateProvider
+        .translations('fr', window.translateFR)
+        .preferredLanguage('fr');
 
   }).run(function($rootScope, $interval, jsonRpc, $state, $cookies, $modal) {
         $rootScope.modal = function(data) {
