@@ -41,7 +41,6 @@ angular.module('pickadoo')
                 .always(function(result) {
                     blockUI.stop();
                 });
-
         };
 
         $scope.$watch('todoMoves', function (newValue, oldValue) {
@@ -52,4 +51,19 @@ angular.module('pickadoo')
             }
         }, true);
 
+        var searchWatch = $rootScope.$watch('search', function (newValue, oldValue) {
+            if (angular.isDefined(newValue)) {
+                console.log('youoouh');
+                console.log(newValue);
+                angular.forEach($scope.todoMoves, function(move){
+                    if ( move.product.ean == newValue ) {
+                        $scope.move_add_one(move.id);
+                    }
+                });
+            };
+        });
+
+        $scope.$on('$destroy',function() {
+            searchWatch();
+        });
     });

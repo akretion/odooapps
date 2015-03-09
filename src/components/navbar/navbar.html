@@ -6,9 +6,9 @@
       </a>
     </div>
 
-    <form class="navbar-form navbar-right" role="search">
+    <form class="navbar-form navbar-right" role="search" ng-submit="doSearch()">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchPicking">
+        <input id="search" type="text" class="form-control" placeholder="Search" ng-model="searchPicking">
       </div>
     </form>
 
