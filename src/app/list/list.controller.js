@@ -2,7 +2,7 @@
 
 angular.module('pickadoo')
     .controller('ListCtrl', function( $rootScope, $scope, $state, jsonRpc ) {
-        
+
         $rootScope.navTitle = undefined;
 
         $scope.open = function (item) {
@@ -14,8 +14,7 @@ angular.module('pickadoo')
                 })
                 .fail(function() {
                     $state.go('list');
-                    }
-            )
+                });
         };
 
         $scope.$on('open.detail', function(e, item) {
@@ -27,8 +26,8 @@ angular.module('pickadoo')
                 $scope.itemsFiltered = _.first(_($rootScope.items).toArray(),pickingConfig.maxList);
                 itemsWatch();
             }
-        }, true)
-    
+        }, true);
+
         var searchWatch = $rootScope.$watch('searchPicking', function (newValue, oldValue) {
             if (angular.isDefined(newValue)) {
 

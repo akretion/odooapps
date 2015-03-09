@@ -25,6 +25,13 @@ body {
   }
 }
 
+.pickadoo-table {
+  tbody {
+    tr {
+      cursor:pointer;
+    }
+  }
+}
 .list-group-item:nth-child(2n) {
     background-color:#ddd;
 }
