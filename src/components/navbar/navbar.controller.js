@@ -3,8 +3,11 @@
 angular.module('pickadoo')
   .controller('NavbarCtrl', function ($rootScope, $scope) {
     $scope.$watch('searchPicking', function (newValue, oldValue) {
-        if (angular.isDefined(newValue)) {
-            $rootScope.searchPicking = newValue;
+        $rootScope.searchPicking = newValue;
+    });
+    $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+        if ( toState.name == 'detail' ) {
+            $scope.searchPicking = undefined;
         }
-        });
+    });
   });

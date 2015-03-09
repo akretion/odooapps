@@ -6,16 +6,21 @@
       </a>
     </div>
 
-<form class="navbar-form navbar-left" role="search">
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Search" ng-model="searchPicking">
-  </div>
-</form>
+    <form class="navbar-form navbar-right" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchPicking">
+      </div>
+    </form>
 
+    <div class="item-name" ng-show="navTitle">
+        {{ navTitle }}
+    </div>
+<!--
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav navbar-right">
         <li>Current date: {{ date | date:'yyyy-MM-dd' }}</li>
       </ul>
     </div>
+-->
   </div>
 </nav>

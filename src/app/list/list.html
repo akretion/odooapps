@@ -1,23 +1,8 @@
-<div class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand">
-        <span class="glyphicon glyphicon-home"></span> Pickadoo
-      </a>
-    </div>
-
-    <form class="navbar-form navbar-right" role="search">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchOrder">
-      </div>
-    </form>
-  </div>
-</div>
-
 <div class="container-fluid">
   <div class="row big-list">
     <div class="col-md-12 col-no-padding">
-        <table st-table="items" class="table table-striped">
+        {{ searchPicking }}
+        <table st-table="itemsFiltered" class="table table-striped">
             <thead>
             <tr>
                 <th>Origin</th>
@@ -29,7 +14,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in items | filter: searchOrder" ng-click="open(item)">
+            <tr ng-repeat="item in itemsFiltered" ng-click="open(item)">
                 <td>{{item.origin}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.partner}}</td>
