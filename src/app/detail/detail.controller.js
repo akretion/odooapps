@@ -5,23 +5,23 @@ angular.module('pickadoo')
 
         $scope.item = $rootScope.items[$stateParams.id];
         $rootScope.navTitle = $scope.item.name;
-        $scope.todoMoves = $rootScope.items[$stateParams.id].moves;
+        $scope.todoMoves = $scope.item.moves;
         $scope.processMoves = {};
 
-        $scope.add_all = function() {
+        $scope.addAll = function() {
             angular.extend($scope.processMoves, $scope.todoMoves);
             $scope.todoMoves = {};
         };
-        $scope.move_add_all = function( id ) {
+        $scope.moveAddAll = function( id ) {
             $scope.processMoves[id] = $scope.todoMoves[id];
             delete $scope.todoMoves[id];
 
         };
-        $scope.move_add_one = function( id ) {
+        $scope.moveAddOne = function( id ) {
             $scope.processMoves[id] = $scope.todoMoves[id];
             delete $scope.todoMoves[id];
         };
-        $scope.move_cancel_process = function( id ) {
+        $scope.moveCancelProcess = function( id ) {
             $scope.todoMoves[id] = $scope.processMoves[id];
             delete $scope.processMoves[id];
         };
