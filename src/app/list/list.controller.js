@@ -28,7 +28,7 @@ angular.module('pickadoo')
             }
         }, true);
 
-        var searchWatch = $rootScope.$watch('searchPicking', function (newValue, oldValue) {
+        var searchWatch = $rootScope.$watch('filterPicking', function (newValue, oldValue) {
             if (angular.isDefined(newValue)) {
 
                 $scope.itemsFiltered = [];

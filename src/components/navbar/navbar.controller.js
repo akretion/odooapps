@@ -2,19 +2,18 @@
 
 angular.module('pickadoo')
   .controller('NavbarCtrl', function ($rootScope, $scope) {
-    $scope.$watch('searchPicking', function (newValue, oldValue) {
-        $rootScope.searchPicking = newValue;
+    $scope.$watch('searchBar', function (newValue, oldValue) {
+        $rootScope.filterPicking = newValue;
     });
     $rootScope.$on('$stateChangeSuccess', function (e, toState) {
         if ( toState.name == 'detail' ) {
-            $scope.searchPicking = undefined;
+            $scope.filterPicking = undefined;
         };
         document.querySelector("#search").focus();
     });
 
     $scope.doSearch = function() {
-        $rootScope.search = $scope.searchPicking;
-        console.log($rootScope.search);
-        $scope.searchPicking = "";
+        $rootScope.search = $scope.searchBar;
+        $scope.searchBar = "";
     }
   });
