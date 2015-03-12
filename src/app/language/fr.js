@@ -14,6 +14,7 @@ window.translateFR = {
     PARTIAL: 'Envoie Partiel',
     NO_ORDER_FOUND: 'Aucune commande trouvé, veuillez resaisir le numéro',
     USER_ERROR: 'Erreur utilisateur',
-    NO_PRODUCT_FOUND: 'Le code barre saisi ne correspond pas à un produit de la commande' 
+    NO_PRODUCT_FOUND: 'Le code barre saisi ne correspond pas à un produit de la commande',
+    NOTE: 'Commentaire'
 }
 
