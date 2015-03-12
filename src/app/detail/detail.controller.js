@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pickadoo')
-    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal, blockUI ) {
+    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal, blockUI, $translate ) {
 
         $scope.item = $rootScope.items[$stateParams.id];
         $rootScope.navTitle = $scope.item.name;
@@ -31,8 +31,7 @@ angular.module('pickadoo')
         };
 
         $scope.validate = function() {
-            console.log('Validate Picking');
-            blockUI.start();
+            blockUI.start( "{{ 'VALIDATE_PRINT | translate }}" ) ;
             jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
                 .done(function(result) {
                     delete $rootScope.items[$scope.item.id];
@@ -44,22 +43,32 @@ angular.module('pickadoo')
         };
 
         $scope.$watch('todoMoves', function (newValue, oldValue) {
-            console.log(newValue);
             if ( angular.equals({}, newValue) ) {
-                console.log('We should validate the picking');
                 $scope.validate();
             }
         }, true);
 
         var searchWatch = $rootScope.$watch('search', function (newValue, oldValue) {
-            if (angular.isDefined(newValue)) {
-                console.log('youoouh');
-                console.log(newValue);
+            var selectedMove = undefined;
+            if (angular.isDefined(newValue) && newValue.length > 0 ) {
                 angular.forEach($scope.todoMoves, function(move){
                     if ( move.product.ean == newValue ) {
-                        $scope.move_add_one(move.id);
+                        selectedMove = move;
                     }
                 });
+                $rootScope.search = "";
+                if ( selectedMove ) {
+                    $scope.moveAddOne(selectedMove.id);
+                } else {
+                    $translate(['USER_ERROR', 'NO_PRODUCT_FOUND']).then(function (translations) {
+                        $modal({
+                            title: translations.USER_ERROR,
+                            content: translations.NO_PRODUCT_FOUND,
+                            show: true,
+                            html: false,
+                        });
+                    });
+                }
             };
         });
 

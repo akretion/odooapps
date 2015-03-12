@@ -71,5 +71,5 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
 
         getData();
 
-        $interval(getData, 1000);
+        $interval(getData, 10000);
     });

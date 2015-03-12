@@ -7,12 +7,13 @@ angular.module('pickadoo')
     });
     $rootScope.$on('$stateChangeSuccess', function (e, toState) {
         if ( toState.name == 'detail' ) {
-            $scope.filterPicking = undefined;
+            $scope.searchBar = "";
         };
         document.querySelector("#search").focus();
     });
 
     $scope.doSearch = function() {
+        console.log('submit');
         $rootScope.search = $scope.searchBar;
         $scope.searchBar = "";
     }
