@@ -15,6 +15,11 @@ window.translateFR = {
     NO_ORDER_FOUND: 'Aucune commande trouvé, veuillez resaisir le numéro',
     USER_ERROR: 'Erreur utilisateur',
     NO_PRODUCT_FOUND: 'Le code barre saisi ne correspond pas à un produit de la commande',
-    NOTE: 'Commentaire'
+    NOTE: 'Commentaire',
+    PAYMENT_DONE: 'Le règlement à bien été effectué',
+    PAYMENT_PROCESSING: 'Capture en cours',
+    PAYMENT_FAIL: 'Capture échouée',
+    PAYMENT_MISSING: 'Aucun réglement n\'a été fait',
+    VALIDATE_AND_PRINT: 'Validation et impression en cours...'
 }
 

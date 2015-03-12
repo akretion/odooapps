@@ -4,25 +4,66 @@ angular.module('pickadoo')
     .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal, blockUI, $translate ) {
 
         $scope.item = $rootScope.items[$stateParams.id];
-        $rootScope.navTitle = $scope.item.name;
+        $rootScope.navTitle = $scope.item.name + ' : ' + $scope.item.carrier_method;
         $scope.todoMoves = $scope.item.moves;
         $scope.processMoves = {};
 
-        $scope.addAll = function() {
-            angular.extend($scope.processMoves, $scope.todoMoves);
-            $scope.todoMoves = {};
-        };
-        $scope.moveAddAll = function( id ) {
-            $scope.processMoves[id] = $scope.todoMoves[id];
-            delete $scope.todoMoves[id];
+        $translate(['PAYMENT_DONE', 'PAYMENT_PROCESSING', 'PAYMENT_FAIL', 'PAYMENT_MISSING'])
+            .then(function (translations) {
+                console.log('=====');
+                console.log($scope.item.paid);
+                if ( $scope.item.paid ) {
+                    $scope.paymentMessage = translations.PAYMENT_DONE;
+                } else if ( $scope.item.payment_method == 'CB' ) {
+                    $scope.paymentMessage = translations.PAYMENT_PROCESSING;
+                    jsonRpc.call('stock.picking.out', 'capture_order', [[$scope.item.id]], {})
+                        .then(
+                            function(){
+                                $scope.paymentMessage = translations.PAYMENT_DONE;
+                            },
+                            function(error) {
+                                $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
+                            }
+                        );
+                } else {
+                    $scope.paymentMessage = translations.PAYMENT_MISSING;
+                };
+                console.log($scope.paymentMessage);
+            });
 
+        $scope.addAll = function() {
+            angular.forEach($scope.todoMoves, function(move){
+                $scope.moveAddQty(move.id, move.qty);
+            });
         };
+
+        $scope.moveAddAll = function( id ) {
+            $scope.moveAddQty(id, $scope.todoMoves[id].qty);
+        };
+
         $scope.moveAddOne = function( id ) {
-            $scope.processMoves[id] = $scope.todoMoves[id];
-            delete $scope.todoMoves[id];
+            $scope.moveAddQty(id, 1);
         };
+
+        $scope.moveAddQty = function( id, qty ) {
+            if ( ! $scope.processMoves[id] ) {
+                $scope.processMoves[id] = angular.copy($scope.todoMoves[id]);
+                $scope.processMoves[id].qty = qty;
+            } else {
+                $scope.processMoves[id].qty += qty;
+            };
+            $scope.todoMoves[id].qty -= qty;
+            if ( $scope.todoMoves[id].qty == 0 ) {
+                delete $scope.todoMoves[id];
+            };
+        };
+
         $scope.moveCancelProcess = function( id ) {
-            $scope.todoMoves[id] = $scope.processMoves[id];
+            if ( ! $scope.todoMoves[id] ) {
+                $scope.todoMoves[id] = $scope.processMoves[id];
+            } else {
+                $scope.todoMoves[id].qty += $scope.processMoves[id].qty;
+            };
             delete $scope.processMoves[id];
         };
 
@@ -31,15 +72,19 @@ angular.module('pickadoo')
         };
 
         $scope.validate = function() {
-            blockUI.start( "{{ 'VALIDATE_PRINT | translate }}" ) ;
+            $translate(['VALIDATE_AND_PRINT']).then(function (translations) {
+                blockUI.start(translations.VALIDATE_AND_PRINT) ;
+            });
             jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
-                .done(function(result) {
-                    delete $rootScope.items[$scope.item.id];
-                    $state.go('list');
-                })
-                .always(function(result) {
-                    blockUI.stop();
-                });
+                .then(
+                    function(result) {
+                        delete $rootScope.items[$scope.item.id];
+                        $state.go('list');
+                    },
+                    function(result) {
+                        blockUI.stop();
+                    }
+               );
         };
 
         $scope.$watch('todoMoves', function (newValue, oldValue) {

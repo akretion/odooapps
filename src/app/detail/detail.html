@@ -38,15 +38,36 @@
         <div class="panel-body">
           <ul class="list-group list-group-striped">
             <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in processMoves">
-              {{move.name}} {{move.qty}} {{move.barcode}}
-              <button class="btn btn-danger dropdown-toggle pull-right" type="button" ng-click="moveCancelProcess(move.id)">{{ 'CANCEL' | translate }}</button>
-
+              <div class="row">
+                <div class="col-md-6">
+                  {{move.product.model}} - {{move.product.name}} - {{move.product.color}} - {{move.product.brand}} - {{move.product.collection}} - {{move.product.ean}}
+                </div>
+                <div class="col-md-1 qty">
+                  {{move.qty}}
+                </div>
+              </div>
+              <div class="pull-right">
+                <button class="btn btn-danger dropdown-toggle pull-right" type="button" ng-click="moveCancelProcess(move.id)">{{ 'CANCEL' | translate }}</button>
+              </div>
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="col-md-12" ng-if="item.note">
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'PAYMENT' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+            <p ng-bind-html="paymentMessage"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8" ng-if="item.note">
       <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">{{ 'NOTE' | translate }}</h3>
