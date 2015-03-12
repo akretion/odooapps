@@ -80,7 +80,8 @@ angular.module('pickadoo')
                     function(result) {
                         delete $rootScope.items[$scope.item.id];
                         $state.go('list');
-                    },
+                    })
+                .finally(
                     function(result) {
                         blockUI.stop();
                     }
