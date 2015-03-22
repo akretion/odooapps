@@ -46,6 +46,7 @@ class StockPickingOut(orm.Model):
             'email': partner.email,
             'paid': picking.paid,
             'payment_method': payment_code,
+            'note': picking.sale_id.note or "",
         }
 
     def _prepare_move_information(self, cr, uid, move, context=None):
