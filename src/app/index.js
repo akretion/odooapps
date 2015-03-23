@@ -48,28 +48,13 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         $state.go('login');
 
         $rootScope.timekey = ""
-        // TODO move this code in odoo lib
-        var getData = function (timekey) {
-            if ( $cookies.session_id && $cookies.session_id !== "") {
-                jsonRpc.call('stock.picking.out', 'get_sync_data', [
-                    'pickadoo', $rootScope.timekey, [['type', '=', 'out'], ['state', 'in', ['confirmed', 'assigned']]], 50
-                ], {}).then(
-                    function(result) {
-                        var res = result[0];
-                        $rootScope.timekey = result[1];
-                        var remove_ids = result[2];
-                        if(!$.isEmptyObject(res)) {
-                            angular.extend($rootScope.items, res);
-                            getData($rootScope.timekey);
-                        }
-                        if(!$.isEmptyObject(remove_ids)) {
-                            //console.log("We should remove this ids", remove_ids);
-                        }
-                    })
-                }
-            };
-
-        getData();
-
-        $interval(getData, 10000);
+        var getData = function() {
+            console.log('do import');
+            jsonRpc.syncDataImport(
+                'stock.picking.out',
+                'pickadoo',
+                [['type', '=', 'out'], ['state', 'in', ['confirmed', 'assigned']]],
+                50)
+        }
+        $interval(getData, 5000);
     });
