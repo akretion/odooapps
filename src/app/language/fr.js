@@ -20,6 +20,7 @@ window.translateFR = {
     PAYMENT_PROCESSING: 'Capture en cours',
     PAYMENT_FAIL: 'Capture échouée',
     PAYMENT_MISSING: 'Aucun réglement n\'a été fait',
-    VALIDATE_AND_PRINT: 'Validation et impression en cours...'
+    VALIDATE_AND_PRINT: 'Validation et impression en cours...',
+    PAYMENT: 'Paiement information'
 }
 
