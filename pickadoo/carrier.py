@@ -20,5 +20,12 @@
 #
 ###############################################################################
 
-from . import stock
-from . import carrier
+from openerp.osv import fields, orm
+
+
+class DeliveryCarrier(orm.Model):
+    _inherit = 'delivery.carrier'
+
+    _columns = {
+        'process_in_pickadoo': fields.boolean('Process in Pickadoo'),
+    }

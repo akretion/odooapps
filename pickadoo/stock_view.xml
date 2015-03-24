@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_out_form" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <button name="draft_force_assign" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="draft_validate" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="force_assign" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="action_process" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="%(stock.action_stock_invoice_onshipping)d" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="%(stock.act_stock_return_picking)d" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+                <button name="button_cancel" position="attributes">
+                    <attribute name="invisible">context.get('hide_button')</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_picking_out_search" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <filter name="done" position="after">
+                    <separator/>
+                    <filter string="Prepared"
+                            name="prepared"
+                            domain="[('prepared', '=', True)]"
+                            help="Picking already Prepared"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="stock.action_picking_tree" model="ir.actions.act_window">
+            <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 'hide_button': True}</field>
+        </record>
+ 
+
+        <record id="action_picking_tree" model="ir.actions.act_window">
+            <field name="name">Manual Delivery Orders</field>
+            <field name="res_model">stock.picking.out</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','out'), ('carrier_id.process_in_pickadoo', '=', False)]</field>
+            <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 'search_default_prepared': True}</field>
+            <field name="search_view_id" ref="stock.view_picking_out_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery order. 
+              </p><p>
+                This is the list of all delivery orders that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+ 
+        <record id="action_picking_tree_out_view1_waiting" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.view_picking_out_tree"/>
+            <field name="act_window_id" ref="action_picking_tree"/>
+        </record>
+
+        <record id="action_picking_tree_out_view2_waiting" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock.view_picking_out_form"/>
+            <field name="act_window_id" ref="action_picking_tree"/>
+        </record>
+
+        <record id="action_picking_tree_out_view2_waiting_cal" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_out_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree"/>
+        </record>
+ 
+        <menuitem
+            action="action_picking_tree"
+            id="menu_action_picking_tree"
+            parent="stock.menu_stock_warehouse_mgmt"
+            sequence="4"/>
+
+    </data>
+</openerp>

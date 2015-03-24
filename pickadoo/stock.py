@@ -20,12 +20,33 @@
 #
 ###############################################################################
 
-from openerp.osv import orm
+from openerp.osv import fields, orm
 from openerp.tools.translate import _
 
 
+class StockPicking(orm.Model):
+    _inherit = 'stock.picking'
+
+    _columns = {
+        'process_in_pickadoo': fields.related(
+            'carrier_id',
+            'process_in_pickadoo',
+            type='boolean',
+            string='Process in pickadoo'),
+        'prepared': fields.boolean('Prepared'),
+    }
+
 class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
+
+    _columns = {
+        'process_in_pickadoo': fields.related(
+            'carrier_id',
+            'process_in_pickadoo',
+            type='boolean',
+            string='Process in pickadoo'),
+        'prepared': fields.boolean('Prepared'),
+    }
 
     def _prepare_sync_data_pickadoo(self, cr, uid, picking, context=None):
         moves = {}
@@ -47,6 +68,7 @@ class StockPickingOut(orm.Model):
             'paid': picking.paid,
             'payment_method': payment_code,
             'note': picking.sale_id.note or "",
+            'process_in_pickadoo': picking.process_in_pickadoo,
         }
 
     def _prepare_move_information(self, cr, uid, move, context=None):

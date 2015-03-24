@@ -31,14 +31,13 @@
  """,
  'depends': [
      'stock',
+     'delivery',
      'synchronizer',
  ],
  'data': [
+     'stock_view.xml',
+     'carrier_view.xml',
  ],
  'installable': True,
  'application': True,
 }
-
-
-
-
