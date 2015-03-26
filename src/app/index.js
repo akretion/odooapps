@@ -17,7 +17,12 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: '/detail/:id',
         templateUrl: 'app/detail/detail.html',
         controller: 'DetailCtrl'
-      }); 
+      }).state('print', {
+        url: '/print',
+        templateUrl: 'app/print/print.html',
+        controller: 'PrintCtrl'
+      })
+ ; 
     $urlRouterProvider.otherwise('/login');
     blockUIConfig.autoBlock = false;
     $translateProvider
@@ -29,7 +34,6 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             $modal(data);
         };
 
-        $rootScope.items = {};
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
                 if ( ! $cookies.session_id && toState.name !== 'login' ) {
@@ -46,15 +50,22 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             })
 
         $state.go('login');
-
-        $rootScope.timekey = ""
-        var getData = function() {
-            console.log('do import');
-            jsonRpc.syncDataImport(
-                'stock.picking.out',
-                'pickadoo',
-                [['type', '=', 'out'], ['state', 'in', ['confirmed', 'assigned']]],
-                50)
-        }
-        $interval(getData, 5000);
-    });
+        
+        $rootScope.picking = jsonRpc.syncImportObject({
+            model: 'stock.picking.out',
+            func_key: 'pickadoo',
+            domain: [
+                ['type', '=', 'out'],
+                ['state', 'in', ['assigned']],
+                '|',
+                    ['prepared', '=', false], 
+                    '&',
+                        '&',
+                            ['prepared', '=', true],
+                            ['carrier_id.process_in_pickadoo', '=', true],
+                        ['paid', '=', true]
+                ],
+            limit: 50,
+            interval: 1000,
+            });
+     });

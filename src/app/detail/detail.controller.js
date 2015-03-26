@@ -10,7 +10,6 @@ angular.module('pickadoo')
 
         $translate(['PAYMENT_DONE', 'PAYMENT_PROCESSING', 'PAYMENT_FAIL', 'PAYMENT_MISSING'])
             .then(function (translations) {
-                console.log('=====');
                 console.log($scope.item.paid);
                 if ( $scope.item.paid ) {
                     $scope.paymentMessage = translations.PAYMENT_DONE;
@@ -20,6 +19,8 @@ angular.module('pickadoo')
                         .then(
                             function(){
                                 $scope.paymentMessage = translations.PAYMENT_DONE;
+                                $scope.item.paid = true;
+                                $rootScope.items[item.id].paid = true;
                             },
                             function(error) {
                                 $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
@@ -72,20 +73,41 @@ angular.module('pickadoo')
         };
 
         $scope.validate = function() {
-            $translate(['VALIDATE_AND_PRINT']).then(function (translations) {
-                blockUI.start(translations.VALIDATE_AND_PRINT) ;
-            });
-            jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
-                .then(
-                    function(result) {
-                        delete $rootScope.items[$scope.item.id];
-                        $state.go('list');
-                    })
-                .finally(
-                    function(result) {
-                        blockUI.stop();
-                    }
-               );
+            if ( $scope.item.process_in_pickadoo && $scope.item.paid ) {
+                $translate(['VALIDATE_AND_PRINT']).then(function (translations) {
+                    blockUI.start(translations.VALIDATE_AND_PRINT) ;
+                });
+                jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
+                    .then(
+                        function(result) {
+                            delete $rootScope.items[$scope.item.id];
+                            $state.go('list');
+                        })
+                    .finally(
+                        function(result) {
+                            blockUI.stop();
+                        }
+                   );
+            } else {
+                $translate(['CAN_NOT_PROCESS_PICKING', 'SET_PAID_ORDER_AS_PREPARED', 'SET_CARRIER_ORDER_AS_PREPARED']).then(function (translations) {
+                    var message = '';
+                    if ( !$scope.item.paid ) {
+                        message = translations.SET_PAID_ORDER_AS_PREPARED;
+                    } else {
+                        message = translations.SET_CARRIER_ORDER_AS_PREPARED;
+                    };
+
+                    var modal = $modal({
+                        scope: $scope,
+                        title: translations.CAN_NOT_PROCESS_PICKING,
+                        content: message,
+                        show: true,
+                        html: false,
+                        prefixEvent: 'doneModal',
+                    });
+                    
+              })
+            }
         };
 
         $scope.$watch('todoMoves', function (newValue, oldValue) {
@@ -121,4 +143,11 @@ angular.module('pickadoo')
         $scope.$on('$destroy',function() {
             searchWatch();
         });
+        
+        $scope.$on('doneModal.hide',function(){
+            jsonRpc.call('stock.picking.out', 'set_prepared', [[$scope.item.id]], {})
+            delete $rootScope.items[$scope.item.id];
+            $state.go('list');
+        });
+
     });

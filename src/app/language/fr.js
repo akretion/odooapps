@@ -21,6 +21,10 @@ window.translateFR = {
     PAYMENT_FAIL: 'Capture échouée',
     PAYMENT_MISSING: 'Aucun réglement n\'a été fait',
     VALIDATE_AND_PRINT: 'Validation et impression en cours...',
-    PAYMENT: 'Paiement information'
+    PAYMENT: 'Paiement information',
+    CAN_NOT_PROCESS_PICKING: 'L\'expédition ne peut pas être traité',
+    SET_CARRIER_ORDER_AS_PREPARED: 'Le transporteur sélectionné ne peut pas être traité via l\'application. Veuillez mettre la commande dans le bac des Fedex/Chronopost',
+    SET_PAID_ORDER_AS_PREPARED: 'La commande n\'est pas payé. Veuillez la mettre dans le bac des commandes préparés'
+ 
 }
 

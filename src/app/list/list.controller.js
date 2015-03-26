@@ -23,37 +23,34 @@ angular.module('pickadoo')
             $scope.open(item);
         });
 
-        var itemsWatch = $rootScope.$watch('items', function(newValue,oldValue) {
-            if (angular.isDefined(newValue) && _.keys(newValue).length > 0) {
-                $scope.itemsFiltered = _.first(_($rootScope.items).toArray(),pickingConfig.maxList);
-                itemsWatch();
-            }
-        }, true);
-
-        var filterWatch = $rootScope.$watch('filterPicking', function (newValue, oldValue) {
-            console.log('SEARCH FILTER');
-            if (angular.isDefined(newValue)) {
-
+        var filterItem = function(val) {
+            if (angular.isDefined(val)) {
                 $scope.itemsFiltered = [];
-
-                angular.forEach($rootScope.items, function(picking){
-                    if ( picking.name.toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || picking.origin.toLowerCase().indexOf(newValue.toLowerCase()) != -1 ) {
+                angular.forEach($rootScope.picking.data, function(picking){
+                    if ( picking.name.toLowerCase().indexOf(val.toLowerCase()) != -1
+                                || picking.origin.toLowerCase().indexOf(val.toLowerCase()) != -1 ) {
                         $scope.itemsFiltered.push(picking);
                     }
                   });
             } else {
-                $scope.itemsFiltered = _($rootScope.items).toArray()
+                $scope.itemsFiltered = _($rootScope.picking.data).toArray()
             }
             $scope.itemsFiltered = _.first($scope.itemsFiltered, pickingConfig.maxList)
+        }; 
+
+        var itemsWatch = $rootScope.$watch('picking.timekey', function(newValue,oldValue) {
+            filterItem($rootScope.filterPicking);
+        });
+
+        var filterWatch = $rootScope.$watch('filterPicking', function (newValue, oldValue) {
+            filterItem(newValue);
         });
 
         var searchWatch = $rootScope.$watch('search', function (newValue, oldValue) {
-            console.log('search');
             console.log(newValue, oldValue);
             if (angular.isDefined(newValue) && newValue.length > 0 ) {
                 var selectedPicking = undefined;
-                angular.forEach($rootScope.items, function(picking){
+                angular.forEach($rootScope.picking.data, function(picking){
                     if ( picking.name.toLowerCase() == newValue.toLowerCase()
                          || picking.origin.toLowerCase() == newValue.toLowerCase() ) {
                         selectedPicking = picking;
