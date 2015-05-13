@@ -51,10 +51,14 @@ class StockPickingOut(orm.Model):
     def _prepare_sync_data_pickadoo(self, cr, uid, picking, context=None):
         moves = {}
         for move in picking.move_lines:
-            data = self._prepare_move_information(cr, uid, move, context=context)
-            moves[move.id] = data
+            if not (picking.move_type == 'direct'
+                    and move.state != 'assigned'):
+                data = self._prepare_move_information(
+                    cr, uid, move, context=context)
+                moves[move.id] = data
         partner = picking.final_partner_id or picking.partner_id
-        payment_code = picking.sale_id and picking.sale_id.payment_method_id.code or ""
+        payment_code = picking.sale_id\
+            and picking.sale_id.payment_method_id.code or ""
         return {
             'id': picking.id,
             'name': picking.name,
@@ -69,6 +73,7 @@ class StockPickingOut(orm.Model):
             'payment_method': payment_code,
             'note': picking.sale_id.note or "",
             'process_in_pickadoo': picking.process_in_pickadoo,
+            'partial': 'Partiel' if picking.move_type == 'direct' else '',
         }
 
     def _prepare_move_information(self, cr, uid, move, context=None):
@@ -88,7 +93,6 @@ class StockPickingOut(orm.Model):
 
     def process_picking(self, cr, uid, ids, data_moves, context=None):
         assert len(ids) == 1, 'You can only process one picking'
-        self.force_assign(cr, uid, ids)
         partial_datas = {}
         for move_id, move_data in data_moves.items():
             partial_datas["move" + str(move_id)] = {
