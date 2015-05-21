@@ -10,6 +10,7 @@
                 <th>{{ 'CARRIER' | translate }}</th>
                 <th>{{ 'EMAIL' | translate }}</th>
                 <th>{{ 'PAYMENT_METHOD' | translate }}</th>
+                <th>{{ 'PARTIAL' | translate }}</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                 <td>{{item.carrier_method}}</td>
                 <td>{{item.email}}</td>
                 <td class="paid_status_{{item.paid}}">{{item.payment_method}}</td>
+                <td class="partial">{{item.partial}}</td>
             </tr>
             </tbody>
         </table>

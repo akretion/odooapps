@@ -6,7 +6,7 @@
         <div class="panel-heading">
           <button class="btn btn-success dropdown-toggle pull-right" type="button"
               ng-click="addAll()">{{ 'ADD_ALL' | translate }}</button>
-          <h2 class="panel-title">{{ 'TO_SEND' | translate }}</h2>
+          <h2 class="panel-title">{{ 'TO_SEND' | translate }} <span class="partial" ng-if="item.partial">{{ 'PARTIAL' | translate }}</span></h2>
         </div>
         <div class="panel-body">
           <ul class="list-group list-group-striped">
