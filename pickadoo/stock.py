@@ -150,3 +150,6 @@ class StockPickingOut(orm.Model):
 
     def start_processing(self, cr, uid, ids, context=None):
         return True
+
+    def set_prepared(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'prepared': True}, context=context)
