@@ -20,7 +20,7 @@ angular.module('pickadoo')
                             function(){
                                 $scope.paymentMessage = translations.PAYMENT_DONE;
                                 $scope.item.paid = true;
-                                $rootScope.picking.data[item.id].paid = true;
+                                $rootScope.picking.data[$scope.item.id].paid = true;
                             },
                             function(error) {
                                 $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
