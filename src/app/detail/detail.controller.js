@@ -89,7 +89,13 @@ angular.module('pickadoo')
                         }
                    );
             } else {
-                $translate(['CAN_NOT_PROCESS_PICKING', 'SET_PAID_ORDER_AS_PREPARED', 'SET_CARRIER_ORDER_AS_PREPARED']).then(function (translations) {
+                $translate([
+                    'CAN_NOT_PROCESS_PICKING',
+                    'SET_PAID_ORDER_AS_PREPARED',
+                    'SET_CARRIER_ORDER_AS_PREPARED',
+                ], {
+                    carrier_name: $scope.item.carrier_method,
+                }).then(function (translations) {
                     var message = '';
                     if ( !$scope.item.paid ) {
                         message = translations.SET_PAID_ORDER_AS_PREPARED;
