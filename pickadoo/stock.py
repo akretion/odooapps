@@ -59,6 +59,8 @@ class StockPickingOut(orm.Model):
         partner = picking.final_partner_id or picking.partner_id
         payment_code = picking.sale_id\
             and picking.sale_id.payment_method_id.code or ""
+        if picking.pending_payment_location:
+            payment_code += u' / BAC payé'
         return {
             'id': picking.id,
             'name': picking.name,
