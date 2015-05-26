@@ -60,7 +60,7 @@ class StockPickingOut(orm.Model):
         payment_code = picking.sale_id\
             and picking.sale_id.payment_method_id.code or ""
         if picking.pending_payment_location:
-            payment_code += u' / BAC payé'
+            payment_code += u' / BAC paiement en attente'
         return {
             'id': picking.id,
             'name': picking.name,
@@ -86,6 +86,7 @@ class StockPickingOut(orm.Model):
                 'model': product.base_default_code,
                 'name': product.name,
                 'color': product.color_id.name,
+                'size': product.size_id.name,
                 'collection': product.categ_id.name,
                 'brand': product.categ_brand_id.name,
                 'ean': product.ean13 or '',
@@ -155,3 +156,17 @@ class StockPickingOut(orm.Model):
 
     def set_prepared(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'prepared': True}, context=context)
+
+    def _get_domain_for_print_from_number(self, cr, uid, number, context=None):
+        return [['name', '=', number]]
+
+    def print_from_number(self, cr, uid, number, context=None):
+        domain = self._get_domain_for_print_from_number(
+            cr, uid, number, context=context)
+        picking_ids = self.search(cr, uid, domain, context=context)
+        if picking_ids:
+            return self.print_label(cr, uid, picking_ids, context=context)
+        else:
+            raise orm.except_orm(
+                _('User Error'),
+                _('There is no picking found for number %s') % number)
