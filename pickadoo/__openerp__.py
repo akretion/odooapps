@@ -33,10 +33,12 @@
      'stock',
      'delivery',
      'synchronizer',
+     'proxy_action',
  ],
  'data': [
      'stock_view.xml',
      'carrier_view.xml',
+     'security/account_security.xml',
  ],
  'installable': True,
  'application': True,

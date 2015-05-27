@@ -27,6 +27,13 @@
                 <button name="button_cancel" position="attributes">
                     <attribute name="invisible">context.get('hide_button')</attribute>
                 </button>
+                <button name="draft_force_assign" position="after">
+                    <button name="print_label"
+                            type="object"
+                            class="oe_highlight"
+                            string="Print Label"
+                            groups="pickadoo.group_delivery_backoffice_direct_print"/>
+                </button>
             </field>
         </record>
 

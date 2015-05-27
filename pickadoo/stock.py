@@ -105,51 +105,42 @@ class StockPickingOut(orm.Model):
         self.do_partial(cr, uid, ids, partial_datas, context=context)
         return self.print_label(cr, uid, ids)
 
-    def print_label(self, cr, uid, ids, context=None):
+    def _add_label(self, cr, uid, ids, todo, context=None):
         assert len(ids) == 1, 'Process only one a single id at a time.'
+        proxy_obj = self.pool['proxy.action.helper']
         label_obj = self.pool['shipping.label']
         label_ids = label_obj.search(cr, uid, [
             ['res_id', 'in', ids],
             ], context=context)
-        action_list = []
+        proxy_obj = self.pool['proxy.action.helper']
         for label in label_obj.browse(cr, uid, label_ids, context=context):
-            action_list.append({
-                'url': 'https://localhost/cups/printData',
-                'params': {
-                    'args': ['zebra', label.datas],
-                    'kwargs': {'options': {'raw': True}},
-                    }
-                })
-
-        picking = self.browse(cr, uid, ids, context=context)[0]
-        if picking.colipostefr_send_douane_doc:
-            self.pool['stock.picking.out'].cn23_trigger(
-                cr, uid, ids, context=context)
-            cn_obj = self.pool['ir.attachment']
-            cn_ids = cn_obj.search(cr, uid, [
-                    ['res_id', 'in', ids],
-                    ['name', '=', 'CN23.pdf'],
-                ], context=context)
-            action_a4 = {}
-            cn = cn_obj.browse(cr, uid, cn_ids, context=context)[0]
-            action_cn23 = {
-                'url' : 'https://localhost/cups/printData',
-                'params': {
-                    'args': ['laser', cn.datas],
-                    'kwargs': {'options': {'raw': True, 'copies': 3}},
-                }
-            }
-            action_list.insert(0, action_cn23)
-        return {
-            'type': 'ir.actions.act_proxy',
-            'action_list': action_list,
-            }
-
-    def cn23_trigger(self, cr, uid, ids, context=None):
-        service = netsvc.LocalService('report.stock.picking.cn23')
-        (result, format) = service.create(
-            cr, uid, ids, {'model': 'stock.picking.out'}, context)
+            todo.append(
+                proxy_obj.get_print_data_action(
+                    cr, uid, label.datas,
+                    printer_name='label',
+                    raw=True,
+                    context=context)
+                )
         return True
+
+    def _prepare_todo_print_list(self, cr, uid, ids, context=None):
+        assert len(ids) == 1, 'Process only one a single id at a time.'
+        proxy_obj = self.pool['proxy.action.helper']
+        todo = []
+        self._add_label(cr, uid, ids, todo, context=context)
+        todo.append(
+            proxy_obj.get_print_report_action(
+                cr, uid, 'report.webkit.delivery_slip',
+                'stock.picking.out', ids,
+                context=context)
+            )
+        return todo
+
+    def print_label(self, cr, uid, ids, context=None):
+        assert len(ids) == 1, 'Process only one a single id at a time.'
+        todo = self._prepare_todo_print_list(cr, uid, ids, context=context)
+        proxy_obj = self.pool['proxy.action.helper']
+        return proxy_obj.return_action(todo)
 
     def start_processing(self, cr, uid, ids, context=None):
         return True
