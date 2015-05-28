@@ -31,7 +31,7 @@ angular.module('pickadoo')
                             function(error) {
                                 if ( error.title == "http" ) {
                                     $scope.messages.unshift(translations.MANUAL_PRINT_FAIL);
-                                } else if ( error.data.cups_error ) {
+                                } else if ( error.data && error.data.cups_error ) {
                                     $scope.messages.unshift(translations.MANUAL_PRINT_ERROR);
                                 } else {
                                     $scope.messages.unshift(translations.MANUAL_NO_PICKING);
