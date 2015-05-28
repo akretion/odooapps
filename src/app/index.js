@@ -30,9 +30,15 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         .preferredLanguage('fr');
 
   }).run(function($rootScope, $interval, jsonRpc, $state, $cookies, $modal) {
-        $rootScope.modal = function(data) {
-            $modal(data);
-        };
+
+        jsonRpc.errorInterceptors.push(function(data) {
+            $modal({
+                title: data.error,
+                show: true,
+                content: data.message,
+                html: true,
+            });
+        });
 
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
