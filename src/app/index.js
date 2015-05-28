@@ -66,6 +66,6 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
                         ['paid', '=', true]
                 ],
             limit: 50,
-            interval: 1000,
+            interval: window.pickingConfig.refresh_interval,
             });
      });

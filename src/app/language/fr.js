@@ -26,6 +26,13 @@ window.translateFR = {
     CAN_NOT_PROCESS_PICKING: 'L\'expédition ne peut pas être traité',
     SET_CARRIER_ORDER_AS_PREPARED: 'Le transporteur sélectionné ne peut pas être traité via l\'application. Veuillez mettre la commande dans le bac des {{carrier_name}}',
     SET_PAID_ORDER_AS_PREPARED: 'La commande n\'est pas payé. Veuillez la mettre dans le bac des commandes préparés',
-    PARTIAL: 'Partiel'
+    PARTIAL: 'Partiel',
+    MANUAL_PRINT_PROCESSING: 'Impression du bon {{ number }} en cours',
+    MANUAL_PRINT_FAIL: 'Erreur d\'impression veuillez vérifier la connection du matériel',
+    MANUAL_PRINT_ERROR: 'Erreur d\'impression veuillez vérifier la connection et le paramétrage du matériel',
+    MANUAL_NO_PICKING: 'Aucune Expédition trouvé pour le numéro {{ number }}',
+    DIRECT_PRINT: 'Impression direct',
+    PRINT_HELP: 'Veuillez scanner dans la barre de recherche le numéro de bon à réimprimer',
+
 }
 
