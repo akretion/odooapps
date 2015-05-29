@@ -30,16 +30,6 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         .preferredLanguage('fr');
 
   }).run(function($rootScope, $interval, jsonRpc, $state, $cookies, $modal) {
-
-        jsonRpc.errorInterceptors.push(function(data) {
-            $modal({
-                title: data.error,
-                show: true,
-                content: data.message,
-                html: true,
-            });
-        });
-
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
                 if ( ! $cookies.session_id && toState.name !== 'login' ) {

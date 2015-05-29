@@ -82,7 +82,18 @@ angular.module('pickadoo')
                         function(result) {
                             delete $rootScope.picking.data[$scope.item.id];
                             $state.go('list');
-                        })
+                        },
+                        function(error) {
+                            var modal = $modal({
+                                scope: $scope,
+                                title: error.title,
+                                content: error.message,
+                                show: true,
+                                html: true,
+                                prefixEvent: 'doneModal',
+                            });
+                        }
+                    )
                     .finally(
                         function(result) {
                             blockUI.stop();
@@ -111,7 +122,6 @@ angular.module('pickadoo')
                         html: false,
                         prefixEvent: 'doneModal',
                     });
-                    
               })
             }
         };
