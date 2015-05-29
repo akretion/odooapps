@@ -86,7 +86,8 @@ angular.module('pickadoo')
                         function(error) {
                             var modal = $modal({
                                 scope: $scope,
-                                title: error.title,
+                                // TODO FIXME improve catching error
+                                title: error.title || 'Erreur d\'impression',
                                 content: error.message,
                                 show: true,
                                 html: true,
