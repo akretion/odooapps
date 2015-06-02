@@ -35,8 +35,8 @@ class MrpProduction(models.Model):
             wiz.write({'consume_lines': vals['value']['consume_lines']})
             self.force_production()
             mo.action_produce(mo.id, wiz.product_qty, wiz.mode, wiz=wiz)
-        return True
-#        proxy_obj = self.env['proxy.action.helper']
-#        action = self.env['proxy.action.helper'].get_print_report_action(
-#            'report.mrp.production.label', 'mrp.production', [mo.id])
-#        return proxy_obj.return_action([action])
+        proxy_obj = self.env['proxy.action.helper']
+        action = self.env['proxy.action.helper'].get_print_report_action(
+            'report.mrp_tracking_label.report_tracking_label', 'mrp.production', [mo.id],
+            printer_name='dymo')
+        return proxy_obj.return_action([action])
