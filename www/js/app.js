@@ -23,28 +23,26 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
       $state.go('login');
   });
 
-  $rootScope.mrpProduction = jsonRpc.syncImportObject({
-    model: 'mrp.production',
-    func_key: 'auto',
-    domain: [['state', 'in', ['ready']]],
-    limit: 50,
-    interval: 1000,
-    });
 }])
 .config(['$stateProvider','$urlRouterProvider' , function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('list', {
     url: '/',
     templateUrl: 'list/list.html',
-    controller: 'ListCtrl'
+    controller: 'ListCtrl',
+    resolve: {
+      production: 'production'
+    }
   }).state('detail', {
     url: '/detail/{id}',
     templateUrl: 'detail/detail.html',
-    controller: 'DetailCtrl'
+    controller: 'DetailCtrl',
+    resolve: {
+      production: 'production'
+    }
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',
     controller: 'LoginCtrl'
   });
   $urlRouterProvider.otherwise('/');
-  console.log('dans config');
 }]);
