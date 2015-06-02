@@ -29,6 +29,7 @@
  'description': """Web service for the simple Ionic MRP application prodoo""",
  'depends': [
      'mrp',
+     'synchronizer',
     ],
  'data': [],
  'installable': True,
