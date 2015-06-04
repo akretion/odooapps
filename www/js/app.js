@@ -29,10 +29,16 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     url: '/',
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
+    resolve: {
+      production: 'production'
+    }
   }).state('detail', {
     url: '/detail/{id}',
     templateUrl: 'detail/detail.html',
     controller: 'DetailCtrl',
+    resolve: {
+      production: 'production'
+    }
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',
