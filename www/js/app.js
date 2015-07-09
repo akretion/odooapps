@@ -17,9 +17,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     }
   });
 })
-.run(['jsonRpc', function (jsonRpc) {
+.run(['jsonRpc','$state', function (jsonRpc, $state) {
   jsonRpc.errorInterceptors.push(function (a) {
-    if (a.title === 'session_expired')
       $state.go('login');
   });
 
