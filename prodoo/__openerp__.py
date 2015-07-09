@@ -30,8 +30,6 @@
  'depends': [
      'mrp',
      'synchronizer',
-     'mrp_tracking_label',
-     'proxy_action',
     ],
  'data': [],
  'installable': True,
