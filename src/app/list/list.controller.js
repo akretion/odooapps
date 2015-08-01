@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('pickadoo')
-    .controller('ListCtrl', function( $rootScope, $scope, $state, jsonRpc, $modal, $translate ) {
+    .controller('ListCtrl', function( $rootScope, $scope, $state, jsonRpc, $modal, $translate, picking) {
 
         $rootScope.navTitle = undefined;
+        $scope.picking = picking;
 
         $scope.open = function (item) {
             // We have to add a blocking call as CB will be captured
@@ -26,20 +27,20 @@ angular.module('pickadoo')
         var filterItem = function(val) {
             if (angular.isDefined(val)) {
                 $scope.itemsFiltered = [];
-                angular.forEach($rootScope.picking.data, function(picking){
+                angular.forEach(picking.data, function(picking){
                     if ( picking.name.toLowerCase().indexOf(val.toLowerCase()) != -1
                                 || picking.origin.toLowerCase().indexOf(val.toLowerCase()) != -1 ) {
                         $scope.itemsFiltered.push(picking);
                     }
                   });
             } else {
-                $scope.itemsFiltered = _($rootScope.picking.data).toArray()
+                $scope.itemsFiltered = _(picking.data).toArray()
             }
             $scope.itemsFiltered = _.first($scope.itemsFiltered, pickingConfig.maxList)
         }; 
 
-        var itemsWatch = $rootScope.$watch('picking.timekey', function(newValue,oldValue) {
-            filterItem($rootScope.filterPicking);
+        var itemsWatch = $scope.$watch('picking.timekey', function(newValue,oldValue) {
+           filterItem($rootScope.filterPicking);
         });
 
         var filterWatch = $rootScope.$watch('filterPicking', function (newValue, oldValue) {
@@ -50,7 +51,7 @@ angular.module('pickadoo')
             console.log(newValue, oldValue);
             if (angular.isDefined(newValue) && newValue.length > 0 ) {
                 var selectedPicking = undefined;
-                angular.forEach($rootScope.picking.data, function(picking){
+                angular.forEach(picking.data, function(picking){
                     if ( picking.name.toLowerCase() == newValue.toLowerCase()
                          || picking.origin.toLowerCase() == newValue.toLowerCase() ) {
                         selectedPicking = picking;

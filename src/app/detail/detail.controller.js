@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('pickadoo')
-    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal, blockUI, $translate ) {
+    .controller('DetailCtrl', function( $rootScope, $scope, $stateParams, $state , jsonRpc, $modal, blockUI, picking, $translate ) {
 
-        $scope.item = $rootScope.picking.data[$stateParams.id];
+        $scope.item = picking.data[$stateParams.id];
         $rootScope.navTitle = $scope.item.name + ' : ' + $scope.item.carrier_method;
         $scope.todoMoves = $scope.item.moves;
         $scope.processMoves = {};
@@ -20,7 +20,7 @@ angular.module('pickadoo')
                             function(){
                                 $scope.paymentMessage = translations.PAYMENT_DONE;
                                 $scope.item.paid = true;
-                                $rootScope.picking.data[$scope.item.id].paid = true;
+                                picking.data[$scope.item.id].paid = true;
                             },
                             function(error) {
                                 $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
@@ -80,7 +80,7 @@ angular.module('pickadoo')
                 jsonRpc.call('stock.picking.out', 'process_picking', [[$scope.item.id], $scope.processMoves], {})
                     .then(
                         function(result) {
-                            delete $rootScope.picking.data[$scope.item.id];
+                            delete picking.data[$scope.item.id];
                             $state.go('list');
                         },
                         function(error) {
@@ -163,7 +163,7 @@ angular.module('pickadoo')
         
         $scope.$on('doneModal.hide',function(){
             jsonRpc.call('stock.picking.out', 'set_prepared', [[$scope.item.id]], {})
-            delete $rootScope.picking.data[$scope.item.id];
+            delete picking.data[$scope.item.id];
             $state.go('list');
         });
 

@@ -11,12 +11,18 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       .state('list', {
         url: '/list',
         templateUrl: 'app/list/list.html',
-        controller: 'ListCtrl'
+        controller: 'ListCtrl',
+        resolve: {
+          picking: 'picking'
+          }
       })
       .state('detail', {
         url: '/detail/:id',
         templateUrl: 'app/detail/detail.html',
-        controller: 'DetailCtrl'
+        controller: 'DetailCtrl',
+        resolve: {
+          picking: 'picking'
+          }
       }).state('print', {
         url: '/print',
         templateUrl: 'app/print/print.html',
@@ -46,22 +52,4 @@ angular.module('pickadoo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             })
 
         $state.go('login');
-        
-        $rootScope.picking = jsonRpc.syncImportObject({
-            model: 'stock.picking.out',
-            func_key: 'pickadoo',
-            domain: [
-                ['type', '=', 'out'],
-                ['state', 'in', ['assigned']],
-                '|',
-                    ['prepared', '=', false], 
-                    '&',
-                        '&',
-                            ['prepared', '=', true],
-                            ['carrier_id.process_in_pickadoo', '=', true],
-                        ['paid', '=', true]
-                ],
-            limit: 50,
-            interval: window.pickingConfig.refresh_interval,
-            });
      });
