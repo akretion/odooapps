@@ -7,6 +7,15 @@ angular.module('pickadoo')
         $rootScope.navTitle = $scope.item.name + ' : ' + $scope.item.carrier_method;
         $scope.todoMoves = $scope.item.moves;
         $scope.processMoves = {};
+        $scope.capturing = false;
+        $scope.validating = false;
+
+        $scope.check_validating = function() {
+            if ( $scope.validating ) {
+                $scope.capturing = false;
+                $scope.validate();
+            }
+        }
 
         $translate(['PAYMENT_DONE', 'PAYMENT_PROCESSING', 'PAYMENT_FAIL', 'PAYMENT_MISSING'])
             .then(function (translations) {
@@ -15,17 +24,20 @@ angular.module('pickadoo')
                     $scope.paymentMessage = translations.PAYMENT_DONE;
                 } else if ( $scope.item.payment_method == 'CB' ) {
                     $scope.paymentMessage = translations.PAYMENT_PROCESSING;
+                    $scope.capturing = true;
                     jsonRpc.call('stock.picking.out', 'capture_order', [[$scope.item.id]], {})
                         .then(
                             function(){
                                 $scope.paymentMessage = translations.PAYMENT_DONE;
                                 $scope.item.paid = true;
                                 picking.data[$scope.item.id].paid = true;
+                                $scope.check_validating();
                             },
                             function(error) {
                                 $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
+                                $scope.check_validating();
                             }
-                        );
+                        )
                 } else {
                     $scope.paymentMessage = translations.PAYMENT_MISSING;
                 };
@@ -73,7 +85,9 @@ angular.module('pickadoo')
         };
 
         $scope.validate = function() {
-            if ( $scope.item.process_in_pickadoo && $scope.item.paid ) {
+            if ( $scope.capturing ) {
+                $scope.validating = true;
+            } else if ( $scope.item.process_in_pickadoo && $scope.item.paid ) {
                 $translate(['VALIDATE_AND_PRINT']).then(function (translations) {
                     blockUI.start(translations.VALIDATE_AND_PRINT) ;
                 });
