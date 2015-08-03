@@ -5,6 +5,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <button class="btn btn-success dropdown-toggle pull-right" type="button"
+              ng-hide="item.blocked"
               ng-click="addAll()">{{ 'ADD_ALL' | translate }}</button>
           <h2 class="panel-title">{{ 'TO_SEND' | translate }} <span class="partial" ng-if="item.partial">{{ 'PARTIAL' | translate }}</span></h2>
         </div>
@@ -19,7 +20,7 @@
                   {{move.qty}}
                 </div>
               </div>
-              <div class="pull-right">
+              <div class="pull-right" ng-hide="item.blocked">
                 <button class="btn btn-success dropdown-toggle" type="button"
                     ng-click="moveAddAll(move.id)">{{ 'ADD_ALL' | translate }}</button>
                 <button class="btn btn-success dropdown-toggle" type="button"
@@ -51,6 +52,18 @@
               </div>
             </li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-hide="! item.blocked">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'BLOCKED' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+            {{ item.blockage_reason }}
         </div>
       </div>
     </div>

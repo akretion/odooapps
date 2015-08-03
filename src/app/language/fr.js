@@ -33,6 +33,7 @@ window.translateFR = {
     MANUAL_NO_PICKING: 'Aucune Expédition trouvé pour le numéro {{ number }}',
     DIRECT_PRINT: 'Impression direct',
     PRINT_HELP: 'Veuillez scanner dans la barre de recherche le numéro de bon à réimprimer',
+    BLOCKED: 'Blocké',
 
 }
 
