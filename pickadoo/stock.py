@@ -48,11 +48,17 @@ class StockPickingOut(orm.Model):
         'prepared': fields.boolean('Prepared'),
     }
 
+    def _should_be_added_move(self, cr, uid, move, context=None):
+        if not (move.picking_id.move_type == 'direct'
+                and move.state != 'assigned'):
+            return True
+        else:
+            return False
+
     def _prepare_sync_data_pickadoo(self, cr, uid, picking, context=None):
         moves = {}
         for move in picking.move_lines:
-            if not (picking.move_type == 'direct'
-                    and move.state != 'assigned'):
+            if self._should_be_added_move(cr, uid, move, context=context):
                 data = self._prepare_move_information(
                     cr, uid, move, context=context)
                 moves[move.id] = data
