@@ -7,7 +7,11 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
         func_key: 'pickadoo',
         domain: [
             ['type', '=', 'out'],
-            ['state', 'in', ['assigned']],
+            '|',
+                ['state', '=', 'assigned'],
+                '&',
+                    ['state', '=', 'confirmed'],
+                    ['partial', '=', true],
             '|',
                 ['prepared', '=', false], 
                 '&',

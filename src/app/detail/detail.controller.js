@@ -10,9 +10,9 @@ angular.module('pickadoo')
         $scope.capturing = false;
         $scope.validating = false;
 
-        $scope.check_validating = function() {
+        $scope.end_capturing = function() {
+            $scope.capturing = false;
             if ( $scope.validating ) {
-                $scope.capturing = false;
                 $scope.validate();
             }
         }
@@ -31,11 +31,11 @@ angular.module('pickadoo')
                                 $scope.paymentMessage = translations.PAYMENT_DONE;
                                 $scope.item.paid = true;
                                 picking.data[$scope.item.id].paid = true;
-                                $scope.check_validating();
+                                $scope.end_capturing();
                             },
                             function(error) {
                                 $scope.paymentMessage = translations.PAYMENT_FAIL + '<br/><br/>' + error.message;
-                                $scope.check_validating();
+                                $scope.end_capturing();
                             }
                         )
                 } else {
