@@ -38,7 +38,7 @@ class ProxyActionHelper(orm.AbstractModel):
             context=None):
         kwargs = {'options':{}}
         if copies > 1:
-            kwargs['options']['copie'] = copies
+            kwargs['options']['copies'] = copies
         if raw:
             kwargs['options']['raw'] = True
         return {
