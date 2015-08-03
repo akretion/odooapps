@@ -21,6 +21,7 @@
 ###############################################################################
 
 from openerp.osv import fields, orm
+from openerp import netsvc
 
 
 class StockPickingOut(orm.Model):
@@ -45,6 +46,7 @@ class StockPickingOut(orm.Model):
             for invoice in picking.sale_id.invoice_ids:
                 invoice_ids.append(invoice.id)
                 if invoice.state == 'draft':
+                    wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(
                         uid, 'account.invoice',
                         invoice.id, 'invoice_open', cr)
