@@ -32,7 +32,14 @@ class StockPicking(orm.Model):
             'carrier_id',
             'process_in_pickadoo',
             type='boolean',
-            string='Process in pickadoo'),
+            string='Process in pickadoo',
+            store={
+                'stock.picking': (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['carrier_id', 'partner_id'],
+                    10),
+                },
+            ),
         'prepared': fields.boolean('Prepared'),
     }
 
@@ -44,7 +51,14 @@ class StockPickingOut(orm.Model):
             'carrier_id',
             'process_in_pickadoo',
             type='boolean',
-            string='Process in pickadoo'),
+            string='Process in pickadoo',
+            store={
+                'stock.picking': (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['carrier_id', 'partner_id'],
+                    10),
+                },
+),
         'prepared': fields.boolean('Prepared'),
     }
 

@@ -47,7 +47,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
-            <field name="domain">[('type','=','out'), ('carrier_id.process_in_pickadoo', '=', False), ('prepared', '=', True)]</field>
+            <field name="domain">[('type','=','out'), ('process_in_pickadoo', '=', False), ('prepared', '=', True)]</field>
             <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 'search_default_available': True}</field>
             <field name="search_view_id" ref="stock.view_picking_out_search"/>
             <field name="help" type="html">
