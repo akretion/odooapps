@@ -35,9 +35,6 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     url: '/list/{fournisseurId}',
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
-    resolve: {
-      fournisseurList: 'fournisseurList'
-    }
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',

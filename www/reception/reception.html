@@ -1,5 +1,24 @@
-<ion-view title="Production: {{item.name}} {{item.product_id.name}}">
+<ion-view title="Réception - Fournisseur et bon de commande">
   <ion-content class="has-header">
-    Reception
+    <div class="centered-form">
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Fournisseur
+          </div>
+          <select 
+            ng-options="fournisseur as fournisseur.name for fournisseur in fournisseurs.records track by fournisseur.id"
+            ng-model="$parent.selected">
+          </select>
+        </label>
+        <label class="item item-input item-floating-label" ng-show="$parent.selected">
+          <span class="input-label">N° Bon de livraison</span>
+          <input type="text" placeholder="N° Bon de livraison" ng-model="bonLivraison">
+        </label>
+        <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!bonLivraison" ng-show="$parent.selected">
+            Valider
+        </button>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

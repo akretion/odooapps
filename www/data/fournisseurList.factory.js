@@ -1,18 +1,16 @@
 'use strict';
 
 angular.module('starter').factory('fournisseurList', ['$q', 'jsonRpc', function ($q, jsonRpc) {
-    
-    var mrpProduction = jsonRpc.syncImportObject({
-          model: 'mrp.production',
-          func_key: 'auto',
-          domain: [['state', 'in', ['ready']]],
-          limit: 50,
-          interval: 5000,
-    });
 
+  return function(fournisseurId) {
     return $q(function(resolve, reject) {
-        mrpProduction.watch(function () {
-            return resolve(mrpProduction);
+      jsonRpc.searchRead('stock.move', [['state','=','assigned'],['picking_id.partner_id','=',parseInt(fournisseurId)]])
+        .then(function(result) {
+          resolve(result);
+        })
+       .catch(function(err) {
+          reject(err);
         });
     });
+  }
 }]);

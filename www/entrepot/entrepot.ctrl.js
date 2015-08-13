@@ -1,7 +1,9 @@
 'use strict';
 angular.module('starter')
-    .controller('ReceptionCtrl', ['$scope', '$stateParams', 'jsonRpc', '$state', 'entrepots', function ($scope, $stateParams, jsonRpc, $state, production) {
-        $scope.confirm = function() {
-          return;
-        }
+.controller('EntrepotCtrl', ['$scope', '$state', 'entrepots', function ($scope, $state, entrepots) {
+    $scope.entrepots = entrepots.records;
+    $scope.confirm = function() {
+      $state.go('reception');
+      return;
+    };
 }]);

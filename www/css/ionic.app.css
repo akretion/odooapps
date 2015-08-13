@@ -7674,3 +7674,9 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.centered-form {
+  display: flex;
+  justify-content: space-around; }
+  .centered-form .list {
+    flex: 0 1 400px; }

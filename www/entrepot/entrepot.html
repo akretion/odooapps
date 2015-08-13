@@ -1,6 +1,20 @@
 
-<ion-view title="Production: {{item.name}} {{item.product_id.name}}">
+<ion-view title="Reception - Choix de l'entrepôt">
   <ion-content class="has-header">
-    Entrepot
+    <div class="centered-form">
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Entrepot
+          </div>
+          <select 
+            ng-options="entrepot as entrepot.name for entrepot in entrepots track by entrepot.id"
+            ng-model="selected">
+          </select>
+        </label>
+        <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!selected">
+            Valider
+        </button>
+      </div>
   </ion-content>
 </ion-view>
