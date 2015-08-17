@@ -1,15 +1,21 @@
 'use strict';
 
 
-angular.module('starter').factory('entrepots', ['$q', 'jsonRpc', function ($q, jsonRpc) {
+angular.module('starter').factory('entrepots', ['$q', 'jsonRpc', '$ionicLoading', function ($q, jsonRpc, $ionicLoading) {
 
-    return $q(function(resolve, reject) {
-      jsonRpc.searchRead('stock.warehouse', [])
-        .then(function(result) {
-          resolve(result);
-        })
-       .catch(function(err) {
-          reject(err);
-        });
-    });
+  $ionicLoading.show({
+    template: 'Chargement'
+  });
+
+  return $q(function(resolve, reject) {
+    jsonRpc.call('receivoo', 'get_picking_type', [])
+      .then(function(result) {
+        $ionicLoading.hide();
+        resolve(result);
+      })
+     .catch(function(err) {
+        $ionicLoading.hide();
+        reject(err);
+      });
+  });
 }]);

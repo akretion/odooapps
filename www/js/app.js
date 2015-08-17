@@ -25,14 +25,11 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
 }])
 .config(['$stateProvider','$urlRouterProvider' , function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('reception', {
-    url: '/',
+    url: '/reception/{warehouseId}',
     templateUrl: 'reception/reception.html',
     controller: 'ReceptionCtrl',
-    resolve: {
-      fournisseurs: 'fournisseurs'
-    }
   }).state('list', {
-    url: '/list/{fournisseurId}',
+    url: '/list/{fournisseurId}/{warehouseId}/{bonDeLivraison}',
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
   }).state('login', {
@@ -47,5 +44,5 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
       entrepots: 'entrepots'
     }
   });
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 }]);

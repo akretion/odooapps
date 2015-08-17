@@ -1,18 +1,27 @@
 'use strict';
 
 
-angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fournisseurList', function ($scope, $stateParams, fournisseurList) {
+angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading', 'fournisseurList', 'jsonRpc', function ($scope, $stateParams, $state, $ionicLoading, fournisseurList, jsonRpc) {
 
   $scope.validList = [];
 
   $scope.search = {
-    name:{},
+    name: {}
   };
 
-  fournisseurList($stateParams.fournisseurId)
-    .then(function(result) {
-      $scope.stockList = result.records;
-    });
+  $ionicLoading.show({
+    template: 'chargement'
+  });
+
+  $scope.$on('$ionicView.beforeEnter', function() {
+    fournisseurList($stateParams.fournisseurId, $stateParams.warehouseId)
+      .then(function(result) {
+        $scope.stockList = result;
+        $ionicLoading.hide();
+      });
+
+    $scope.bonDeLivraison = decodeURIComponent($stateParams.bonDeLivraison);
+  });
 
   function findIndex(array, test) {
     var length = array.length,
@@ -32,7 +41,7 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fou
     });
 
     $scope.validList[index].product_qty = amount;
-  
+
     var indexStock = findIndex($scope.stockList, function(currItem) {
         return currItem.id === id;
     });
@@ -54,14 +63,35 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fou
     }
   });
 
+  $scope.doTransfer = function() {
+
+    $ionicLoading.show({
+      template: 'Validation'
+    });
+
+    var argsList = [[], decodeURIComponent($stateParams.bonDeLivraison)];
+    angular.forEach($scope.validList, function(item) {
+      argsList[0].push({
+        id: item.id,
+        product_qty: item.product_qty
+      });
+    });
+
+    jsonRpc.call('receivoo', 'do_incoming_transfer', argsList)
+      .then(function() {
+        $ionicLoading.hide();
+        $state.go('reception', {warehouseId: $stateParams.warehouseId});
+      });
+  };
+
   $scope.removeFromValid = function( item ) {
-    
-      var index = findIndex($scope.validList, function(currItem) {
+
+    var index = findIndex($scope.validList, function(currItem) {
         return currItem.id === item.id;
       });
 
-      if (index != -1) {
-        $scope.validList.splice(index,1);
+      if (index !== -1) {
+        $scope.validList.splice(index, 1);
 
         var indexStock = findIndex($scope.stockList, function(currItem) {
             return currItem.id === item.id;
@@ -69,7 +99,7 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fou
 
         $scope.stockList[indexStock].product_qty = $scope.stockList[indexStock].original_product_qty;
       }
-  }
+  };
 
 
   $scope.putOnValid = function( item ) {
@@ -81,7 +111,11 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fou
       if ( index === -1 ) {
         var newItem = angular.copy(item);
         newItem.product_qty = 1;
-        $scope.validList.push(newItem);
+        $scope.validList.unshift(newItem);
+
+        if (item.notify_add_item) {
+          jsonRpc.call('receivoo', 'notify_add_item', [item]);
+        }
       }
       else {
         $scope.validList[index].product_qty++;
@@ -91,7 +125,8 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', 'fou
       }
       item.product_qty--;
 
+
     }
-  }
+  };
 
 }]);

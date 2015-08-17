@@ -9,7 +9,7 @@
           </div>
           <select 
             ng-options="entrepot as entrepot.name for entrepot in entrepots track by entrepot.id"
-            ng-model="selected">
+            ng-model="$parent.selected">
           </select>
         </label>
         <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!selected">

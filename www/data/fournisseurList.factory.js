@@ -2,9 +2,9 @@
 
 angular.module('starter').factory('fournisseurList', ['$q', 'jsonRpc', function ($q, jsonRpc) {
 
-  return function(fournisseurId) {
+  return function(fournisseurId, warehouseId) {
     return $q(function(resolve, reject) {
-      jsonRpc.searchRead('stock.move', [['state','=','assigned'],['picking_id.partner_id','=',parseInt(fournisseurId)]])
+      jsonRpc.call('receivoo', 'get_incoming_move', [parseInt(fournisseurId), parseInt(warehouseId)])
         .then(function(result) {
           resolve(result);
         })
@@ -12,5 +12,5 @@ angular.module('starter').factory('fournisseurList', ['$q', 'jsonRpc', function 
           reject(err);
         });
     });
-  }
+  };
 }]);

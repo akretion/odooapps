@@ -101,9 +101,49 @@
   position:static !important;
 }
 
-.item {
+.list-with-flex .item {
   overflow:visible !important;
   z-index:auto !important;
+  display:flex;
+  flex-flow:row nowrap;
+}
+
+.list-with-flex .item.ng-move,
+.list-with-flex .item.ng-enter,
+.list-with-flex .item.ng-leave {
+  -webkit-transition:all ease 0.2s;
+  transition:all ease 0.2s;
+}
+
+.list-with-flex .item.ng-leave.ng-leave-active,
+.list-with-flex .item.ng-move,
+.list-with-flex .item.ng-enter {
+  opacity:0;
+  height:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+}
+
+.list-with-flex .item.ng-leave,
+.list-with-flex .item.ng-move.ng-move-active,
+.list-with-flex .item.ng-enter.ng-enter-active {
+  opacity:1;
+  height:74px;
+  padding-top:16px;
+  padding-bottom:16px;
+}
+
+.list-text-and-count {
+  flex: 1 1 70%;
+}
+
+.list-text {
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+
+.list-buttons {
+  flex:0 0 30%;
 }
 
 .list-button {
@@ -127,4 +167,8 @@
   padding:5px;
   border-radius:5px;
   color:#fdfdfd;
+  flex:0 0 20%;
+  margin-top: -4px;
+  margin-left: 15px;
+  height: 28px;
 }

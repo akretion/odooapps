@@ -4,27 +4,47 @@
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="search" placeholder="Search" ng-model="search.name.name">
-      </label>
+      </label> 
     </div>
   </ion-nav-buttons>
 	<ion-content class="padding">
-  <div class="row">
+  <h1>Bon de livraison N° {{bonDeLivraison}}</h1>
+  <div class="row list-with-flex">
     <div class="col col-50">
       <ion-list>
-        <ion-item ng-repeat="item in stockList | filter:search.name.name" ng-click="putOnValid(item)">
-          {{item.name}} - {{item.product_qty}} pièces
+      <ion-item ng-repeat="item in stockList | filter:search.name.name |filter:{product_qty: '!0'}" ng-click="putOnValid(item)">
+          <div class="list-text-and-count">
+            <div class="list-text">
+              {{item.product_id.name}}
+            </div>
+            <div class="list-count">
+              {{item.product_qty}} pièces
+            </div>
+          </div>
         </ion-item>
       </ion-list>
     </div>
     <div class="col col-50">
       <ion-list>
         <ion-item ng-repeat="item in validList">
-        {{item.name}} - {{item.product_qty}} pièces <span ng-show="item.overboard > 0" class="overboard">{{item.overboard}} en plus</span>
-          <div class="list-button" ng-click="show = true;">
-            Compte
+          <div class="list-text-and-count">
+            <div class="list-text">
+            {{item.product_id.name}}
+            </div>
+            <div class="list-count">
+              {{item.product_qty}} pièces
+            </div>
           </div>
-          <div class="list-button list-button-remove" ng-click="removeFromValid(item)">
-            <i class="icon ion-close"></i>
+          <div ng-show="item.overboard > 0" class="overboard">
+            {{item.overboard}} en plus
+          </div>
+          <div class="list-buttons">
+            <div class="list-button" ng-click="show = true;">
+              Compte
+            </div>
+            <div class="list-button list-button-remove" ng-click="removeFromValid(item)">
+              <i class="icon ion-close"></i>
+            </div>
           </div>
           <div digit-keyboard show="show" item-id="item.id"></div>
         </ion-item>
@@ -32,5 +52,5 @@
     </div>
   </div>
 	</ion-content>
-  <button class="button button-positive fixed-right-bottom">Valider</button>
+  <button class="button button-positive fixed-right-bottom" ng-click="doTransfer()">Valider</button>
 </ion-view>
