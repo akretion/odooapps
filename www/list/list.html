@@ -1,5 +1,49 @@
-<ion-view view-title="List" ng-init="search">
+<ion-view view-title="Liste des réceptions - {{list.entrepotName}} - {{list.fournisseurName}}">
+  <ion-nav-buttons side="primary">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search" ng-model="list.search.name.name">
+    </label> 
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="list.logout()">Déconnexion</button>
+  </ion-nav-buttons>
 	<ion-content class="padding">
-    List
+  <h1>Bon de livraison N° {{list.bonDeLivraison}}</h1>
+  <div class="row list-with-flex">
+    <div class="col col-50">
+      <ion-list>
+      <ion-item ng-repeat="item in list.stockList | filter:list.search.name.name |filter:{product_qty: '!0'}" ng-click="list.putOnValid(item)">
+          <div class="list-count">
+            {{item.product_qty}}
+          </div>
+          <div class="list-text">
+            {{item.product_id.name}}
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="col col-50">
+      <ion-list>
+        <ion-item ng-repeat="item in list.validList">
+          <div class="list-count" ng-click="show = true;">
+            {{item.product_qty}}
+          </div>
+          <div ng-show="item.overboard > 0" class="overboard">
+            {{item.product_qty - item.overboard}} commandés
+          </div>
+          <div class="list-text">
+          {{item.product_id.name}}
+          </div>
+          <div class="list-button-remove" ng-click="list.removeFromValid(item)">
+            <i class="icon ion-close"></i>
+          </div>
+          <div digit-keyboard show="show" item-id="item.id"></div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 	</ion-content>
+  <button class="button button-positive fixed-right-bottom" ng-click="list.doTransfer()">Valider</button>
+  <button class="button button-energized fixed-left-bottom" ng-click="list.goBack()">Annuler</button>
 </ion-view>

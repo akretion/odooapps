@@ -2,16 +2,16 @@
   "name": "HelloIonic",
   "private": "true",
   "dependencies": {
-	  "angular-animate": "~1.3.4",
-    "angular-cookies": "~1.3.4",
-    "angular-touch": "~1.3.4",
-    "angular-sanitize": "~1.3.4",
-    "angular-resource": "~1.3.4",
+	  "angular-animate": "~1.4.4",
+    "angular-cookies": "~1.4.4",
+    "angular-touch": "~1.4.4",
+    "angular-sanitize": "~1.4.4",
+    "angular-resource": "~1.4.4",
     "angular-ui-router": "~0.2.13",
-    "angular": "~1.3.4",
-    "odoo": "https://github.com/hparfr/angular-odoo.git"
+    "angular": "~1.4.4",
+    "odoo": "hparfr/angular-odoo#develop",
+    "ionic": "driftyco/ionic-bower#1.1.0"
   },
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0"
   }
 }

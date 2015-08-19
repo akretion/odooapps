@@ -46,7 +46,12 @@ gulp.task('templates', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build',['sass', 'templates'], function() {
+gulp.task('fonts', function() {
+  return gulp.src(['www/lib/ionic/fonts/ionicons.*'])
+    .pipe(gulp.dest('dist/fonts'));
+});
+
+gulp.task('build',['sass', 'templates', 'fonts'], function() {
   var assets = useref.assets();
 
   return gulp.src('www/index.html')

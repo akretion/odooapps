@@ -1,19 +1,17 @@
 'use strict';
 
-
 angular.module('starter').factory('fournisseurs', ['$q', 'jsonRpc', function ($q, jsonRpc) {
-    
-    var mrpProduction = jsonRpc.syncImportObject({
-          model: 'mrp.production',
-          func_key: 'auto',
-          domain: [['state', 'in', ['ready']]],
-          limit: 50,
-          interval: 5000,
-    });
+    return function(pickingType) {
 
-    return $q(function(resolve, reject) {
-        mrpProduction.watch(function () {
-            return resolve(mrpProduction);
-        });
-    });
+      return $q(function(resolve, reject) {
+        var partners = jsonRpc.call('receivoo', 'get_supplier', [parseInt(pickingType)])
+          .then(function(result) {
+            resolve(result);
+          })
+         .catch(function(err) {
+            reject(err);
+          });
+      });
+    };
+
 }]);

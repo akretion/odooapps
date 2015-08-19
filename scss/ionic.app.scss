@@ -21,3 +21,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.centered-form {
+  display:flex;
+  justify-content:space-around;
+
+  .list {
+    flex:0 1 400px;
+  }
+}

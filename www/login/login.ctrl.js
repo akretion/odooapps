@@ -12,7 +12,7 @@ angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state'
             $scope.login.username,
             $scope.login.password
         ).then(function (a) {
-			$state.go('list');
+			$state.go('entrepot');
 		}, function(e) {
 			$scope.errorMessage = e.message;
 		});

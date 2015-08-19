@@ -1,19 +1,21 @@
 'use strict';
 
 
-angular.module('starter').factory('entrepots', ['$q', 'jsonRpc', function ($q, jsonRpc) {
-    
-    var mrpProduction = jsonRpc.syncImportObject({
-          model: 'mrp.production',
-          func_key: 'auto',
-          domain: [['state', 'in', ['ready']]],
-          limit: 50,
-          interval: 5000,
-    });
+angular.module('starter').factory('entrepots', ['$q', 'jsonRpc', '$ionicLoading', function ($q, jsonRpc, $ionicLoading) {
 
-    return $q(function(resolve, reject) {
-        mrpProduction.watch(function () {
-            return resolve(mrpProduction);
-        });
-    });
+  $ionicLoading.show({
+    template: 'Chargement'
+  });
+
+  return $q(function(resolve, reject) {
+    jsonRpc.call('receivoo', 'get_picking_type', [])
+      .then(function(result) {
+        $ionicLoading.hide();
+        resolve(result);
+      })
+     .catch(function(err) {
+        $ionicLoading.hide();
+        reject(err);
+      });
+  });
 }]);
