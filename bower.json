@@ -9,9 +9,9 @@
     "angular-resource": "~1.4.4",
     "angular-ui-router": "~0.2.13",
     "angular": "~1.4.4",
-    "odoo": "hparfr/angular-odoo#develop"
+    "odoo": "hparfr/angular-odoo#develop",
+    "ionic": "driftyco/ionic-bower#1.1.0"
   },
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0"
   }
 }

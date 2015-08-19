@@ -1,4 +1,10 @@
-<ion-view title="Réception - Fournisseur et bon de commande">
+<ion-view title="Réception - {{entrepotName}}">
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click="goBack()">Choisir un entrepôt</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="logout()">Déconnexion</button>
+  </ion-nav-buttons>
   <ion-content class="has-header">
     <div class="centered-form">
       <div class="list">

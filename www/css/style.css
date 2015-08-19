@@ -12,7 +12,13 @@
 .fixed-right-bottom {
   position:fixed;
   bottom:10px;
-  right:10px;
+  right:20px;
+}
+
+.fixed-left-bottom {
+  position:fixed;
+  bottom:10px;
+  left:20px;
 }
 
 .calc {
@@ -101,11 +107,17 @@
   position:static !important;
 }
 
+.list-with-flex.row {
+  margin-bottom:60px;
+}
+
 .list-with-flex .item {
   overflow:visible !important;
   z-index:auto !important;
   display:flex;
   flex-flow:row nowrap;
+  padding:0;
+  margin:0;
 }
 
 .list-with-flex .item.ng-move,
@@ -133,42 +145,42 @@
   padding-bottom:16px;
 }
 
-.list-text-and-count {
-  flex: 1 1 70%;
-}
-
 .list-text {
   text-overflow:ellipsis;
   overflow:hidden;
+  line-height: 40px;
+  padding-left: 10px;
+  flex: 1 1 100%;
 }
 
-.list-buttons {
-  flex:0 0 30%;
+.list-count {
+  font-size: 24px;
+  color: #fefefe;
+  background-color: #387ef5;
+  padding: 10px;
+  flex: 0 0 50px;
+  text-align: center;
+  cursor:pointer;
 }
 
-.list-button {
-  float: right;
+.list-button-remove {
+  flex:0 0 30px;
   background-color: #3453ff;
   color: #f5f5f5;
   padding: 10px;
   position: relative;
-  top: -10px;
-  right: -9px;
-  border-radius:3px;
   margin-left:5px;
-}
-
-.list-button-remove {
   background-color:#ef473a;
+  cursor:pointer;
 }
 
 .overboard {
   background-color:#ffc900;
-  padding:5px;
-  border-radius:5px;
+  padding:10px;
   color:#fdfdfd;
-  flex:0 0 20%;
-  margin-top: -4px;
-  margin-left: 15px;
-  height: 28px;
+  flex:0 0 120px;
+}
+
+.list-menu-right {
+  margin-top:44px;
 }

@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ui.router', 'odoo'])
+angular.module('starter', ['ionic', 'ui.router', 'odoo', 'ngCookies'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, jsonRpc, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -16,6 +16,11 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
       StatusBar.styleDefault();
     }
   });
+
+  $rootScope.logout = function() {
+    jsonRpc.logout(true);
+    $state.go('login');
+  };
 })
 .run(['jsonRpc','$state', function (jsonRpc, $state) {
   jsonRpc.errorInterceptors.push(function (a) {
@@ -31,7 +36,7 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
   }).state('list', {
     url: '/list/{fournisseurId}/{warehouseId}/{bonDeLivraison}',
     templateUrl: 'list/list.html',
-    controller: 'ListCtrl',
+    controller: 'ListCtrl as list'
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',
