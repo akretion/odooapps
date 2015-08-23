@@ -41,6 +41,7 @@ class Receivoo(models.TransientModel):
             'location_dest_id': move.location_dest_id.id,
             'product_uom_id': move.product_uom.id,
             'processed': 'false',
+            'lot_id': move.restrict_lot_id.id,
         }
 
     @api.model
@@ -80,6 +81,9 @@ class Receivoo(models.TransientModel):
             id2move[move.id] = move
             if not move.picking_id in picking_list:
                 picking_list.append(move.picking_id)
+        for picking in picking_list:
+            if picking.pack_operation_ids:
+                picking.pack_operation_ids.unlink()
         for move_data in data:
             vals = self._prepare_reception_operation(
                 id2move[move_data['id']], move_data)
