@@ -13,5 +13,11 @@
     "ionic": "driftyco/ionic-bower#1.1.0"
   },
   "devDependencies": {
+  },
+  "resolutions": {
+    "angular": "~1.4.4",
+    "angular-animate": "~1.4.4",
+    "angular-sanitize": "~1.4.4"
   }
+
 }
