@@ -59363,6 +59363,7 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 				return cookies.get_sessionId().length > 0;
 
 			return odooRpc.getSessionInfo().then(function (result) {
+				cookies.set_sessionId(result.session_id);
 				return !!(result.uid); 
 			});
 		};
@@ -59399,9 +59400,9 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 			return odooRpc.sendRequest('/web/webclient/version_info', {});
 		};
 
-		odooRpc.syncDataImport = function(model, func_key, domain, limit, object) {
+		odooRpc.syncDataImport = function(model, func_key, base_domain, filter_domain, limit, object) {
 			return odooRpc.call(model, 'get_sync_data', [
-				func_key, object.timekey, domain, limit
+				func_key, object.timekey, base_domain, filter_domain, limit
 			], {}).then(function(result) {
 					//if (object.timekey === result.timekey) TODO: add mutlidomain before uncomment
 					// return; //no change since last run
@@ -59413,7 +59414,7 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 
 					if (Object.keys(result.data).length) {
 						angular.extend(object.data, result.data);
-						return odooRpc.syncDataImport(model, func_key, domain, limit, object);
+						return odooRpc.syncDataImport(model, func_key, base_domain, filter_domain, limit, object);
 					}
 			});
 		};
@@ -59448,7 +59449,8 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 				odooRpc.syncDataImport(
 					params.model,
 					params.func_key,
-					params.domain,
+					params.base_domain,
+					params.filter_domain,
 					params.limit,
 					object)
 				.then(function () { 
@@ -59538,6 +59540,9 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 						) {
 							errorObj.title ='session_expired';
 							cookies.delete_sessionId();
+				} else if ( (error.message === "Odoo Server Error" && /FATAL:  database "(.+)" does not exist/.test(error.data.message))) {
+					errorObj.title = "database_not_found";
+					errorObj.message = error.data.message;
 				} else {
 					var split = ("" + error.data.fault_code).split('\n')[0].split(' -- ');
 					if (split.length > 1) {
@@ -59618,25 +59623,30 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 		return odooRpc;
 	}];
 
-  var cookies = (function() {
-    return {
-      delete_sessionId: function() {
-        document.cookie  = 'session_id=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      },
-      get_sessionId: function () {
-        //source : MDN
-        return document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + 'session_id' + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1");
-      },
-      set_sessionId: function (val) {
-        document.cookie = 'session_id=' + val;
-      }
-    };
-    }());
+	var cookies = (function() {
+		var session_id; //cookies doesn't work with Android Default Browser / Ionic
+		return {
+			delete_sessionId: function() {
+				session_id = null;
+				document.cookie  = 'session_id=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+			},
+			get_sessionId: function () {
+				return document.cookie.split('; ')
+				.filter(function (x) { return x.indexOf('session_id') === 0; })
+				.map(function (x) { return x.split('=')[1]; })
+				.pop() || session_id || "";
+			},
+			set_sessionId: function (val) {
+				document.cookie = 'session_id=' + val;
+				session_id = val;
+			}
+		};
+	}());
 });
 
 
 /**
- * @license AngularJS v1.4.4-build.4167+sha.d33cedd
+ * @license AngularJS v1.4.4
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */

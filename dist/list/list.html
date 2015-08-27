@@ -18,6 +18,8 @@
             {{item.product_qty}}
           </div>
           <div class="list-text">
+            {{item.lot_id.name}}
+            {{item.customer}}
             {{item.product_id.name}}
           </div>
         </ion-item>
@@ -33,7 +35,9 @@
             {{item.product_qty - item.overboard}} commandés
           </div>
           <div class="list-text">
-          {{item.product_id.name}}
+            {{item.lot_id.name}}
+            {{item.customer}}
+            {{item.product_id.name}}
           </div>
           <div class="list-button-remove" ng-click="list.removeFromValid(item)">
             <i class="icon ion-close"></i>
