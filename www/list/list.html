@@ -1,4 +1,4 @@
-<ion-view view-title="List" ng-init="search">
+<ion-view view-title="Liste" ng-init="search">
 	<ion-content class="padding">
 		<ion-list>
 			<div class="list list-inset" style="margin-top:0px;">
@@ -7,8 +7,11 @@
                     <input type="text" placeholder="Search" ng-model="search.name">
               </label>
             </div>
-			<ion-item ng-repeat="item in mrpProduction | filter: search" ui-sref="detail({id: item.id})">
+			<ion-item ng-repeat="item in mrpProduction | filter:search.name" ui-sref="detail({id: item.id})">
 				{{ item.name }}
+				{{ item.date_requested }}
+				{{ item.customer }}
+				{{ item.state }}
 			</ion-item>
 		</ion-list>
 	</ion-content>
