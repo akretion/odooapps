@@ -23,6 +23,14 @@
 from openerp import models, api
 
 
+class Prodoo(models.AbstractModel):
+    _name = 'prodoo'
+
+    @api.model
+    def get_warehouse(self):
+        return self.env['stock.warehouse'].search_read([], ['name'])
+
+
 class MrpProduction(models.Model):
     _inherit='mrp.production'
 
@@ -58,6 +66,7 @@ class MrpProduction(models.Model):
             'move_lines': record.move_lines._prepare_prodoo_move_line(),
             'workcenter_lines': record.workcenter_lines.mapped('name'),
             'state': status[record.state],
+            'warehouse_id': sale.warehouse_id.id,
             }
 
 
