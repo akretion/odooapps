@@ -27,10 +27,15 @@ class MrpProduction(models.Model):
     _inherit='mrp.production'
 
     @api.multi
+    def prodoo_force_production(self):
+        return self.pool['mrp.production'].force_production(
+            self._cr, self._uid, self.id, self._context)
+
+    @api.multi
     def prodoo_produce(self):
         wizard_obj = self.env['mrp.product.produce']
         for mo in self:
-            self.force_production()
+            mo.force_production()
             wiz = wizard_obj.with_context({'active_id': mo.id}).create({})
             vals = wiz.on_change_qty(wiz.product_qty, [])
             wiz.write({'consume_lines': vals['value']['consume_lines']})
