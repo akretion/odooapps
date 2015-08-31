@@ -30,9 +30,43 @@ class MrpProduction(models.Model):
     def prodoo_produce(self):
         wizard_obj = self.env['mrp.product.produce']
         for mo in self:
+            self.force_production()
             wiz = wizard_obj.with_context({'active_id': mo.id}).create({})
             vals = wiz.on_change_qty(wiz.product_qty, [])
             wiz.write({'consume_lines': vals['value']['consume_lines']})
-            self.force_production()
             mo.action_produce(mo.id, wiz.product_qty, wiz.mode, wiz=wiz)
         return True
+
+    @api.model
+    def _prepare_sync_data_prodoo(self, record):
+        sale = record.lot_id.sale_id
+        status = {
+            'confirmed': 'En attente de matière première',
+            'ready': 'Prêt à traiter',
+            }
+        return {
+            'id': record.id,
+            'name': record.name,
+            'product': record.product_id.name,
+            'date_requested': sale.requested_date or '',
+            'customer': sale.partner_id.name,
+            'move_lines': record.move_lines._prepare_prodoo_move_line(),
+            'workcenter_lines': record.workcenter_lines.mapped('name'),
+            'state': status[record.state],
+            }
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    @api.one
+    def _prepare_prodoo_move_line(self):
+        if self.product_id.default_code:
+            name = "[%s] " % self.product_id.default_code
+        else:
+            name = ""
+        name += self.product_id.name
+        return {
+            'product_qty': self.product_qty,
+            'product_name': name,
+            }

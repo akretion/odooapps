@@ -99,7 +99,6 @@ class Receivoo(models.TransientModel):
             'id': move.id,
             'notify_add_item': True,
             'name': move.product_id.name,
-            'customer_name': 'TODO',
             'product_id': {
                 'id': move.product_id.id,
                 'name': move.product_id.name,
