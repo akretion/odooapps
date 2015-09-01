@@ -29,7 +29,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
     resolve: {
-      production: 'production'
+      production: 'production',
+      warehouse: 'warehouse'
     }
   }).state('detail', {
     url: '/detail/{id}',
