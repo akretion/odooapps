@@ -86,7 +86,7 @@ angular.module('starter')
 angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state', function ($scope, jsonRpc, $state) {
     $scope.login = {
         'db': 'db',
-        'username':'fabien.sellier'
+        'username':'admin'
     };
 
 	$scope.submit = function () {
