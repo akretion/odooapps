@@ -29,7 +29,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
     resolve: {
-      production: 'production'
+      production: 'production',
+      warehouse: 'warehouse'
     }
   }).state('detail', {
     url: '/detail/{id}',
@@ -49,22 +50,32 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
 'use strict';
 
 
-angular.module('starter').controller('ListCtrl', ['$scope', 'production', function ($scope, production) {
-
-	$scope.mrpProduction = Object.keys(production.data).map(function (k) {
-		return production.data[k];
-	});
+angular.module('starter').controller('ListCtrl', ['$scope', 'production', 'warehouse', function ($scope, production, warehouse) {
+    $scope.$on('$ionicView.beforeEnter', function() {
+        $scope.mrpProduction = Object.keys(production.data).map(function (k) {
+	        return production.data[k];
+        });
+    });
+    $scope.warehouse = warehouse;
 }]);
 
 'use strict';
 angular.module('starter')
-    .controller('DetailCtrl', ['$scope', '$stateParams', 'jsonRpc', '$state', 'production', function ($scope, $stateParams, jsonRpc, $state, production) {
+    .controller('DetailCtrl', ['$scope', '$stateParams', 'jsonRpc', '$state', 'production', '$ionicLoading', function ($scope, $stateParams, jsonRpc, $state, production, $ionicLoading) {
         $scope.item = production.data[$stateParams.id];
         $scope.confirm = function() {
-            jsonRpc.call('mrp.production', 'prodoo_produce', [$scope.item.id], {})
+            $ionicLoading.show({
+                template: 'Validation'
+            });
+            jsonRpc.call('mrp.production', 'prodoo_force_production', [$scope.item.id], {})
                 .then(function() {
-                    delete production.data[$scope.item.id];
-                    $state.go('list');
+                    jsonRpc.call('mrp.production', 'prodoo_produce', [$scope.item.id], {})
+                        .then(function() {
+                            delete production.data[$scope.item.id];
+                            $ionicLoading.hide();
+                            $state.go('list');
+                        }
+                    )
                 }
             )
         }
@@ -75,7 +86,7 @@ angular.module('starter')
 angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state', function ($scope, jsonRpc, $state) {
     $scope.login = {
         'db': 'db',
-        'username':'admin'
+        'username':'fabien.sellier'
     };
 
 	$scope.submit = function () {
@@ -98,10 +109,11 @@ angular.module('starter').factory('production', ['$q', 'jsonRpc', function ($q, 
     
     var mrpProduction = jsonRpc.syncImportObject({
           model: 'mrp.production',
-          func_key: 'auto',
-          domain: [['state', 'in', ['ready']]],
+          func_key: 'prodoo',
+          base_domain: [],
+          filter_domain: [['state', 'in', ['confirmed', 'ready']]],
           limit: 50,
-          interval: 5000,
+          interval: 30000,
     });
 
     return $q(function(resolve, reject) {
@@ -109,4 +121,26 @@ angular.module('starter').factory('production', ['$q', 'jsonRpc', function ($q, 
             return resolve(mrpProduction);
         });
     });
+}]);
+
+'use strict';
+
+
+angular.module('starter').factory('warehouse', ['$q', 'jsonRpc', '$ionicLoading', function ($q, jsonRpc, $ionicLoading) {
+
+  $ionicLoading.show({
+    template: 'Chargement'
+  });
+
+  return $q(function(resolve, reject) {
+    jsonRpc.call('prodoo', 'get_warehouse', [])
+      .then(function(result) {
+        $ionicLoading.hide();
+        resolve(result);
+      })
+     .catch(function(err) {
+        $ionicLoading.hide();
+        reject(err);
+      });
+  });
 }]);
