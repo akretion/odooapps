@@ -19,6 +19,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
 })
 .run(['jsonRpc','$state', function (jsonRpc, $state) {
   jsonRpc.errorInterceptors.push(function (a) {
+      console.log(a);
+      alert(a.title);
       $state.go('login');
   });
 
