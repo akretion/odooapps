@@ -7,6 +7,7 @@ angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state'
     };
 
 	$scope.submit = function () {
+        $scope.errorMessage = null;
 		jsonRpc.login(
             $scope.login.db,
             $scope.login.username,
