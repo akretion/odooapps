@@ -1,34 +1,44 @@
 'use strict';
 
 
-angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading', 'fournisseurList', 'jsonRpc', '$cookies', '$ionicSideMenuDelegate', function ($scope, $stateParams, $state, $ionicLoading, fournisseurList, jsonRpc, $cookies, $ionicSideMenuDelegate) {
+angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading','Receptions', 'jsonRpc', 'Entrepots', 'Fournisseurs', function ($scope, $stateParams, $state, $ionicLoading, Receptions, jsonRpc, Entrepots, Fournisseurs) {
 
-  this.validList = [];
+  $scope.validList = [];
 
-  this.search = {
-    name: {}
+  $scope.search = {
+    name: null
   };
 
-  $ionicLoading.show({
-    template: 'chargement'
+  $scope.$on('$ionicView.beforeEnter', function(evt, ionicView) {
+    $ionicLoading.show({
+      template: 'chargement'
+    });
+
+    Entrepots.get().then(function (e) {
+      $scope.entrepot = e;
+    }).then(function () {
+      return Fournisseurs.get($scope.entrepot.id).then(function (f) {
+        $scope.fournisseur = f;
+      });
+    }).then(function () {
+      return Receptions.get($scope.entrepot.id, $scope.fournisseur.id).then(function (receptions) {
+        $scope.stockList = receptions;
+        console.log('receptions', receptions);
+      });
+    }).finally(function() {
+        $ionicLoading.hide();
+        
+    });
+
+    $scope.bonDeLivraison = decodeURIComponent($stateParams.bonDeLivraison);
+
   });
 
-  $scope.$on('$ionicView.beforeEnter', angular.bind(this, function() {
-    fournisseurList($stateParams.fournisseurId, $stateParams.warehouseId)
-      .then(angular.bind(this, function(result) {
-        this.stockList = result;
-        $ionicLoading.hide();
-      }));
-
-    this.entrepotName = decodeURIComponent($cookies.get('reception.entrepot.name'));
-    this.entrepotName = this.entrepotName.charAt(0) + this.entrepotName.slice(1).toLowerCase();
-
-    this.fournisseurName = decodeURIComponent($cookies.get('reception.fournisseur.name'));
-
-    this.bonDeLivraison = decodeURIComponent($stateParams.bonDeLivraison);
-
-    $scope.$apply();
-  }));
+  $scope.getTitle = function() {
+    if (!$scope.entrepot || !$scope.fournisseur)
+      return "Chargement";
+    return "Liste des réceptions - " + $scope.entrepot.name + " - " + $scope.fournisseur.name;
+  }
 
   function findIndex(array, test) {
     var length = array.length,
@@ -42,19 +52,19 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
     return -1;
   }
 
-  $scope.$on('valid.amount', angular.bind(this, function(e, amount, id) {
-    var index = findIndex(this.validList, function(currItem) {
+  $scope.$on('valid.amount', angular.bind($scope, function(e, amount, id) {
+    var index = findIndex($scope.validList, function(currItem) {
         return currItem.id === id;
     });
 
-    this.validList[index].product_qty = amount;
+    $scope.validList[index].product_qty = amount;
 
-    var indexStock = findIndex(this.stockList, function(currItem) {
+    var indexStock = findIndex($scope.stockList, function(currItem) {
         return currItem.id === id;
     });
 
     if (indexStock !== -1) {
-      var item = this.stockList[indexStock];
+      var item = $scope.stockList[indexStock];
 
       item.product_qty = Math.max(
         0, Math.min(
@@ -62,34 +72,27 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
         )
       );
 
-      this.validList[index].overboard = amount - item.original_product_qty;
+      $scope.validList[index].overboard = amount - item.original_product_qty;
 
       if (amount === 0) {
-        this.validList.splice(index, 1);
+        $scope.validList.splice(index, 1);
       }
     }
   }));
 
-  this.getEntrepotName = function() {
-    return this.entrepotName;
-  };
-
-  this.getFournisseurName = function() {
-    return this.fournisseurName;
-  };
-
-  this.goBack = function() {
+  
+  $scope.goBack = function() {
     $state.go('reception', {warehouseId: $stateParams.warehouseId});
   }
 
-  this.doTransfer = function() {
+  $scope.doTransfer = function() {
 
     $ionicLoading.show({
       template: 'Validation'
     });
 
     var argsList = [[], decodeURIComponent($stateParams.bonDeLivraison)];
-    angular.forEach(this.validList, function(item) {
+    angular.forEach($scope.validList, function(item) {
       argsList[0].push({
         id: item.id,
         product_qty: item.product_qty
@@ -103,40 +106,40 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
       });
   };
 
-  this.removeFromValid = function( item ) {
+  $scope.removeFromValid = function( item ) {
 
-    var index = findIndex(this.validList, function(currItem) {
+    var index = findIndex($scope.validList, function(currItem) {
         return currItem.id === item.id;
       });
 
       if (index !== -1) {
-        this.validList.splice(index, 1);
+        $scope.validList.splice(index, 1);
 
-        var indexStock = findIndex(this.stockList, function(currItem) {
+        var indexStock = findIndex($scope.stockList, function(currItem) {
             return currItem.id === item.id;
         });
 
-        this.stockList[indexStock].product_qty = this.stockList[indexStock].original_product_qty;
+        $scope.stockList[indexStock].product_qty = $scope.stockList[indexStock].original_product_qty;
       }
   };
 
-  this.putOnValid = function( item ) {
+  $scope.putOnValid = function( item ) {
     if (item.product_qty > 0) {
-      var index = findIndex(this.validList, function(currItem) {
+      var index = findIndex($scope.validList, function(currItem) {
         return currItem.id === item.id;
       });
 
       if ( index === -1 ) {
         var newItem = angular.copy(item);
         newItem.product_qty = 1;
-        this.validList.unshift(newItem);
+        $scope.validList.unshift(newItem);
 
         if (item.notify_add_item) {
           jsonRpc.call('receivoo', 'notify_add_item', [item]);
         }
       }
       else {
-        this.validList[index].product_qty++;
+        $scope.validList[index].product_qty++;
       }
       if (item.original_product_qty === undefined) {
         item.original_product_qty = item.product_qty;

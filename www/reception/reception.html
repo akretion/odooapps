@@ -1,4 +1,4 @@
-<ion-view title="Réception - {{entrepotName}}">
+<ion-view title="Réception - {{entrepot.name}}">
   <ion-nav-buttons side="primary">
     <button class="button" ng-click="goBack()">Choisir un entrepôt</button>
   </ion-nav-buttons>
@@ -6,6 +6,7 @@
     <button class="button" ng-click="logout()">Déconnexion</button>
   </ion-nav-buttons>
   <ion-content class="has-header">
+  <button class="button button-royal" ng-click="refresh()">Actualiser</button>
     <div class="centered-form">
       <div class="list">
         <label class="item item-input item-select">
