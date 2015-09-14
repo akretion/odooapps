@@ -38,21 +38,3 @@ angular.module('starter')
     $state.go('fournisseur', {warehouseId: $scope.selected.id});
   };
 }]);
-
-angular.module('starter')
-.controller('ResolveEntrepotCtrl', ['$scope', '$state', 'Entrepots', function ($scope, $state, Entrepots) {
-  console.log('resulve entrepots');
-  Entrepots.get().then(function (entrepot) {
-    if (entrepot)
-      $state.go('fournisseur', { warehouseId: entrepot.id });
-    else
-      $state.go('entrepot');
-  }, function (error) {
-    console.log('entrepot error', error);
-    if (error === 'key not found') {
-      Entrepots.set(null);
-      $state.go('entrepot');
-    } else
-      $state.go('login');
-  });
-}]);

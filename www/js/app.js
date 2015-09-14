@@ -29,10 +29,6 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
 }])
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('resolveEntrepot', {
-    url: '/',
-    controller: 'ResolveEntrepotCtrl'
-  })
   .state('entrepot', {
     url: '/entrepot',
     templateUrl: 'entrepot/entrepot.html',
@@ -59,5 +55,5 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     controller: 'LoginCtrl'
   });
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/entrepot');
 }]);
