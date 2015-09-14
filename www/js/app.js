@@ -23,36 +23,41 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
 }])
 .run(['jsonRpc','$state', function (jsonRpc, $state) {
   jsonRpc.errorInterceptors.push(function (a) {
+      console.log('Error: ',a);
       $state.go('login');
   });
-
 }])
-.config(['$stateProvider','$urlRouterProvider' , function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('reception', {
-    url: '/reception/{warehouseId}',
-    templateUrl: 'reception/reception.html',
-    controller: 'ReceptionCtrl',
+  .state('resolveEntrepot', {
+    url: '/',
+    controller: 'ResolveEntrepotCtrl'
   })
-  .state('list', {
-    url: '/list/{fournisseurId}/{warehouseId}/{bonDeLivraison}',
-    templateUrl: 'list/list.html',
-    controller: 'ListCtrl as list'
-  }).state('login', {
-    url: '/login',
-    templateUrl: 'login/login.html',
-    controller: 'LoginCtrl'
-  }).state('logout', {
-    url: '/logout',
-    templateUrl: 'login/login.html',
-    controller: 'LoginCtrl'
-  }).state('entrepot', {
+  .state('entrepot', {
     url: '/entrepot',
     templateUrl: 'entrepot/entrepot.html',
     controller: 'EntrepotCtrl'
-  }).state('resolveWarehouse', {
-    url: '/',
-    controller: 'ResolveEntrepotCtrl'
+  })
+  .state('fournisseur', {
+    url: '/entrepot/{warehouseId}',
+    templateUrl: 'reception/reception.html',
+    controller: 'ReceptionCtrl',
+  })
+  .state('reception', {
+    url: '/entrepot/{warehouseId}/fournisseur/{fournisseurId}/{bonDeLivraison}',
+    templateUrl: 'list/list.html',
+    controller: 'ListCtrl as list'
+  })
+  .state('login', {
+    url: '/login',
+    templateUrl: 'login/login.html',
+    controller: 'LoginCtrl'
+  })
+  .state('logout', {
+    url: '/logout',
+    templateUrl: 'login/login.html',
+    controller: 'LoginCtrl'
   });
+
   $urlRouterProvider.otherwise('/');
 }]);

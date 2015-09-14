@@ -44,7 +44,7 @@ angular.module('starter')
   $scope.confirm = function() {
     Fournisseurs.set($scope.selected);
 
-    $state.go('list', {
+    $state.go('reception', {
       fournisseurId: $scope.selected.id,
       warehouseId: $scope.entrepot.id,
       bonDeLivraison: encodeURIComponent($scope.bonLivraison)

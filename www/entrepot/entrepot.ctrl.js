@@ -33,7 +33,7 @@ angular.module('starter')
 
   $scope.confirm = function() {
     Entrepots.set($scope.selected);
-    $state.go('reception', {warehouseId: $scope.selected.id});
+    $state.go('fournisseur', {warehouseId: $scope.selected.id});
   };
 }]);
 
@@ -42,7 +42,7 @@ angular.module('starter')
   console.log('resulve entrepots');
   Entrepots.get().then(function (entrepot) {
     if (entrepot)
-      $state.go('reception', { warehouseId: entrepot.id });
+      $state.go('fournisseur', { warehouseId: entrepot.id });
     else
       $state.go('entrepot');
   }, function (error) {

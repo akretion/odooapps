@@ -82,7 +82,7 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
 
   
   $scope.goBack = function() {
-    $state.go('reception', {warehouseId: $stateParams.warehouseId});
+    $state.go('fournisseur', {warehouseId: $stateParams.warehouseId});
   }
 
   $scope.doTransfer = function() {
@@ -102,7 +102,7 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
     jsonRpc.call('receivoo', 'do_incoming_transfer', argsList)
       .then(function() {
         $ionicLoading.hide();
-        $state.go('reception', {warehouseId: $stateParams.warehouseId});
+        $state.go('fournisseur', {warehouseId: $stateParams.warehouseId});
       });
   };
 
