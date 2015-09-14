@@ -14,10 +14,10 @@ angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$st
       template: 'chargement'
     });
 
-    Entrepots.get().then(function (e) {
+    Entrepots.get($stateParams.warehouseId).then(function (e) {
       $scope.entrepot = e;
     }).then(function () {
-      return Fournisseurs.get($scope.entrepot.id).then(function (f) {
+      return Fournisseurs.get($stateParams.fournisseurId).then(function (f) {
         $scope.fournisseur = f;
       });
     }).then(function () {

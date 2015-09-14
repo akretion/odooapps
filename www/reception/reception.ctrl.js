@@ -11,11 +11,11 @@ angular.module('starter')
     $scope.selected = undefined;
     $scope.bonLivraison = undefined;
 
-    Entrepots.getById($stateParams.warehouseId).then(function (e) {
+    Entrepots.get($stateParams.warehouseId).then(function (e) {
+      console.log('get entrepto', $stateParams.warehouseId, e);
       if (!e.id)
         $state.go('entrepot');
       
-      Entrepots.set(e);
       $scope.entrepot = e;
       return e;
     }).then(function (e) {

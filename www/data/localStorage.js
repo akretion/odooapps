@@ -3,7 +3,7 @@ angular.module('starter')
     return {
         set: function(key, value) {
             return $q(function (resolve, reject) {
-                resolve($window.localStorage[key] = JSON.stringify(value));
+                resolve($window.localStorage[key] = JSON.stringify(value) || null);
             });
         },
         get: function(key) {

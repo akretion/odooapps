@@ -3,7 +3,6 @@
   "private": "true",
   "dependencies": {
 	  "angular-animate": "~1.4.4",
-    "angular-cookies": "~1.4.4",
     "angular-touch": "~1.4.4",
     "angular-sanitize": "~1.4.4",
     "angular-resource": "~1.4.4",

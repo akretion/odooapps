@@ -8,9 +8,7 @@ angular.module('starter')
 
   Entrepots.getAll().then(function (entrepots) {
     $scope.entrepots = entrepots;
-  }).finally(function () {
-    $ionicLoading.hide();
-  });
+  }).finally($ionicLoading.hide);
 
   $scope.selected = null;
 
@@ -34,10 +32,8 @@ angular.module('starter')
   });
 
   $scope.confirm = function() {
-    console.log('dans le set');
     Entrepots.set($scope.selected);
     $state.go('reception', {warehouseId: $scope.selected.id});
-    return;
   };
 }]);
 
@@ -46,7 +42,7 @@ angular.module('starter')
   console.log('resulve entrepots');
   Entrepots.get().then(function (entrepot) {
     if (entrepot)
-      $state.go('reception', { wharehouseId: entrepot.id });
+      $state.go('reception', { warehouseId: entrepot.id });
     else
       $state.go('entrepot');
   }, function (error) {
@@ -57,5 +53,4 @@ angular.module('starter')
     } else
       $state.go('login');
   });
-  console.log('par là')
 }]);
