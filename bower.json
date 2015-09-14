@@ -9,4 +9,9 @@
   "resolutions": {
     "angular": "~1.4.3"
   }
+  ,"overrides": {
+    "ionic": {
+      "main": "js/ionic.bundle.js"
+    }
+  }
 }
