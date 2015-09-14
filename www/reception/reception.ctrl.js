@@ -34,12 +34,6 @@ angular.module('starter').controller('ReceptionCtrl', ['$scope', '$stateParams',
 
   });
 
-  $scope.getTitle = function() {
-    if (!$scope.entrepot || !$scope.fournisseur)
-      return "Chargement";
-    return "Liste des réceptions - " + $scope.entrepot.name + " - " + $scope.fournisseur.name;
-  }
-
   function findIndex(array, test) {
     var length = array.length,
     index = -1;
