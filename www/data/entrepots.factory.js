@@ -23,12 +23,18 @@ angular.module('starter').factory('Entrepots', ['$q', 'jsonRpc', 'localStorage',
       promiseSelected = promiseSelected || localStorage.get('reception.entrepot');
 
       return promiseSelected.then(function (entrepotInCache) {
+
         //check if it's the one we want
         if (entrepotInCache && entrepotInCache.id == entrepotId)
           return entrepotInCache;
 
+        //no entrepotId provided, need to check if the one in cache
+        //is in the server list 
+        if (entrepotInCache && !entrepotId)
+          return service.getById(entrepotInCache.id);
+
         //entrepotInCache = null or id !=
-        //refresh from server 
+        //refresh from server and try to get one with id we want 
         return service.getById(entrepotId).then(function(entrepot) {
           service.set(entrepot); //set cache
           return entrepot;
