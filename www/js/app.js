@@ -41,13 +41,17 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'ngCookies'])
     url: '/login',
     templateUrl: 'login/login.html',
     controller: 'LoginCtrl'
+  }).state('logout', {
+    url: '/logout',
+    templateUrl: 'login/login.html',
+    controller: 'LoginCtrl'
   }).state('entrepot', {
     url: '/entrepot',
     templateUrl: 'entrepot/entrepot.html',
-    controller: 'EntrepotCtrl',
-    resolve: {
-      entrepots: 'entrepots'
-    }
+    controller: 'EntrepotCtrl'
+  }).state('resolveWarehouse', {
+    url: '/',
+    controller: 'ResolveEntrepotCtrl'
   });
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 }]);
