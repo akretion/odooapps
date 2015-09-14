@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('starter').controller('ListCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading','Receptions', 'jsonRpc', 'Entrepots', 'Fournisseurs', function ($scope, $stateParams, $state, $ionicLoading, Receptions, jsonRpc, Entrepots, Fournisseurs) {
+angular.module('starter').controller('ReceptionCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading','Receptions', 'jsonRpc', 'Entrepots', 'Fournisseurs', function ($scope, $stateParams, $state, $ionicLoading, Receptions, jsonRpc, Entrepots, Fournisseurs) {
 
   $scope.validList = [];
 

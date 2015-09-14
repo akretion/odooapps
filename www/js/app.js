@@ -45,8 +45,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
   })
   .state('reception', {
     url: '/entrepot/{warehouseId}/fournisseur/{fournisseurId}/{bonDeLivraison}',
-    templateUrl: 'list/list.html',
-    controller: 'ListCtrl as list'
+    templateUrl: 'reception/reception.html',
+    controller: 'ReceptionCtrl'
   })
   .state('login', {
     url: '/login',
