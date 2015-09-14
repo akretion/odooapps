@@ -29,11 +29,13 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'ngCookies'])
 
 }])
 .config(['$stateProvider','$urlRouterProvider' , function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state('reception', {
+  $stateProvider
+  .state('reception', {
     url: '/reception/{warehouseId}',
     templateUrl: 'reception/reception.html',
     controller: 'ReceptionCtrl',
-  }).state('list', {
+  })
+  .state('list', {
     url: '/list/{fournisseurId}/{warehouseId}/{bonDeLivraison}',
     templateUrl: 'list/list.html',
     controller: 'ListCtrl as list'
