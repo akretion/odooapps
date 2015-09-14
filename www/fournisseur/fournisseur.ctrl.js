@@ -1,6 +1,6 @@
 'use strict';
 angular.module('starter')
-.controller('ReceptionCtrl', ['$scope', '$state', '$stateParams', '$ionicLoading', 'Fournisseurs', 'Entrepots', function ($scope, $state, $stateParams, $ionicLoading, Fournisseurs, Entrepots) {
+.controller('FournisseurCtrl', ['$scope', '$state', '$stateParams', '$ionicLoading', 'Fournisseurs', 'Entrepots', function ($scope, $state, $stateParams, $ionicLoading, Fournisseurs, Entrepots) {
 
 
   $scope.$on('$ionicView.beforeEnter', function() {

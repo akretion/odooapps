@@ -40,8 +40,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
   })
   .state('fournisseur', {
     url: '/entrepot/{warehouseId}',
-    templateUrl: 'reception/reception.html',
-    controller: 'ReceptionCtrl',
+    templateUrl: 'fournisseur/fournisseur.html',
+    controller: 'FournisseurCtrl',
   })
   .state('reception', {
     url: '/entrepot/{warehouseId}/fournisseur/{fournisseurId}/{bonDeLivraison}',
