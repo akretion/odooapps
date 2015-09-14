@@ -6,13 +6,15 @@ angular.module('starter')
     template: 'Chargement'
   });
 
-  Entrepots.getAll().then(function (entrepots) {
-    $scope.entrepots = entrepots;
-  }).finally($ionicLoading.hide);
-
   $scope.selected = null;
 
   $scope.$on('$ionicView.beforeEnter', function() {
+    
+    Entrepots.getAll().then(function (entrepots) {
+      $scope.entrepots = entrepots;
+    }).finally($ionicLoading.hide);
+
+
     $q.all([Entrepots.getAll(), Entrepots.get()]).then(function (all) {
       var entrepots = all[0];
       var entrepot = all[1];
