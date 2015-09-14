@@ -1,0 +1,32 @@
+<ion-view title="Réception - {{entrepot.name}}">
+  <ion-nav-title>Réception - {{ entrepot.name }}</ion-nav-title>
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click="goBack()">Choisir un entrepôt</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="logout()">Déconnexion</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+  <button class="button button-royal" ng-click="refresh()">Actualiser</button>
+    <div class="centered-form">
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Fournisseur
+          </div>
+          <select 
+            ng-options="fournisseur as fournisseur.name for fournisseur in fournisseurs track by fournisseur.id"
+            ng-model="$parent.selected">
+          </select>
+        </label>
+        <label class="item item-input item-floating-label" ng-show="$parent.selected">
+          <span class="input-label">N° Bon de livraison</span>
+          <input type="text" placeholder="N° Bon de livraison" ng-model="$parent.bonLivraison">
+        </label>
+        <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!bonLivraison" ng-show="$parent.selected">
+            Valider
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

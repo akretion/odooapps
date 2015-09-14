@@ -1,30 +1,54 @@
-<ion-view title="Réception - {{entrepotName}}">
+<ion-view view-title="Liste des réceptions {{ entrepot.name }} - {{ fournisseur.name }}">
+  <ion-nav-title>Liste des réceptions {{ entrepot.name }} - {{ fournisseur.name }}</ion-nav-title>
   <ion-nav-buttons side="primary">
-    <button class="button" ng-click="goBack()">Choisir un entrepôt</button>
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search" ng-model="search.name">
+    </label> 
   </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button class="button" ng-click="logout()">Déconnexion</button>
   </ion-nav-buttons>
-  <ion-content class="has-header">
-    <div class="centered-form">
-      <div class="list">
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Fournisseur
+	<ion-content class="padding">
+  <h1>Bon de livraison N° {{bonDeLivraison}}</h1>
+  <div class="row list-with-flex">
+    <div class="col col-50">
+      <ion-list>
+      <ion-item ng-repeat="item in stockList | filter: search.name | filter:{product_qty: '!0'}" ng-click="putOnValid(item)">
+          <div class="list-count">
+            {{item.product_qty}}
           </div>
-          <select 
-            ng-options="fournisseur as fournisseur.name for fournisseur in fournisseurs track by fournisseur.id"
-            ng-model="$parent.selected">
-          </select>
-        </label>
-        <label class="item item-input item-floating-label" ng-show="$parent.selected">
-          <span class="input-label">N° Bon de livraison</span>
-          <input type="text" placeholder="N° Bon de livraison" ng-model="$parent.bonLivraison">
-        </label>
-        <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!bonLivraison" ng-show="$parent.selected">
-            Valider
-        </button>
-      </div>
+          <div class="list-text">
+            {{item.lot_id.name}}
+            {{item.customer}}
+            {{item.product_id.name}}
+          </div>
+        </ion-item>
+      </ion-list>
     </div>
-  </ion-content>
+    <div class="col col-50">
+      <ion-list>
+        <ion-item ng-repeat="item in validList">
+          <div class="list-count" ng-click="show = true;">
+            {{item.product_qty}}
+          </div>
+          <div ng-show="item.overboard > 0" class="overboard">
+            {{item.product_qty - item.overboard}} commandés
+          </div>
+          <div class="list-text">
+            {{item.lot_id.name}}
+            {{item.customer}}
+            {{item.product_id.name}}
+          </div>
+          <div class="list-button-remove" ng-click="removeFromValid(item)">
+            <i class="icon ion-close"></i>
+          </div>
+          <div digit-keyboard show="show" item-id="item.id"></div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+	</ion-content>
+  <button class="button button-positive fixed-right-bottom" ng-click="doTransfer()">Valider</button>
+  <button class="button button-energized fixed-left-bottom" ng-click="goBack()">Annuler</button>
 </ion-view>

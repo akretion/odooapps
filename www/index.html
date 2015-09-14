@@ -17,7 +17,6 @@
     <!-- build:js js/vendor.js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/odoo/dist/odoo.js"></script>
-    <script src="lib/angular-cookies/angular-cookies.js"></script>
     <!-- endbuild -->
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -26,13 +25,15 @@
     <!-- your app's js -->
     <!-- build:js js/app.js -->
     <script src="js/app.js"></script>
-    <script src="list/list.ctrl.js"></script>
     <script src="reception/reception.ctrl.js"></script>
+    <script src="fournisseur/fournisseur.ctrl.js"></script>
     <script src="entrepot/entrepot.ctrl.js"></script>
     <script src="login/login.ctrl.js"></script>
     <script src="data/fournisseurs.factory.js"></script>
     <script src="data/fournisseurList.factory.js"></script>
     <script src="data/entrepots.factory.js"></script>
+    <script src="data/receptions.factory.js"></script>
+    <script src="data/localStorage.js"></script>
     <script src="digit-keyboard/digit-keyboard.directive.js"></script>
     <!-- endbuild -->
   </head>

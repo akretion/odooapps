@@ -1,20 +1,40 @@
 'use strict';
 angular.module('starter')
-.controller('EntrepotCtrl', ['$scope', '$state', 'entrepots', '$cookies', function ($scope, $state, entrepots, $cookies) {
+.controller('EntrepotCtrl', ['$scope', '$state', 'Entrepots', '$q', '$ionicLoading', function ($scope, $state, Entrepots, $q, $ionicLoading) {
 
-  $scope.entrepots = entrepots;
+  $ionicLoading.show({
+    template: 'Chargement'
+  });
+
+  $scope.selected = null;
+
   $scope.$on('$ionicView.beforeEnter', function() {
-    angular.forEach($scope.entrepots, function(entrepot) {
-      if (entrepot.id === parseInt($cookies.get('reception.entrepot.id'))) {
+    
+    Entrepots.getAll().then(function (entrepots) {
+      $scope.entrepots = entrepots;
+    }).finally($ionicLoading.hide);
+
+
+    $q.all([Entrepots.getAll(), Entrepots.get()]).then(function (all) {
+      var entrepots = all[0];
+      var entrepot = all[1];
+
+      if (!entrepot)
+        return;
+
+      //check that saved entrepot is still available
+      entrepots.some(function (e) {
+        if (e.id !== entrepot.id)
+          return false;
+
         $scope.selected = entrepot;
-      }
+        return true;
+      });
     });
   });
 
   $scope.confirm = function() {
-    $cookies.put('reception.entrepot.id', $scope.selected.id);
-    $cookies.put('reception.entrepot.name', $scope.selected.name);
-    $state.go('reception', {warehouseId: $scope.selected.id});
-    return;
+    Entrepots.set($scope.selected);
+    $state.go('fournisseur', {warehouseId: $scope.selected.id});
   };
 }]);
