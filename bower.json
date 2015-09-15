@@ -6,9 +6,8 @@
     "ionic": "driftyco/ionic-bower#1.1.0",
     "odoo": "hparfr/angular-odoo#develop"
   },
-  "devDependencies": {},
   "resolutions": {
-    "angular": "~1.4.4",
+    "angular": "~1.4.4"
   },
   "overrides": {
     "ionic": {
