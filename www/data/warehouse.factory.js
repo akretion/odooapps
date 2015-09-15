@@ -48,7 +48,6 @@ angular.module('starter').factory('Warehouse', ['$q', 'jsonRpc', 'localStorage',
     getById: function(entrepotId) {
       //get entrepot from the server
       return service.getAll().then(function (entrepots) {
-        console.log('voici les entrepots', entrepots);
         return entrepots.filter(function (e) {
           return e.id == entrepotId;
         }).pop();
