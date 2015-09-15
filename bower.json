@@ -2,19 +2,9 @@
   "name": "HelloIonic",
   "private": "true",
   "dependencies": {
-	  "angular-animate": "~1.3.4",
-    "angular-cookies": "~1.3.4",
-    "angular-touch": "~1.3.4",
-    "angular-sanitize": "~1.3.4",
-    "angular-resource": "~1.3.4",
-    "angular-ui-router": "~0.2.13",
-    "angular": "~1.3.4",
     "odoo": "hparfr/angular-odoo#develop"
   },
-  "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0"
-  },
   "resolutions": {
-    "angular": "~1.3.4"
+    "angular": "~1.4.3"
   }
 }
