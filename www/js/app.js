@@ -35,7 +35,6 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
     controller: 'ListCtrl',
     resolve: {
       production: 'production',
-      warehouse: 'warehouse'
     }
   }).state('detail', {
     url: '/detail/{id}',

@@ -1,16 +1,16 @@
-<ion-view view-title="Production" ng-init="search">
+<ion-view view-title="Production">
   <ion-nav-buttons side="secondary">
     <button class="button" ng-click="logout()">Déconnexion</button>
   </ion-nav-buttons>
-	<ion-content class="padding">
-		<ion-list>
-			<div class="list list-inset" style="margin-top:0px;">
+  <ion-content class="padding">
+    <ion-list>
+      <div class="list list-inset" style="margin-top:0px;">
         <label class="item item-input item-select">
           <div class="input-label">
             Entrepot
           </div>
           <select
-              ng-options="w as w.name for w in warehouse track by w.id"
+              ng-options="w as w.name for w in warehouses track by w.id"
               ng-model="search.warehouse">
           </select>
         </label>
@@ -19,12 +19,12 @@
           <input type="text" placeholder="Search" ng-model="search.name">
         </label>
       </div>
-			<ion-item ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})">
-				{{ item.name }}
-				{{ item.date_requested }}
-				{{ item.customer }}
-				{{ item.state }}
-			</ion-item>
-		</ion-list>
-	</ion-content>
+      <ion-item ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})">
+        {{ item.name }}
+        {{ item.date_requested }}
+        {{ item.customer }}
+        {{ item.state }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>
