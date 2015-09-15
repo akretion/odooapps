@@ -1,21 +1,20 @@
 'use strict';
 
-angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state', function ($scope, jsonRpc, $state) {
-    $scope.login = {
-        'db': 'db',
-        'username':'admin'
-    };
+angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc', function ($scope, $state, jsonRpc) {
+    
+    $scope.$on('$ionicView.beforeEnter', function() {
+        if ($state.current.name === 'logout')
+            jsonRpc.logout(true);
+        else {
+            //login
+            jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
+                if (isLoggedIn)
+                    return $scope.successCallback();
+            });
+        }
+    });
 
-	$scope.submit = function () {
-        $scope.errorMessage = null;
-		jsonRpc.login(
-            $scope.login.db,
-            $scope.login.username,
-            $scope.login.password
-        ).then(function (a) {
-			$state.go('list');
-		}, function(e) {
-			$scope.errorMessage = e.message;
-		});
-	}
+    $scope.successCallback = function () {
+        $state.go('list');
+	};
 }]);
