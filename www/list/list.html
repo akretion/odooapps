@@ -19,11 +19,19 @@
           <input type="text" placeholder="Search" ng-model="search.name">
         </label>
       </div>
-      <ion-item ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})">
-        {{ item.name }}
-        {{ item.date_requested }}
-        {{ item.customer }}
-        {{ item.state }}
+      <div class="row item">
+        <div class="col">Entrepôt</div>
+        <div class="col">N° commande</div>
+        <div class="col">Date demandée</div>
+        <div class="col">Client</div>
+        <div class="col">Etat</div>
+      </div>
+      <div class="row item" ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})">
+        <div class="col entrepot">{{ warehouses_by_id[item.warehouse_id] }}</div>
+        <div class="col bon">{{ item.name }}</div>
+        <div class="col reqDate">{{ item.date_requested }}</div>
+        <div class="col client">{{ item.customer }}</div>
+        <div class="col etat">{{ item.state }}</div>
       </ion-item>
     </ion-list>
   </ion-content>

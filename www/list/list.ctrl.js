@@ -17,6 +17,8 @@ angular.module('starter').controller('ListCtrl', ['$scope', 'production', 'Wareh
     Warehouse.getAll().then(function (ws) { 
         $scope.warehouses = ws;
         $scope.warehouses.unshift({ 'name': 'Tous'});
+        $scope.warehouses_by_id = [];
+        ws.forEach(function (w) { $scope.warehouses_by_id[w.id] = w.name });
     });
     //select the last used 
     Warehouse.get().then(function (w) { $scope.search.warehouse = w; });
