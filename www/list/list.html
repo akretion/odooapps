@@ -24,7 +24,7 @@
         <div class="col">N° commande</div>
         <div class="col">Date demandée</div>
         <div class="col">Client</div>
-        <div class="col">Etat</div>
+        <div class="col">État</div>
       </div>
       <div class="row item" ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})">
         <div class="col entrepot">{{ warehouses_by_id[item.warehouse_id] }}</div>
