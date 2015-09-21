@@ -6,7 +6,7 @@ angular.module('starter').controller('ReceptionCtrl', ['$scope', '$stateParams',
   $scope.validList = [];
 
   $scope.search = {
-    name: null
+    name: ""
   };
 
   $scope.$on('$ionicView.beforeEnter', function(evt, ionicView) {
