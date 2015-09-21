@@ -9,7 +9,7 @@
       <div class="col">
         <div class="item item-divider">Matière Première</div>
 
-        <div ng-repeat="move in item.move_lines" class="item">
+        <div ng-repeat="move in item.move_lines track by $index" class="item">
             {{ move.product_qty }}
             X
             {{ move.product_name }}
@@ -17,7 +17,7 @@
       </div>
       <div class="col">
         <div class="item item-divider">Opération</div>
-          <div ng-repeat="line_name in item.workcenter_lines" class="item">
+          <div ng-repeat="line_name in item.workcenter_lines track by $index" class="item">
                {{ line_name }}
           </div>
         </div>
