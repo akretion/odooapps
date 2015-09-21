@@ -14,7 +14,10 @@ angular.module('starter').controller('ListCtrl', ['$scope', 'production', 'Wareh
     }
 
     //load warehouse list
-    Warehouse.getAll().then(function (ws) { $scope.warehouses = ws; });
+    Warehouse.getAll().then(function (ws) { 
+        $scope.warehouses = ws;
+        $scope.warehouses.unshift({ 'name': 'Tous'});
+    });
     //select the last used 
     Warehouse.get().then(function (w) { $scope.search.warehouse = w; });
 
