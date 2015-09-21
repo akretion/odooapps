@@ -34,14 +34,14 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
     resolve: {
-      production: 'production',
+      production: 'loadProduction'
     }
   }).state('detail', {
     url: '/detail/{id}',
     templateUrl: 'detail/detail.html',
     controller: 'DetailCtrl',
     resolve: {
-      production: 'production'
+      production: 'loadProduction'
     }
   }).state('login', {
     url: '/login',

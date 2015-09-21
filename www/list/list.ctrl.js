@@ -27,5 +27,5 @@ angular.module('starter').controller('ListCtrl', ['$scope', 'production', 'Wareh
     $scope.$on('$ionicView.beforeLeave', function() {
         if ($scope.search.warehouse)
             Warehouse.set($scope.search.warehouse);
-    });    
+    });
 }]);
