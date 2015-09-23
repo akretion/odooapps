@@ -7,12 +7,11 @@ angular.module('starter')
     $ionicLoading.show({
       template:'Chargement'
     });
+  
+    $scope.form = {}
 
-    $scope.selected = undefined;
-    $scope.bonLivraison = undefined;
 
     Entrepots.get($stateParams.warehouseId).then(function (e) {
-      console.log('get entrepto', $stateParams.warehouseId, e);
       if (!e.id)
         $state.go('entrepot');
       
@@ -21,6 +20,7 @@ angular.module('starter')
     }).then(function (e) {
       return Fournisseurs.getAll(e.id).then(function(fournisseurs) {
         $scope.fournisseurs = fournisseurs;
+        //$scope.fournisseurs.push({name:'bim', id:'0'})
       });
     }).finally($ionicLoading.hide);
     
@@ -42,13 +42,27 @@ angular.module('starter')
   };
 
   $scope.confirm = function() {
-    Fournisseurs.set($scope.selected);
+    Fournisseurs.set($scope.form.selected);
 
     $state.go('reception', {
-      fournisseurId: $scope.selected.id,
+      fournisseurId: $scope.form.selected.id,
       warehouseId: $scope.entrepot.id,
-      bonDeLivraison: encodeURIComponent($scope.bonLivraison)
+      bonDeLivraison: encodeURIComponent($scope.form.bonLivraison)
     });
     return;
   };
+
+  $scope.selectFournisseur = function(fournisseur) {
+
+    if ($scope.form.selected === fournisseur) {
+      $scope.form.selected = null;
+      //trigger reset
+      document.getElementById('fform').reset(); //TODO move this to a directive
+    } else 
+      $scope.form.selected = fournisseur;
+ 
+  };
+  $scope.changed = function (...e) {
+    console.log('changed', e, $scope.form.selected)
+  }
 }]);

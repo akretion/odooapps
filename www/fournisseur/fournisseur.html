@@ -7,26 +7,46 @@
     <button class="button" ng-click="logout()">Déconnexion</button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-  <button class="button button-royal" ng-click="refresh()">Actualiser</button>
+  <button class="button button-royal ion-refresh icon-left" ng-click="refresh()">Actualiser</button>
     <div class="centered-form">
       <div class="list">
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Fournisseur
+
+        <div class="item" ng-show="fournisseurs.length == 0">Aucune commande à récéptionner à {{ entrepot.name}}.
+          <p>Assurez-vous d'avoir passé commande auprès d'un fournisseur.</p>
+          <p>Pour rafraîchir la page, cliquez sur <button class="button button-royal ion-refresh icon-left" ng-click="refresh()">Actualiser</button></p>
+        </div>
+
+        <div class="card" ng-show="fournisseurs.length">
+          <div class="item item-stacked-label item-input">
+            <span class="input-label">Choisissez un fournisseur</span>
           </div>
-          <select 
-            ng-options="fournisseur as fournisseur.name for fournisseur in fournisseurs track by fournisseur.id"
-            ng-model="$parent.selected">
-          </select>
-        </label>
-        <label class="item item-input item-floating-label" ng-show="$parent.selected">
-          <span class="input-label">N° Bon de livraison</span>
-          <input type="text" placeholder="N° Bon de livraison" ng-model="$parent.bonLivraison">
-        </label>
-        <button class="button button-positive button-block" ng-click="confirm()" ng-disabled="!bonLivraison" ng-show="$parent.selected">
-            Valider
-        </button>
+              <form id="fform">
+              <label class="item item-radio" ng-repeat="fournisseur in fournisseurs track by fournisseur.id" ng-click="selectFournisseur(fournisseur)">
+                <input type="radio" name="fournisseur">
+                <div class="item-content">
+                      {{ fournisseur.name }}
+                </div> 
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+            </form>
+        </div>
+
+
+        <div class="card" ng-show="form.selected">
+          <div class="item item-divider">{{ form.selected.name }}</div>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">N° bon de livraison du fournisseur</span>
+            <input type="text" placeholder="optionnel" ng-model="form.bonLivraison">
+          </label>
+          <div class="item">
+             <button class="button button-positive button-block" ng-click="confirm()">
+              Valider
+          </button>
+          </div>
+        </div>
+
       </div>
+    </div>
     </div>
   </ion-content>
 </ion-view>
