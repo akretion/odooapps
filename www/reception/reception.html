@@ -14,6 +14,8 @@
   <div class="row list-with-flex">
     <div class="col col-50">
       <ion-list>
+      <ion-item>Produits attendus</ion-item>
+      <ion-item ng-show="(stockList | filter:{product_qty: '!0'}) == 0">Tous les produits ont été réceptionnés. Cliquez sur valider pour terminer la réception.</ion-list>
       <ion-item ng-repeat="item in stockList | filter: search.name | filter:{product_qty: '!0'}" ng-click="putOnValid(item)">
           <div class="list-count">
             {{item.product_qty}}
@@ -28,6 +30,10 @@
     </div>
     <div class="col col-50">
       <ion-list>
+      <ion-item>Produits reçus</ion-item>
+      <ion-item ng-show="validList.length == 0">
+        <div class="card">Cliquez sur les produits que vous souhaitez réceptionner.</div>
+      </ion-item>
         <ion-item ng-repeat="item in validList">
           <div class="list-count" ng-click="show = true;">
             {{item.product_qty}}
