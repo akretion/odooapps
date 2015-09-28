@@ -47,7 +47,7 @@ angular.module('starter')
     $state.go('reception', {
       fournisseurId: $scope.form.selected.id,
       warehouseId: $scope.entrepot.id,
-      bonDeLivraison: encodeURIComponent($scope.form.bonLivraison)
+      bonDeLivraison: $scope.form.bonLivraison && encodeURIComponent($scope.form.bonLivraison)
     });
     return;
   };
