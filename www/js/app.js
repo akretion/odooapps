@@ -24,7 +24,8 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
 
   jsonRpc.errorInterceptors.push(function (a) {
       console.log(a);
-      alert(a.title);
+      if (a.title !== 'session_expired')
+        alert(a.title);
       $state.go('login');
   });
 }])
