@@ -7,9 +7,10 @@ angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc'
     });
 
     $scope.$on('$ionicView.beforeEnter', function() {
-        if ($state.current.name === 'logout')
+        if ($state.current.name === 'logout') {
             jsonRpc.logout(true);
-        else {
+            $ionicLoading.hide();
+        } else {
             //login
             jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
                 if (isLoggedIn)
