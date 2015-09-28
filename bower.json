@@ -11,7 +11,7 @@
   },
   "overrides": {
     "ionic": {
-      "main": "js/ionic.bundle.js"
+      "main": ["css/ionic.css", "js/ionic.bundle.js"]
     }
   }
 }
