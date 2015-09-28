@@ -3,8 +3,9 @@
   <ion-nav-buttons side="primary">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Recherche" ng-model="search.name">
+      <input type="search" placeholder="Recherche" ng-model="search.name"></input>
     </label> 
+    <button ng-click="search.name=''" class="ion-backspace button" title="Effacer la recherche"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button class="button" ng-click="logout()">Déconnexion</button>
