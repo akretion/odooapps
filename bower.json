@@ -1,7 +1,7 @@
 {
   "name": "Reception",
   "private": "true",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "akaLogin": "akretion/akaLogin#master",
     "ionic": "driftyco/ionic-bower#1.1.0",
@@ -14,7 +14,9 @@
     "ionic": {
       "main": [
         "js/ionic.bundle.js",
-        "css/ionic.css"
+        "css/ionic.css",
+        "fonts/ionicons.woff",
+        "fonts/ionicons.ttf"
       ]
     }
   }
