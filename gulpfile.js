@@ -51,6 +51,6 @@ gulp.task('bump', function () {
 });
 
 gulp.task('push', function() {
-  git.push('origin', 'master', { args: '--folow-tags' })
+  git.push('origin', 'master', { args: '--follow-tags' })
 });
 
