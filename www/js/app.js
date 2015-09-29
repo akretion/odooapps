@@ -24,8 +24,7 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
 
   jsonRpc.errorInterceptors.push(function (a) {
       console.log(a);
-      if (a.title !== 'session_expired')
-        alert(a.title);
+      $state.get('login').data.errors.push(a);
       $state.go('login');
   });
 }])
@@ -47,7 +46,10 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',
-    controller: 'LoginCtrl'
+    controller: 'LoginCtrl',
+    data: {
+      errors: []
+    }
   }).state('logout', {
     url: '/logout',
     templateUrl: 'login/login.html',

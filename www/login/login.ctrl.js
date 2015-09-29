@@ -7,7 +7,7 @@ angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc'
     });
 
     $scope.$on('$ionicView.beforeEnter', function() {
-        $scope.errors = $state.current.data.errors;
+        $scope.errors = $state.get('login').data.errors;
         if ($state.current.name === 'logout') {
             jsonRpc.logout(true);
             $ionicLoading.hide();
@@ -15,6 +15,7 @@ angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc'
             //login
             jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
                 $ionicLoading.hide();
+                $state.get('login').data.errors = [];
                 if (isLoggedIn)
                     return $scope.successCallback();
 
