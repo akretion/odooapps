@@ -14,7 +14,9 @@
     "ionic": {
       "main": [
         "js/ionic.bundle.js",
-        "css/ionic.css"
+        "css/ionic.css",
+        "fonts/ionicons.woff",
+        "fonts/ionicons.ttf"
       ]
     }
   }
