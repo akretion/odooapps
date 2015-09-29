@@ -1,6 +1,6 @@
 {
   "name": "prod",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "prod: An Ionic project",
   "devDependencies": {
     "bower": "^1.3.3",
@@ -9,6 +9,7 @@
     "main-bower-files": "^2.9.0"
   },
   "dependencies": {
+    "gulp-bump": "^1.0.0",
     "gulp-git": "^1.4.0"
   }
 }
