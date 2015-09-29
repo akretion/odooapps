@@ -7,15 +7,18 @@ angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc'
     });
 
     $scope.$on('$ionicView.beforeEnter', function() {
+        $scope.errors = $state.current.data.errors;
         if ($state.current.name === 'logout') {
             jsonRpc.logout(true);
             $ionicLoading.hide();
         } else {
             //login
             jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
+                $ionicLoading.hide();
                 if (isLoggedIn)
                     return $scope.successCallback();
-            }).then($ionicLoading.hide);
+
+            });
         }
     });
 
