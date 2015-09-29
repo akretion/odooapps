@@ -50,7 +50,7 @@
         <div class="col client">{{ item.customer }}</div>
         <div class="col etat">{{ item.state }}</div>
       </div>
-      <div ng-show="(item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}).length">Aucun résultat</div>
+      <div ng-show="(mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}).length == 0">Aucun résultat</div>
     </ion-list>
   </ion-content>
 </ion-view>
