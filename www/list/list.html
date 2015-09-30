@@ -42,7 +42,7 @@
         <div class="col">Client</div>
         <div class="col">État</div>
       </div>
-      <div class="row item" ng-repeat="item in mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})" style="cursor:pointer;">
+      <div class="row item" ng-repeat="item in mrpProduction | blFilter: search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})" style="cursor:pointer;">
         <div class="col entrepot">{{ warehouses_by_id[item.warehouse_id] }}</div>
         <div class="col bon">{{ item.name }}</div>
         <div class="col ean">{{ item.ean13 }}</div>
@@ -50,7 +50,7 @@
         <div class="col client">{{ item.customer }}</div>
         <div class="col etat">{{ item.state }}</div>
       </div>
-      <div ng-show="(mrpProduction | filter:search.name | filter: {warehouse_id: search.warehouse.id}).length == 0">Aucun résultat</div>
+      <div ng-show="(mrpProduction | blFilter: search.name | filter: { warehouse_id: search.warehouse.id}).length == 0">Aucun résultat</div>
     </ion-list>
   </ion-content>
 </ion-view>
