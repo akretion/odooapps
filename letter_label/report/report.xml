@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="base_label_header_41x89" model="ir.header_webkit">
+                <field name="footer_html"><![CDATA[<html>
+    <body>
+    </body>
+    </html>]]></field>
+                <field name="orientation">Landscape</field>
+                <field name="format">36x89</field>
+                <field name="html"><![CDATA[
+    <html>
+    <body>
+    </body>
+    </html>]]>
+                </field>
+                <field eval="1" name="margin_top"/>
+                <field eval="1" name="margin_bottom"/>
+                <field eval="1" name="margin_left"/>
+                <field eval="1" name="margin_right"/>
+                <field name="css"><![CDATA[]]>
+                </field>
+                <field name="name">Base Label 36x89 Header</field>
+            </record>
+
+
+    <report
+        auto="False"
+        id="report_letter_label"
+        model="stock.picking.out"
+        name="letter.label"
+        string="Etiquette lettre"
+        file="letter_label/report/letter_label.mako"
+        multi="False"
+        attachment="object.name + '.pdf'"
+        attachment_use="True"
+        webkit_header="base_label_header_41x89"
+        report_type="webkit"/>
+    </data>
+</openerp>

@@ -103,12 +103,7 @@ class StockPickingOut(orm.Model):
         return {
             'id': move.id,
             'product': {
-                'model': product.base_default_code,
                 'name': product.name,
-                'color': product.color_id.name,
-                'size': product.size_id.name,
-                'collection': product.categ_id.name,
-                'brand': product.categ_brand_id.name,
                 'ean': product.ean13 or '',
                 },
             'qty': move.product_qty,
@@ -123,7 +118,7 @@ class StockPickingOut(orm.Model):
                 'product_uom': 1, #TODO FIXME should be not hardcoded
                 }
         self.do_partial(cr, uid, ids, partial_datas, context=context)
-        return self.print_label(cr, uid, ids)
+        return self.print_label(cr, uid, ids, context=context)
 
     def _add_label(self, cr, uid, ids, todo, context=None):
         assert len(ids) == 1, 'Process only one a single id at a time.'
@@ -148,12 +143,6 @@ class StockPickingOut(orm.Model):
         proxy_obj = self.pool['proxy.action.helper']
         todo = []
         self._add_label(cr, uid, ids, todo, context=context)
-        todo.append(
-            proxy_obj.get_print_report_action(
-                cr, uid, 'report.webkit.delivery_slip',
-                'stock.picking.out', ids,
-                context=context)
-            )
         return todo
 
     def print_label(self, cr, uid, ids, context=None):
@@ -181,3 +170,5 @@ class StockPickingOut(orm.Model):
             raise orm.except_orm(
                 _('User Error'),
                 _('There is no picking found for number %s') % number)
+
+
