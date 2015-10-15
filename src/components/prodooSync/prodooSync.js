@@ -17,7 +17,7 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
                 '&',
                     '&',
                         ['prepared', '=', true],
-                        ['carrier_id.process_in_pickadoo', '=', true],
+                        ['process_in_pickadoo', '=', true],
                     ['paid', '=', true]
             ],
         limit: 50,
