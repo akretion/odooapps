@@ -54,7 +54,7 @@ class StockPickingOut(orm.Model):
         picking_obj = self.pool.get('stock.picking.out')
         picking_ids = picking_obj.search(cr, uid,(
             ['name', '=', name],
-            ['state', '=', 'assigned']
+            ['state', 'in', ('assigned', 'started')]
         ))
         result = False
         for pick in picking_obj.browse(cr, uid, picking_ids):
