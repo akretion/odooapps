@@ -62,7 +62,5 @@ angular.module('starter')
       $scope.form.selected = fournisseur;
  
   };
-  $scope.changed = function (...e) {
-    console.log('changed', e, $scope.form.selected)
-  }
+
 }]);
