@@ -25,6 +25,7 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
   jsonRpc.errorInterceptors.push(function (a) {
       console.log('Error: ',a);
       $state.go('login');
+      $state.get('login').data.errors.push(a);
   });
 }])
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -47,7 +48,10 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
   .state('login', {
     url: '/login',
     templateUrl: 'login/login.html',
-    controller: 'LoginCtrl'
+    controller: 'LoginCtrl',
+    data: {
+      errors: []
+    }
   })
   .state('logout', {
     url: '/logout',

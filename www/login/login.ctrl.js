@@ -3,11 +3,15 @@
 angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state', '$ionicLoading', function ($scope, jsonRpc, $state, $ionicLoading) {
 
     $scope.$on('$ionicView.beforeEnter', function() {
-        if ($state.current.name === 'logout')
+        $scope.errors = $state.get('login').data.errors;
+
+        if ($state.current.name === 'logout') {
             jsonRpc.logout(true);
-        else {
+        } else {
             //login
             jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
+                $state.get('login').data.errors = [];
+
                 if (isLoggedIn)
                     return $scope.successCallback();
             });
