@@ -8,7 +8,7 @@
             margin-top:5px;
         }
         div {
-            font-family: "Courier";
+            font-family: "Arial";
             font-size: 17px;
             text-align: center;
             margin: -1px;
