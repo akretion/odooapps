@@ -9,7 +9,7 @@
         }
         div {
             font-family: "Courier";
-            font-size: 18px;
+            font-size: 17px;
             text-align: center;
             margin: -1px;
         }
@@ -20,7 +20,7 @@
 
         body {
             padding-top: 10px;
-            height: 135px;
+            height: 125px;
             width: 435px;
         }
 
