@@ -19,7 +19,7 @@
         }
 
         body {
-            padding-top: 25px;
+            padding-top: 15px;
             height: 125px;
             width: 435px;
         }
