@@ -19,8 +19,8 @@
         }
 
         body {
-            padding-top: 15px;
-            height: 125px;
+            padding-top: 10px;
+            height: 135px;
             width: 435px;
         }
 
