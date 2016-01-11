@@ -1,7 +1,7 @@
 {
   "name": "HelloIonic",
   "private": "true",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "akaLogin": "akretion/akaLogin#master",
     "ionic": "driftyco/ionic-bower#~1.1.0",
