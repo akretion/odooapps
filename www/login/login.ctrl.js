@@ -24,6 +24,12 @@ angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc'
     });
 
     $scope.successCallback = function () {
-        $state.go('list');
-	};
+        $state.get('login').data.errors = [];
+        $state.go('list', {}, {reload: true, inherit: false}).then(function () {
+            //nothing to do, everything alright
+        }, function() {
+            console.log('ya que ça qui marche visiblement');
+            window.location.reload();
+        });
+    };
 }]);
