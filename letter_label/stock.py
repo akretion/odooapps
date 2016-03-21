@@ -54,7 +54,6 @@ class StockPickingOut(orm.Model):
         picking_obj = self.pool.get('stock.picking.out')
         picking_ids = picking_obj.search(cr, uid,(
             ['name', '=', name],
-            ['state', 'in', ('assigned', 'started')]
         ))
         result = False
         for pick in picking_obj.browse(cr, uid, picking_ids):
@@ -72,8 +71,10 @@ class StockPickingOut(orm.Model):
         move_datas = {}
         for move in pick.move_lines:
             move_datas[move.id] = self._prepare_move_information(cr, uid, move)
-        result = self.process_picking(cr, uid, [id], move_datas, context)
-        return result
+        if pick.state == 'done':
+            return self.print_label(cr, uid, [id], context=context)
+        else:
+            return self.process_picking(cr, uid, [id], move_datas, context)
 
     def set_letter_number(self, cr, uid, ids, letter_number, context=None):
         assert len(ids) == 1, 'Process only one a single id at a time.'
