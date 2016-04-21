@@ -35,6 +35,6 @@ angular.module('starter')
 
   $scope.confirm = function() {
     Entrepots.set($scope.selected);
-    $state.go('fournisseur', {warehouseId: $scope.selected.id});
+    $state.go('fournisseur', {warehouseId: $scope.selected && $scope.selected.id});
   };
 }]);
