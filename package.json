@@ -1,6 +1,6 @@
 {
   "name": "Reception",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Reception",
   "dependencies": {
     "gulp-bump": "^1.0.0",

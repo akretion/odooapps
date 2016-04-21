@@ -1,7 +1,7 @@
 {
   "name": "Reception",
   "private": "true",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "akaLogin": "akretion/akaLogin#master",
     "ionic": "driftyco/ionic-bower#1.1.0",
