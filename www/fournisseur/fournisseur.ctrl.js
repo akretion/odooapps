@@ -1,6 +1,6 @@
 'use strict';
 angular.module('starter')
-.controller('FournisseurCtrl', ['$scope', '$state', '$stateParams', '$ionicLoading', 'Fournisseurs', 'Entrepots', function ($scope, $state, $stateParams, $ionicLoading, Fournisseurs, Entrepots) {
+.controller('FournisseurCtrl', ['$q','$scope', '$state', '$stateParams', '$ionicLoading', 'Fournisseurs', 'Entrepots', function ($q, $scope, $state, $stateParams, $ionicLoading, Fournisseurs, Entrepots) {
 
 
   $scope.$on('$ionicView.beforeEnter', function() {
@@ -9,20 +9,19 @@ angular.module('starter')
     });
   
     $scope.form = {}
-
-
-    Entrepots.get($stateParams.warehouseId).then(function (e) {
-      if (!e.id)
-        $state.go('entrepot');
-      
-      $scope.entrepot = e;
-      return e;
-    }).then(function (e) {
-      return Fournisseurs.getAll(e.id).then(function(fournisseurs) {
-        $scope.fournisseurs = fournisseurs;
-        //$scope.fournisseurs.push({name:'bim', id:'0'})
+    $scope.entrepots = null;
+    
+    if (!$stateParams.warehouseId) {
+      $scope.entrepots = Entrepots.getAll();
+      $scope.entrepot = null;
+    } else {
+      $scope.entrepots = Entrepots.get($stateParams.wharehouseId).then(function (e) {
+        return [e]; //be consistent with Entrepots.getAll()
       });
-    }).finally($ionicLoading.hide);
+      $scope.entrepot = $stateParams.wharehouseId;
+    }
+
+    loadFournisseurs($scope.entrepots).finally($ionicLoading.hide);
     
   });
 
@@ -32,9 +31,7 @@ angular.module('starter')
       template:'Chargement'
     });
 
-    return Fournisseurs.getAll($scope.entrepot.id).then(function(fournisseurs) {
-        $scope.fournisseurs = fournisseurs;
-    }).finally($ionicLoading.hide);
+    return loadFournisseurs($scope.entrepots).finally($ionicLoading.hide);
   }
 
   $scope.goBack = function() {
@@ -46,7 +43,7 @@ angular.module('starter')
 
     $state.go('reception', {
       fournisseurId: $scope.form.selected.id,
-      warehouseId: $scope.entrepot.id,
+      warehouseId: $scope.entrepot,
       bonDeLivraison: $scope.form.bonLivraison && encodeURIComponent($scope.form.bonLivraison)
     });
     return;
@@ -65,4 +62,27 @@ angular.module('starter')
   $scope.changed = function (...e) {
     console.log('changed', e, $scope.form.selected)
   }
+  function loadFournisseurs(entrepotsPromise) {
+    $scope.fournisseurs = []; //reset
+    var fournisseurs = [];
+
+    return entrepotsPromise.then(function (entrepots) {
+      $q.all(entrepots.map(function (e) {
+        return Fournisseurs.getAll(e.id).then(function(someFournisseurs) {
+          fournisseurs = fournisseurs.concat(someFournisseurs);
+        });
+      })).then(function() {
+        // a same fournisseur can happen twice
+        // add it only once in $scope.fournisseurs
+        var fIds = [];
+        $scope.fournisseurs = fournisseurs.filter(function (f) {
+          if (fIds.indexOf(f.id) == -1) {
+            fIds.push(f.id);
+            return true;
+          }
+          return false;
+        });
+      });
+    });
+  } 
 }]);

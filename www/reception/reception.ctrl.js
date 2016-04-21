@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('starter').controller('ReceptionCtrl', ['$scope', '$stateParams', '$state', '$ionicLoading','Receptions', 'jsonRpc', 'Entrepots', 'Fournisseurs', function ($scope, $stateParams, $state, $ionicLoading, Receptions, jsonRpc, Entrepots, Fournisseurs) {
+angular.module('starter').controller('ReceptionCtrl', ['$q', '$scope', '$stateParams', '$state', '$ionicLoading','Receptions', 'jsonRpc', 'Entrepots', 'Fournisseurs', function ($q, $scope, $stateParams, $state, $ionicLoading, Receptions, jsonRpc, Entrepots, Fournisseurs) {
 
   $scope.validList = [];
 
@@ -10,24 +10,35 @@ angular.module('starter').controller('ReceptionCtrl', ['$scope', '$stateParams',
   };
 
   $scope.$on('$ionicView.beforeEnter', function(evt, ionicView) {
+    var entrepotsPromise;
+    var fournisseurPromise;
+    $scope.stockList = [];
+
     $ionicLoading.show({
       template: 'chargement'
     });
 
-    Entrepots.get($stateParams.warehouseId).then(function (e) {
-      $scope.entrepot = e;
-    }).then(function () {
-      return Fournisseurs.get($stateParams.fournisseurId).then(function (f) {
-        $scope.fournisseur = f;
+
+    if ($stateParams.warehouseId)
+      entrepotsPromise = Entrepots.get($stateParams.warehouseId).then(function (e) {
+        return [e]; //getall returns an array
       });
-    }).then(function () {
-      return Receptions.get($scope.entrepot.id, $scope.fournisseur.id).then(function (receptions) {
-        $scope.stockList = receptions;
-        console.log('receptions', receptions);
+    else
+      entrepotsPromise = Entrepots.getAll();
+
+    fournisseurPromise = Fournisseurs.get($stateParams.fournisseurId).then(function (f) {
+        $scope.fournisseur = f;
+    });
+
+    $q.all([entrepotsPromise, fournisseurPromise]).then(function(values) {
+      var entrepots = values[0];
+      entrepots.forEach(function(entrepot) {
+        Receptions.get(entrepot.id, $scope.fournisseur.id).then(function (receptions) {
+          $scope.stockList = $scope.stockList.concat(receptions);
+        });
       });
     }).finally(function() {
-        $ionicLoading.hide();
-        
+        $ionicLoading.hide(); 
     });
 
     $scope.bonDeLivraison = decodeURIComponent($stateParams.bonDeLivraison);
