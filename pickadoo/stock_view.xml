@@ -38,7 +38,7 @@
         </record>
 
         <record id="stock.action_picking_tree" model="ir.actions.act_window">
-            <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 'hide_button': True}</field>
+            <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 'hide_button': False}</field>
         </record>
  
         <record id="action_picking_tree" model="ir.actions.act_window">
