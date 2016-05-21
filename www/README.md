@@ -25,7 +25,7 @@ Configure your http server like that :
 server {
 	root '/path/to/odoo-ionic-sample/www';
 	location /web {
-		proxy_pass	http://odoo-server/;
+		proxy_pass	http://odoo-server/web;
 		proxy_set_header	X-Forwarded-For $proxy_add_x_forwarded_for;
 	}
 }
