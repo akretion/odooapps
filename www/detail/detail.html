@@ -1,30 +1,15 @@
-<ion-view title="Production: {{item.name}} {{item.product_id.name}}">
+<ion-view title="Partner: {{item.name}}">
   <ion-content class="has-header">
-
-  <div class="row">
-      <div class="col">
-        <div class="item item-divider">Products to Consume</div>
-
-        <div ng-repeat="move in item.move_lines" class="item">
-            {{ move.product_qty }}
-            X
-            {{ move.product_id.default_code }}
-         </div>
-      </div>
-      
-      <div class="col">
-        <div class="item item-divider">Work Order</div>
-          <div ng-repeat="line in item.workcenter_lines" class="item">
-               {{ line.name }}
-          </div>
-        </div>
-      </div>
+    <div>
+        <h1>{{item.name}}</h1>
+        <p>{{item.street}}</p>
+        <p>{{item.street2}}</p>
+        <p>{{item.zip}} {{item.city}} {{item.country_id.name}}</p>
     </div>
   </ion-content>
 
   <div class="bar bar-footer">
-    <a href="#/list" class="button button-large pull-left">Back</a>
-    <button ng-click="confirm()" class="button button-large button-balanced pull-right">Confirm</button>
+    <a href="#/list" class="button button-large pull-left button-dark">Back</a>
   </div>
 
 </ion-view>

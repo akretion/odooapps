@@ -30,14 +30,14 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo'])
     templateUrl: 'list/list.html',
     controller: 'ListCtrl',
     resolve: {
-      production: 'production'
+      partner: 'partner'
     }
   }).state('detail', {
     url: '/detail/{id}',
     templateUrl: 'detail/detail.html',
     controller: 'DetailCtrl',
     resolve: {
-      production: 'production'
+      partner: 'partner'
     }
   }).state('login', {
     url: '/login',

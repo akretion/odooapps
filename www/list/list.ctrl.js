@@ -1,6 +1,6 @@
 'use strict';
 
 
-angular.module('starter').controller('ListCtrl', ['$scope', 'production', function ($scope, production) {
-	$scope.mrpProduction = production.data;
+angular.module('starter').controller('ListCtrl', ['$scope', 'partner', function ($scope, partner) {
+	$scope.resPartner = partner.data;
 }]);
