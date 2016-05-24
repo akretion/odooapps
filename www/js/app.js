@@ -29,20 +29,10 @@ angular.module('starter', ['ionic', 'ui.router', 'odoo', 'akaLogin'])
   });
 }])
 .config(['$stateProvider','$urlRouterProvider' , function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state('list', {
+  $stateProvider.state('scan', {
     url: '/',
-    templateUrl: 'list/list.html',
-    controller: 'ListCtrl',
-    resolve: {
-      partner: 'partner'
-    }
-  }).state('detail', {
-    url: '/detail/{id}',
-    templateUrl: 'detail/detail.html',
-    controller: 'DetailCtrl',
-    resolve: {
-      partner: 'partner'
-    }
+    templateUrl: 'scan/scan.html',
+    controller: 'ScanCtrl',
   }).state('login', {
     url: '/login',
     templateUrl: 'login/login.html',

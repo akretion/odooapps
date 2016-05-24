@@ -1,0 +1,35 @@
+<ion-view view-title="Scan">
+    <ion-nav-buttons side="secondary">
+      <button class="button" ng-click="logout()">Déconnexion</button>
+    </ion-nav-buttons>
+	<ion-content class="col-50 col-offset-25">
+    <h1>Bonjour {{picker_name}}</h1>
+    <h2 ng-if="!picker_name">Veuillez scanner votre badge</h2>
+    <h2 ng-if="picker_name">Veuillez scanner vos commandes puis valider</h2>
+    <form ng-submit="doSearch()">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input id="search"
+               type="text"
+               class="form-control"
+               placeholder="Recherche"
+               ng-model="$parent.scan">
+      </label>
+    </form>
+    
+    <div class="card" ng-if="message">
+        <div class="item item-text-wrap item-assertive">
+            {{ message }}
+        </div>
+    </div>
+    
+    <div class="row pick-list">
+        <div class="col col-25" ng-repeat="picking in pickings">
+            <div class="item item-balanced item-icon-right">
+                {{ picking.name }}
+                <i class="icon ion-close" ng-click="remove(picking.id);"></i>
+            </div>
+        </div>
+    </div>
+
+</ion-view>
