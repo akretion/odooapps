@@ -1,13 +1,23 @@
-<ion-view view-title="Login">
+<ion-view view-title="Test Partner - Connexion">
 	<ion-content class="padding">
-		<div ng-show="errorMessage">{{ errorMessage }}</div>
-		<div class="list">
-		<form ng-submit="submit()">
-			<label class="item item-input"><span class="input-label">Server </span><input ng-model="login.server" type="text"></label>			
-			<label class="item item-input"><span class="input-label">DB </span><input ng-model="login.db" type="text"></label>
-			<label class="item item-input"><span class="input-label">Username </span><input ng-model="login.username" type="text"></label>
-			<label class="item item-input"><span class="input-label">Password </span><input ng-model="login.password" type="password"></label>
-			<div class="item item-imput"><input type="submit" class="button button-positive"></div>
-		</form>
+		<div aka-login success-callback="successCallback()">aka login</div>
+
+	<div>
+		<div ng-repeat="error in errors" class="card">
+			<div ng-show="error.title == 'session_expired'">
+				<h2>Votre session à expiré.</h2>
+				<p>Reconnectez-vous</p></div>
+			<div ng-show="error.fullTrace.status == 0">
+				<h2>Perte de connectivité</h2>
+				<p>Votre connexion à internet a probablement été interompue.</p>
+				<p>Réssayez dans quelques instants en rechargeant la page</p>
+			</div>
+			<div ng-show="error.fullTrace.status > 500">
+				<h4 class="assertive">Erreur du serveur</h4>
+				<p>Le serveur semble rencontrer des difficultés.</p>
+				<p>Notre équipe est peut-être déjà entrain de régler le problème. Réessayez dans quelques minutes en rechargeant la page. Si le problème persiste, n'hésitez pas à contacter le support.</p>
+			</div>
+		</div>
+	</div>
 	</ion-content>
 </ion-view>

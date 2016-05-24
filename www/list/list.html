@@ -1,4 +1,7 @@
 <ion-view view-title="List">
+    <ion-nav-buttons side="secondary">
+      <button class="button" ng-click="logout()">Déconnexion</button>
+    </ion-nav-buttons>
 	<ion-content class="padding">
 		<ion-list>
 			<ion-item ng-repeat="item in resPartner" ui-sref="detail({id: item.id})">

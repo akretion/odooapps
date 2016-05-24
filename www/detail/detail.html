@@ -1,4 +1,7 @@
 <ion-view title="Partner: {{item.name}}">
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="logout()">Déconnexion</button>
+  </ion-nav-buttons>
   <ion-content class="has-header">
     <div>
         <h1>{{item.name}}</h1>

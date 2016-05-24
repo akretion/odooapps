@@ -1,20 +1,35 @@
 'use strict';
 
+angular.module('starter').controller('LoginCtrl', ['$scope', '$state', 'jsonRpc', '$ionicLoading', function ($scope, $state, jsonRpc, $ionicLoading) {
 
-angular.module('starter').controller('LoginCtrl', ['$scope', 'jsonRpc', '$state', function ($scope, jsonRpc, $state) {
+    $ionicLoading.show({
+          template: 'Chargement'
+    });
 
-	$scope.login = {
-		'db': 'db',
-		'username':'admin',
-		'server': ''
-	};
-	$scope.submit = function () {
-		console.log('send', $scope.login);
-		jsonRpc.odoo_server = $scope.login.server;
-		jsonRpc.login($scope.login.db, $scope.login.username, $scope.login.password).then(function (a) {
-			$state.go('list');
-		}, function(e) {
-			$scope.errorMessage = e.message;
-		});
-	}
+    $scope.$on('$ionicView.beforeEnter', function() {
+        $scope.errors = $state.get('login').data.errors;
+        if ($state.current.name === 'logout') {
+            jsonRpc.logout(true);
+            $ionicLoading.hide();
+        } else {
+            //login
+            jsonRpc.isLoggedIn(true).then(function (isLoggedIn) {
+                $ionicLoading.hide();
+                $state.get('login').data.errors = [];
+                if (isLoggedIn)
+                    return $scope.successCallback();
+
+            });
+        }
+    });
+
+    $scope.successCallback = function () {
+        $state.get('login').data.errors = [];
+        $state.go('list', {}, {reload: true, inherit: false}).then(function () {
+            //nothing to do, everything alright
+        }, function() {
+            console.log('ya que ça qui marche visiblement');
+            window.location.reload();
+        });
+    };
 }]);
