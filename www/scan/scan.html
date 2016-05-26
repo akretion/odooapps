@@ -31,5 +31,10 @@
             </div>
         </div>
     </div>
-
+    </ion-content>
+    <ion-footer-bar>
+      <button class="button button-large pull-right button-balanced"
+              ng-if="pickings"
+              ng-click="validate()">Valider</button>
+    </ion-footer-bar>
 </ion-view>

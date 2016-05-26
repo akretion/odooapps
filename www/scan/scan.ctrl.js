@@ -2,8 +2,11 @@
 
 
 angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function ($scope, jsonRpc) {
-    $scope.picker_name = null    
-    $scope.pickings = {}
+
+    $scope.picker_id = null;
+    $scope.picker_name = null;
+    $scope.scan = null;
+    $scope.pickings = null;
 
     $scope.doSearch = function() {
         $scope.message = ''
@@ -33,9 +36,14 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
             ).then(function(response) {
                 if (response.length) {
                     var record = response.records[0]
-                    if (record.id in $scope.pickings) {
+                    if (record.picker_id) {
+                        $scope.message = 'La commande est déjà affecté à ' + record.picker_id[1]
+                    } else if ($scope.pickings && record.id in $scope.pickings) {
                         $scope.message = 'Commande déjà scannée'
                     } else {
+                        if (!$scope.pickings) {
+                            $scope.pickings = {}
+                        }
                         $scope.pickings[record.id] = record;
                     }
                 } else {
@@ -47,5 +55,30 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
 
     $scope.remove = function(pickingId) {
         delete $scope.pickings[pickingId];
+    }
+
+    $scope.validate = function() {
+        var ids = []
+        angular.forEach($scope.pickings, function(value, key) {
+            ids.push(parseInt(key))
+        });
+        console.log(ids)
+        if (ids) {
+            jsonRpc.call(
+                'stock.picking.out',
+                'assigned_picker',
+                [ids, $scope.picker_id]
+            ).then(
+                function(response) {
+                    $scope.picker_name = null
+                    $scope.picker_id = null
+                    $scope.pickings = null
+                },
+                function(error) {
+                    var message = error.message.split("<br />");
+                    $scope.message = message[message.length -1];
+                }
+            )
+        }
     }
 }]);
