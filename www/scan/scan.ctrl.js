@@ -16,12 +16,14 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
             jsonRpc.searchRead(
                 'res.partner',
                 [['is_picker', '=', true], ['ref', '=', scan]],
-                ['id', 'name']
+                ['id', 'name', 'num_pick_today', 'num_pick_month']
             ).then(function(response) {
                 if (response.length) {
                     var picker = response.records[0]
                     $scope.picker_id = picker.id;
                     $scope.picker_name = picker.name;
+                    $scope.picker_num_today = picker.num_pick_today
+                    $scope.picker_num_month = picker.num_pick_month
                 } else {
                     $scope.message = 'Aucun preparateur trouvé'
                 }
@@ -70,9 +72,10 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
                 [ids, $scope.picker_id]
             ).then(
                 function(response) {
-                    $scope.picker_name = null
-                    $scope.picker_id = null
-                    $scope.pickings = null
+                    $scope.picker_name = null;
+                    $scope.picker_id = null;
+                    $scope.pickings = null;
+                    $scope.refresh_top_five();
                 },
                 function(error) {
                     var message = error.message.split("<br />");
@@ -81,4 +84,16 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
             )
         }
     }
+
+    $scope.refresh_top_five = function() {
+        jsonRpc.call(
+            'res.partner',
+            'get_top_five',
+            []).then(
+                function(response) {
+                    $scope.top_five = response;
+            }
+        )
+    }
+    $scope.refresh_top_five();
 }]);
