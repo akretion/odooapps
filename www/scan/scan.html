@@ -23,12 +23,20 @@
             {{ message }}
         </div>
     </div>
-    
+    <p ng-if="pickings"> Sélectionnés:</p>
     <div class="row pick-list">
-        <div class="col col-25" ng-repeat="picking in pickings">
+        <div class="col col-20" ng-repeat="picking in pickings">
             <div class="item item-balanced item-icon-right">
                 {{ picking.name }}
                 <i class="icon ion-close" ng-click="remove(picking.id);"></i>
+            </div>
+        </div>
+    </div>
+    <p ng-if="processing_pickings">En attente de livraison:</p>
+    <div class="row pick-list">
+        <div class="col col-20" ng-repeat="picking in processing_pickings">
+            <div class="item item-calm item-icon-right">
+                {{ picking.name }}
             </div>
         </div>
     </div>

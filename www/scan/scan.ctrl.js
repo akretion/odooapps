@@ -24,6 +24,7 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
                     $scope.picker_name = picker.name;
                     $scope.picker_num_today = picker.num_pick_today
                     $scope.picker_num_month = picker.num_pick_month
+                    $scope.get_processing_picking()
                 } else {
                     $scope.message = 'Aucun preparateur trouvé'
                 }
@@ -95,5 +96,18 @@ angular.module('starter').controller('ScanCtrl', ['$scope', 'jsonRpc', function 
             }
         )
     }
+
+    $scope.get_processing_picking = function() {
+        jsonRpc.searchRead(
+            'stock.picking.out', [
+                ['picker_id', '=', $scope.picker_id],
+                ['state', '!=', 'done'],
+            ],['name']
+        ).then(function(response) {
+            $scope.processing_pickings = response.records;
+            console.log(response)
+        })
+    }
+
     $scope.refresh_top_five();
 }]);
