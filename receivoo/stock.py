@@ -22,6 +22,7 @@
 
 from openerp import models, fields, api
 
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
@@ -46,13 +47,12 @@ class Receivoo(models.TransientModel):
 
     @api.model
     def get_picking_type(self):
-        domain = [('code', '=', 'incoming')]
         res = []
-        for picking_type in self.env['stock.picking.type'].search(domain):
+        for warehouse in self.env['stock.warehouse'].search([]):
             res.append({
-                'id': picking_type.id,
-                'name': picking_type.warehouse_id.name,
-                })
+                'id': warehouse.in_type_id.id,
+                'name': warehouse.name,
+            })
         return res
 
     @api.model
@@ -60,12 +60,12 @@ class Receivoo(models.TransientModel):
         domain = [
             ('picking_type_id', '=', picking_type_id),
             ('state', '=', 'assigned'),
-            ]
+        ]
         processed_supplier_ids = []
         res = []
         for picking in self.env['stock.picking'].search(domain):
             partner = picking.partner_id
-            if not partner.id in processed_supplier_ids:
+            if partner.id not in processed_supplier_ids:
                 res.append({'id': partner.id, 'name': partner.name})
                 processed_supplier_ids.append(partner.id)
         return res
@@ -79,7 +79,7 @@ class Receivoo(models.TransientModel):
         id2move = {}
         for move in moves:
             id2move[move.id] = move
-            if not move.picking_id in picking_list:
+            if move.picking_id not in picking_list:
                 picking_list.append(move.picking_id)
         for picking in picking_list:
             if picking.pack_operation_ids:
@@ -102,13 +102,13 @@ class Receivoo(models.TransientModel):
             'product_id': {
                 'id': move.product_id.id,
                 'name': move.product_id.name,
-                },
+            },
             'lot_id': {
                 'id': move.restrict_lot_id.id,
                 'name': move.restrict_lot_id.name,
-                },
+            },
             'product_qty': move.product_qty,
-            }
+        }
 
     @api.model
     def get_incoming_move(self, supplier_id, picking_type_id):
@@ -116,7 +116,7 @@ class Receivoo(models.TransientModel):
             ('picking_id.partner_id', '=', supplier_id),
             ('picking_type_id', '=', picking_type_id),
             ('state', '=', 'assigned'),
-            ]
+        ]
         res = []
         for move in self.env['stock.move'].search(domain):
             res.append(self._prepare_move_data(move))
