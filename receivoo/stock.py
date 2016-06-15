@@ -47,13 +47,12 @@ class Receivoo(models.TransientModel):
 
     @api.model
     def get_picking_type(self):
-        domain = [('code', '=', 'incoming')]
         res = []
-        for picking_type in self.env['stock.picking.type'].search(domain):
+        for warehouse in self.env['stock.warehouse'].search([]):
             res.append({
-                'id': picking_type.id,
-                'name': picking_type.warehouse_id.name,
-                })
+                'id': warehouse.in_type_id.id,
+                'name': warehouse.name,
+            })
         return res
 
     @api.model
