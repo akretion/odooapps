@@ -30,11 +30,10 @@ class Receivoo(models.TransientModel):
         In simple cases, there is one picking type per warehouse.
         """
         res = []
-        domain = [('code', '=', 'incoming')]
-        for picking_type in self.env['stock.picking.type'].search(domain):
+        for warehouse in self.env['stock.warehouse'].search([]):
             res.append({
-                'id': picking_type.id,
-                'name': picking_type.warehouse_id.name,
+                'id': warehouse.in_type_id.id,
+                'name': warehouse.name,
             })
         return res
 
