@@ -21,7 +21,6 @@ class Receivoo(models.TransientModel):
             'product_uom_id': move.product_uom.id,
             'processed': 'false',
         }
-#            'lot_id': move.restrict_lot_id.id,
 
     @api.model
     def get_picking_type(self):
@@ -81,11 +80,6 @@ class Receivoo(models.TransientModel):
             picking.do_transfer()
         return True
 
-#            'lot_id': {
-#               'id': move.restrict_lot_id.id,
-#              'name': move.restrict_lot_id.name,
-#             },
-
     @api.model
     def get_incoming_move(self, supplier_id, picking_type_id):
         """Return a list of move for a given supplier / picking_type."""
@@ -98,7 +92,3 @@ class Receivoo(models.TransientModel):
         for move in self.env['stock.move'].search(domain):
             res.append(move.get_receivoo_data())
         return res
-
-#    @api.model
-#    def notify_add_item(self, move_data):
-#        return True
