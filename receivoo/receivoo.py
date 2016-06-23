@@ -6,6 +6,8 @@ from openerp import models, api
 
 
 class Receivoo(models.TransientModel):
+    """API for goods receiption from external system."""
+
     _name = 'receivoo'
 
     @api.model
@@ -18,13 +20,17 @@ class Receivoo(models.TransientModel):
             'location_dest_id': move.location_dest_id.id,
             'product_uom_id': move.product_uom.id,
             'processed': 'false',
-            'lot_id': move.restrict_lot_id.id,
         }
+#            'lot_id': move.restrict_lot_id.id,
 
     @api.model
     def get_picking_type(self):
-        domain = [('code', '=', 'incoming')]
+        """List of places where you will do the receiption.
+
+        In simple cases, there is one picking type per warehouse.
+        """
         res = []
+        domain = [('code', '=', 'incoming')]
         for picking_type in self.env['stock.picking.type'].search(domain):
             res.append({
                 'id': picking_type.id,
@@ -34,12 +40,13 @@ class Receivoo(models.TransientModel):
 
     @api.model
     def get_supplier(self, picking_type_id):
+        """List of suppliers for a given picking_type."""
+        processed_supplier_ids = []
+        res = []
         domain = [
             ('picking_type_id', '=', picking_type_id),
             ('state', '=', 'assigned'),
         ]
-        processed_supplier_ids = []
-        res = []
         for picking in self.env['stock.picking'].search(domain):
             partner = picking.partner_id
             if not partner.id in processed_supplier_ids:
@@ -53,11 +60,12 @@ class Receivoo(models.TransientModel):
 
         data: a list of move (given in a precedent call
             by get_incoming_move)
+        supplier_ref: (opt) name of the delivery slip 
         """
-        move_ids = [m['id'] for m in data]
-        moves = self.env['stock.move'].browse(move_ids)
         picking_list = []
         id2move = {}
+        move_ids = [m['id'] for m in data]
+        moves = self.env['stock.move'].browse(move_ids)
         for move in moves:
             id2move[move.id] = move
             if not move.picking_id in picking_list:
@@ -81,7 +89,7 @@ class Receivoo(models.TransientModel):
 
     @api.model
     def get_incoming_move(self, supplier_id, picking_type_id):
-        """Returns a list of move for a given supplier / picking_type."""
+        """Return a list of move for a given supplier / picking_type."""
         domain = [
             ('picking_id.partner_id', '=', supplier_id),
             ('picking_type_id', '=', picking_type_id),
@@ -92,6 +100,6 @@ class Receivoo(models.TransientModel):
             res.append(move.get_receivoo_data())
         return res
 
-    @api.model
-    def notify_add_item(self, move_data):
-        return True
+#    @api.model
+#    def notify_add_item(self, move_data):
+#        return True
