@@ -13,7 +13,7 @@ Configuration
 
 If you need to return other data, override `move.get_receivoo_data()` like this : 
 
-```
+.. code:: python
 # in custom/move.py
 
 from openerp import models, api
@@ -28,7 +28,7 @@ class StockMove(models.Model):
         data['my_new_key'] = 'my_new_value'
         return data
 
-```
+
 
 Usage
 =====
