@@ -18,7 +18,6 @@ class StockMove(models.Model):
         self.ensure_one()
         return {
             'id': self.id,
-#            'notify_add_item': True,
             'name': self.product_id.name,
             'product_id': self.product_id.get_receivoo_data(),
             'product_qty': self.product_qty,
