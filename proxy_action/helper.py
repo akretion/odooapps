@@ -1,44 +1,32 @@
-# -*- coding: utf-8 -*-
-###############################################################################
-#
-#   Module for OpenERP
-#   Copyright (C) 2014 Akretion (http://www.akretion.com).
-#   @author Sébastien BEAU <sebastien.beau@akretion.com>
-#
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU Affero General Public License as
-#   published by the Free Software Foundation, either version 3 of the
-#   License, or (at your option) any later version.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU Affero General Public License for more details.
-#
-#   You should have received a copy of the GNU Affero General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-###############################################################################
+# coding: utf-8
+# Copyright 2014 Sébastien BEAU <sebastien.beau@akretion.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-
-from openerp.osv import fields, orm
-from openerp import netsvc
+from openerp import api, models
 import base64
 
 
-class ProxyActionHelper(orm.AbstractModel):
-    _name="proxy.action.helper"
+class ProxyActionHelper(models.AbstractModel):
+    _name = "proxy.action.helper"
+    _description = "Forward HTTP actions to front-end proxy"
 
+    @api.model
     def get_print_data_action(
-            self, cr, uid, data,
-            printer_name='laser',
+            self, data,
+            printer_name=None,
             raw=False,
+            to_encode64=False,
             copies=1,
-            host='https://localhost',
-            context=None):
-        kwargs = {'options':{}}
-        if copies > 1:
-            kwargs['options']['copie'] = copies
+            host='https://localhost'):
+        """ Prepare a PyWebdriver.print action """
+
+        # remove copies from v9 api, log warning in case of use
+        copie = copies
+        if to_encode64:
+            data = base64.b64encode(data)
+        kwargs = {'options': {}}
+        if copie > 1:
+            kwargs['options']['copie'] = copie
         if raw:
             kwargs['options']['raw'] = True
         return {
@@ -49,15 +37,10 @@ class ProxyActionHelper(orm.AbstractModel):
                 }
             }
 
-    def get_print_report_action(self, cr, uid, report_name,
-                                model, object_ids, **kwargs):
-        result = self.pool['report'].get_pdf(
-            cr, uid, object_ids, report_name,
-            context=kwargs.get('context'))
-        data = base64.b64encode(result)
-        return self.get_print_data_action(cr, uid, data, **kwargs)
-
-    def return_action(self, todo):
+    def send_proxy(self, todo):
+        """ @param todo: list of requests
+                         (printings, webservices)
+        """
         return {
             'type': 'ir.actions.act_proxy',
             'action_list': todo,
