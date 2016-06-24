@@ -20,18 +20,19 @@
 #
 ###############################################################################
 
-{'name': 'receivoo',
- 'version': '0.0.1',
- 'author': 'Akretion',
- 'website': 'www.akretion.com',
- 'license': 'AGPL-3',
- 'category': 'Generic Modules',
- 'depends': [
-     'stock',
- ],
- 'data': [
-     'stock_view.xml',
- ],
- 'installable': True,
- 'application': True,
- }
+{
+    'name': 'receivoo',
+    'version': '0.0.2',
+    'author': 'Akretion',
+    'website': 'https://www.akretion.com',
+    'license': 'AGPL-3',
+    'category': 'Generic Modules',
+    'depends': [
+        'stock',
+    ],
+    'data': [
+        'stock_view.xml',
+    ],
+    'installable': True,
+    'application': True,
+}
