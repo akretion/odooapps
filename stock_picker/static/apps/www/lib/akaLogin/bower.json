@@ -1,0 +1,13 @@
+{
+  "name": "akaLogin",
+  "main": "akaLogin.js",
+  "version": "0.0.0",
+  "authors": [
+    "hparfr <raph@hpar.fr>"
+  ],
+  "description": "Login form for odoo / ionic apps",
+  "license": "MIT",
+  "dependencies": {
+    "odoo": "hparfr/angular-odoo#develop"
+  }
+}

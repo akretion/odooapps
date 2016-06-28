@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="ir_exp_stock_picker" model="ir.exports">
+    <field name="name">Order Picker Info</field>
+    <field name="resource">stock.picking.out</field>
+</record>
+
+    </data>
+</openerp>

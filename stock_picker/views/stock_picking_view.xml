@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_out_form" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_type']/.." position="after">
+                    <group name="picker">
+                        <field name="picker_id"/>
+                        <field name="date_picked"/>
+                    </group>
+                </xpath> 
+            </field>
+        </record>
+
+        <record id="view_picking_out_search" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="picker_id" filter_domain="[('picker_id','child_of',self)]"/>
+                </field>
+                <filter icon="terp-stock_effects-object-colorize" position="after">
+                    <filter string="Picker" context="{'group_by':'picker_id'}"/>
+                    <filter string="Picked Date" context="{'group_by':'date_picked'}"/>
+                </filter>
+            </field>
+        </record>
+
+    </data>
+</openerp>

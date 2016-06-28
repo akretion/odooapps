@@ -1,0 +1,19 @@
+/* Empty. Add your own CSS if you like */
+
+.pick-list {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.top-five {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.bar-footer {
+    height: 180px;
+}
+
+#button-validate {
+    top: 110px;
+}

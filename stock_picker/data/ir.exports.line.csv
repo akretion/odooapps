@@ -1,0 +1,4 @@
+id,export_id/id,name
+name,ir_exp_stock_picker,name
+picker_name,ir_exp_stock_picker,picker_id/name
+date_picked,ir_exp_stock_picker,date_picked

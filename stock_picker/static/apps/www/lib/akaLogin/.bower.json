@@ -1,0 +1,22 @@
+{
+  "name": "akaLogin",
+  "main": "akaLogin.js",
+  "authors": [
+    "hparfr <raph@hpar.fr>"
+  ],
+  "description": "Login form for odoo / ionic apps",
+  "license": "MIT",
+  "dependencies": {
+    "odoo": "hparfr/angular-odoo#develop"
+  },
+  "homepage": "https://github.com/akretion/akaLogin",
+  "_release": "b32addb783",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b32addb78384ba4aef599c0282d3155cf8b7a0fa"
+  },
+  "_source": "git://github.com/akretion/akaLogin.git",
+  "_target": "master",
+  "_originalSource": "akretion/akaLogin"
+}
