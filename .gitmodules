@@ -1,3 +1,0 @@
-[submodule "stock_picker/ionic"]
-	path = stock_picker/ionic
-	url = https://github.com/akretion/odoo-ionic-picker
