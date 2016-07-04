@@ -5,7 +5,7 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
     var picking = jsonRpc.syncImportObject({
         model: 'stock.picking.out',
         func_key: 'pickadoo',
-        domain: [
+        base_domain: [
             ['type', '=', 'out'],
             '|',
                 ['state', '=', 'assigned'],
@@ -20,6 +20,7 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
                         ['process_in_pickadoo', '=', true],
                     ['paid', '=', true]
             ],
+        filter_domain: [],
         limit: 50,
         interval: window.pickingConfig.refresh_interval,
         });
