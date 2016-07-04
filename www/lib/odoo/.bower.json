@@ -1,0 +1,21 @@
+{
+  "name": "odoo",
+  "dependencies": {
+    "angular": "~1.5.3"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.3",
+    "jasmine": "~2.2.1"
+  },
+  "main": "dist/odoo.js",
+  "homepage": "https://github.com/akretion/angular-odoo",
+  "_release": "fe0e583d80",
+  "_resolution": {
+    "type": "branch",
+    "branch": "develop",
+    "commit": "fe0e583d80a82854e0d2b263151ac76cd4bc5b1e"
+  },
+  "_source": "git://github.com/akretion/angular-odoo.git",
+  "_target": "develop",
+  "_originalSource": "akretion/angular-odoo"
+}
