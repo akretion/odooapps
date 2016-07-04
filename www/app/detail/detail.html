@@ -1,6 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <span us-spinner spinner-key="spinner-1"></span>
+
+    <div class="col-md-12 alert alert-danger" ng-if="item.note">
+        <strong>{{ item.note }}</strong>
+    </div>
+
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -80,16 +85,6 @@
       </div>
     </div>
 
-    <div class="col-md-8" ng-if="item.note">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ 'NOTE' | translate }}</h3>
-        </div>
-        <div class="panel-body">
-            {{ item.note }}
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
