@@ -127,8 +127,8 @@ angular.module('pickadoo')
                         message = translations.SET_PAID_ORDER_AS_PREPARED;
                     } else {
                         message = translations.SET_CARRIER_ORDER_AS_PREPARED;
+                        jsonRpc.call('stock.picking.out', 'print_label', [[$scope.item.id]], {})
                     };
-
                     var modal = $modal({
                         scope: $scope,
                         title: translations.CAN_NOT_PROCESS_PICKING,
