@@ -374,8 +374,8 @@ angular.module('odoo').provider('jsonRpc', function jsonRpcProvider() {
 			},
 			get_sessionId: function () {
 				return document.cookie.split('; ')
-				.filter(function (x) { return x.indexOf('session_id') === 0; })
-				.map(function (x) { return x.split('=')[1]; })
+				.filter(function (x) { return x.indexOf('instance0|session_id') === 0; })
+				.map(function (x) { return x.split('=')[1].replace('%22', '').replace('%22', '');})
 				.pop() || session_id || "";
 			},
 			set_sessionId: function (val) {
