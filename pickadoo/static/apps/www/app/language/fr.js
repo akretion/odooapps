@@ -9,6 +9,7 @@ window.translateFR = {
     EMAIL: 'Email',
     PAYMENT_METHOD: 'methode de paiement',
     ADD_ALL: 'Tout ajouter',
+    EDIT: 'Editer',
     TO_SEND: 'A traiter',
     DONE: 'Traité',
     ADD_ONE: '+ 1',

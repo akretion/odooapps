@@ -9,7 +9,11 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <button class="btn btn-success dropdown-toggle pull-right" type="button"
+          <a class="btn btn-info dropdown-toggle pull-left"
+             target="_blank"
+             href="/#id={{item.id}}&view_type=form&model=stock.picking.out&action=stock.action_picking_tree">{{ 'EDIT' | translate }}</a>
+
+            <button class="btn btn-success dropdown-toggle pull-right" type="button"
               ng-hide="item.blocked"
               ng-click="addAll()">{{ 'ADD_ALL' | translate }}</button>
           <h2 class="panel-title">{{ 'TO_SEND' | translate }} <span class="partial" ng-if="item.partial">{{ 'PARTIAL' | translate }}</span></h2>
