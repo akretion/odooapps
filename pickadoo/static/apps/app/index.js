@@ -1,13 +1,8 @@
 'use strict';
 
-angular.module('pickadoo', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'buche', 'blockUI', 'smart-table', 'pascalprecht.translate',])
+angular.module('pickadoo', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'odoo', 'blockUI', 'smart-table', 'pascalprecht.translate',])
   .config(function ($stateProvider, $urlRouterProvider, jsonRpcProvider, $modalProvider, blockUIConfig, $translateProvider) {
     $stateProvider
-      .state('login', {
-        url: '/login',
-        templateUrl: 'app/login/login.html',
-        controller: 'LoginCtrl'
-      })
       .state('list', {
         url: '/list',
         templateUrl: 'app/list/list.html',
@@ -29,13 +24,25 @@ angular.module('pickadoo', ['ngAnimate', 'ngTouch', 'ngSanitize', 'ngResource', 
         controller: 'PrintCtrl'
       })
  ; 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/list');
     blockUIConfig.autoBlock = false;
     $translateProvider
         .translations('fr', window.translateFR)
         .preferredLanguage('fr');
 
   }).run(function($rootScope, $interval, jsonRpc, $state, $modal) {
-
-        $state.go('login');
+        // Redirect to odoo login page if not connected
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                jsonRpc.isLoggedIn(true).then(
+					function(result) {
+                        console.log(result);
+						if (!result) {
+                            window.location = '/'
+						}
+					}
+				)
+			}
+		)
+        $state.go('list');
      });

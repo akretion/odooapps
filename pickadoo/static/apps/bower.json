@@ -12,7 +12,6 @@
     "bootstrap-sass-official": "~3.3.1",
     "angular-strap": "2.3.x",
     "angular": "~1.5.7",
-    "buche": "https://github.com/FranzPoize/buche.git#~0.0.1",
     "odoo": "akretion/angular-odoo#develop",
     "angular-block-ui": "~0.2.0",
     "angular-smart-table": "~2.1.8",
