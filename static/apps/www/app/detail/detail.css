@@ -1,0 +1,28 @@
+.panel-title {
+  font-size: 28px;
+}
+
+.item-name {
+  text-align: center;
+  padding-top: 8px;
+  font-size: 28px;
+  color: white;
+}
+
+.qty {
+  font-size: 30px;
+}
+
+.paid_status_false {
+  color: red;
+}
+
+.paid_status_true {
+  color: green;
+}
+
+.partial {
+  color: red;
+}
+
+

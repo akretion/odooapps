@@ -1,0 +1,29 @@
+<nav class="navbar navbar-fixed-top navbar-inverse" ng-controller="NavbarCtrl">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="list">
+        <span class="glyphicon glyphicon-home"></span> Pickadoo
+      </a>
+      <a class="navbar-brand" ui-sref="print">
+          <span class="glyphicon glyphicon-print"></span>{{ 'DIRECT_PRINT' | translate }}
+      </a>
+    </div>
+    
+    <form class="navbar-form navbar-right" role="search" ng-submit="doSearch()">
+      <div class="form-group">
+          <input id="search" type="text" class="form-control" placeholder="{{ 'SEARCH' | translate }}" ng-model="searchBar">
+      </div>
+    </form>
+
+    <div class="item-name" ng-show="navTitle">
+        {{ navTitle }}
+    </div>
+<!--
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+      <ul class="nav navbar-nav navbar-right">
+        <li>Current date: {{ date | date:'yyyy-MM-dd' }}</li>
+      </ul>
+    </div>
+-->
+  </div>
+</nav>

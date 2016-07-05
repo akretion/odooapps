@@ -1,0 +1,17 @@
+<div>
+  <h2>Login</h2>
+  <form class="form" name="bucheLoginForm" id="buche-login-form">
+    <div class="form-group" ng-class="{'has-error':bucheLoginForm.loginInput.$error.doesntExist}">
+      <input name="loginInput" id="loginInput" type="text" class="form-control" placeholder="username" ng-model="bucheUsername" required data-toggle="tooltip" data-placement="{{bucheLoginTooltipPlacement}}" title="{{bucheLoginTooltipText}}"></input >
+      <a href="{{forgotUsernameLink}}">{{forgotUsernameText}}</a>
+    </div>
+    <div class="form-group" ng-class="{'has-error':bucheLoginForm.passwordInput.$error.passwordError}">
+      <input name="passwordInput" id="passwordInput" type="password" class="form-control" placeholder="Password" ng-model="buchePassword" required data-toggle="tooltip" data-placement="{{buchePasswordTooltipPlacement}}" title="{{buchePasswordTooltipText}}"></input>
+      <a href="{{forgotPasswordLink}}">{{forgotPasswordText}}</a>
+    </div>
+    <div ng-messages="bucheLoginForm.result.$error">
+      <div ng-message="credentials">Le mot de passe ne correspond pas a l'identifiant</div>
+    </div>
+    <button class="btn btn-primary" ng-click="bucheLogin()" ng-disabled="bucheLoginForm.$invalid">Login</button>
+  </form>
+</div>

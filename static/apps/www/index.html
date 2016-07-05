@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js" ng-app="pickadoo">
+  <head>
+    <meta charset="utf-8">
+    <title>pickadoo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/angular-block-ui/dist/angular-block-ui.min.css"/>
+    <link rel="stylesheet" href="app/detail/detail.css"/>
+    <link rel="stylesheet" href="app/list/list.css"/>
+
+    <!-- angularjs js -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-block-ui/dist/angular-block-ui.min.js"></script>
+    <script src="lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="lib/angular-messages/angular-messages.min.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="lib/angular-smart-table/dist/smart-table.min.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="lib/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="lib/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="lib/angular-touch/angular-touch.min.js"></script>
+    <script src="lib/angular-translate/angular-translate.min.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/odoo/dist/odoo.js"></script>
+    <script src="lib/buche/dist/buche.js"></script>
+
+    <!-- your app's js -->
+    <script src="app/index.js"></script>
+    <script src="app/config/config.js"></script>
+    <script src="app/detail/detail.controller.js"></script>
+    <script src="app/language/fr.js"></script>
+    <script src="app/list/list.controller.js"></script>
+    <script src="app/login/login.controller.js"></script>
+    <script src="app/print/print.controller.js"></script>
+    <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/prodooSync/prodooSync.js"></script>
+  </head>
+  <body>
+
+
+  <div ng-include="'components/navbar/navbar.html'"></div>
+  <div ui-view></div>
+
+
+  </body>
+</html>

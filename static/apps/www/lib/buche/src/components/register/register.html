@@ -1,0 +1,21 @@
+<div>
+  <h2>Register</h2>
+  <form class="form" name="bucheRegisterForm">
+    <div class="form-group" ng-class="{'has-error':bucheRegisterForm.loginInput.$error.alreadyUsed || bucheRegisterForm.login.$error.noRespect}">
+      <input name="loginInput" type="text" class="form-control" placeholder="username" ng-model="bucheRegUsername" required></input>
+    </div>
+    <div class="form-group" ng-class="{'has-error':bucheRegisterForm.emailInput.$error}">
+      <input type="text" class="form-control" placeholder="Email address" ng-model="bucheRegEmail" required></input>
+    </div>
+    <div class="form-group" ng-class="{'has-warning':bucheRegisterForm.passwordInput.$error.passwordWarning,'has-success':bucheRegisterForm.passwordInput.$success,'has-error':bucheRegisterForm.passwordInput.$error.passwordError}">
+      <input type="password" name="passwordInput" id="registerPasswordInput" class="form-control" placeholder="Password" ng-model="bucheRegPassword" required data-toggle="tooltip" data-placement="{{buchePasswordTooltipPlacement}}" title="{{buchePasswordTooltipText}}"></input>
+    </div>
+    <div ng-if="!bucheNoConfirm" class="form-group" ng-class="{'has-warning':bucheRegisterForm.confirmPasswordInput.$error.warning,'has-success':bucheRegisterForm.confirmPasswordInput.$success,'has-error':bucheRegisterForm.confirmPasswordInput.$error.error}">
+      <input name="confirmPasswordInput" type="password" class="form-control" placeholder="Password confirmation" ng-model="bucheRegPasswordConfirm" required></input>
+    </div>
+    <div ng-messages="bucheRegisterForm.result.$error">
+      <div ng-message="confirmation">Le mot de passe ne correspond pas a l'identifiant</div>
+    </div>
+    <button class="btn btn-primary" ng-click="bucheRegisterCb()" ng-disabled="bucheRegisterForm.$invalid">Register</button>
+  </form>
+</div>

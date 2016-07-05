@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row">
+    <span us-spinner spinner-key="spinner-1"></span>
+
+    <div class="col-md-12 alert alert-danger" ng-if="item.note">
+        <strong>{{ item.note }}</strong>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button class="btn btn-success dropdown-toggle pull-right" type="button"
+              ng-hide="item.blocked"
+              ng-click="addAll()">{{ 'ADD_ALL' | translate }}</button>
+          <h2 class="panel-title">{{ 'TO_SEND' | translate }} <span class="partial" ng-if="item.partial">{{ 'PARTIAL' | translate }}</span></h2>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group list-group-striped">
+            <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in todoMoves">
+              <div class="row">
+                <div class="col-md-6">
+                  {{move.product.model}} - {{move.product.name}} - {{move.product.color}} - {{move.product.size}} - {{move.product.brand}} - {{move.product.collection}} - {{move.product.ean}}
+                </div>
+                <div class="col-md-1 qty">
+                  {{move.qty}}
+                </div>
+              </div>
+              <div class="pull-right" ng-hide="item.blocked">
+                <button class="btn btn-success dropdown-toggle" type="button"
+                    ng-click="moveAddAll(move.id)">{{ 'ADD_ALL' | translate }}</button>
+                <button class="btn btn-success dropdown-toggle" type="button"
+                    ng-click="moveAddOne(move.id)">{{ 'ADD_ONE' | translate }}</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'DONE' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group list-group-striped">
+            <li class="list-group-item list-link no-radius clearfix" ng-repeat="move in processMoves">
+              <div class="row">
+                <div class="col-md-6">
+                  {{move.product.model}} - {{move.product.name}} - {{move.product.color}} - {{move.product.size}} - {{move.product.brand}} - {{move.product.collection}} - {{move.product.ean}}
+                </div>
+                <div class="col-md-1 qty">
+                  {{move.qty}}
+                </div>
+              </div>
+              <div class="pull-right">
+                <button class="btn btn-danger dropdown-toggle pull-right" type="button" ng-click="moveCancelProcess(move.id)">{{ 'CANCEL' | translate }}</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-hide="! item.blocked">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'BLOCKED' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+            {{ item.blockage_reason }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'PAYMENT' | translate }}</h3>
+        </div>
+        <div class="panel-body">
+            <p ng-bind-html="paymentMessage"></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="navbar navbar-fixed-bottom navbar-inverse">
+  <div class="container-fluid">
+    <button class="btn btn-danger navbar-btn dropdown-toggle" type="button"
+        ng-click="cancel()">{{ 'CANCEL' | translate }}</button>
+  </div>
+</div>
