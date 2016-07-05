@@ -1,11 +1,14 @@
 <nav class="navbar navbar-fixed-top navbar-inverse" ng-controller="NavbarCtrl">
   <div class="container-fluid">
     <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <span class="glyphicon glyphicon-home"></span> ERP
+      </a>
       <a class="navbar-brand" ui-sref="list">
-        <span class="glyphicon glyphicon-home"></span> Pickadoo
+        <span class="glyphicon glyphicon-gift"></span> Pickadoo
       </a>
       <a class="navbar-brand" ui-sref="print">
-          <span class="glyphicon glyphicon-print"></span>{{ 'DIRECT_PRINT' | translate }}
+          <span class="glyphicon glyphicon-print"></span> {{ 'DIRECT_PRINT' | translate }}
       </a>
     </div>
     
@@ -18,12 +21,5 @@
     <div class="item-name" ng-show="navTitle">
         {{ navTitle }}
     </div>
-<!--
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-      <ul class="nav navbar-nav navbar-right">
-        <li>Current date: {{ date | date:'yyyy-MM-dd' }}</li>
-      </ul>
-    </div>
--->
   </div>
 </nav>

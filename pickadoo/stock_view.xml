@@ -88,5 +88,18 @@
             parent="stock.menu_stock_warehouse_mgmt"
             sequence="4"/>
 
+        <record id="action_open_pickadoo" model="ir.actions.act_url">
+            <field name="name">Pickadoo</field>
+            <field name="url">/pickadoo/static/apps/index.html</field>
+            <field name="target">self</field>
+        </record>
+
+        <menuitem
+            action="action_open_pickadoo"
+            id="menu_open_pickadoo"
+            name="Pickadoo"
+            parent="stock.menu_stock_warehouse_mgmt"
+            sequence="5"/>
+
     </data>
 </openerp>
