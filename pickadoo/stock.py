@@ -111,14 +111,19 @@ class StockPickingOut(orm.Model):
 
     def process_picking(self, cr, uid, ids, data_moves, context=None):
         assert len(ids) == 1, 'You can only process one picking'
+        if not context:
+            context = {}
         partial_datas = {}
         for move_id, move_data in data_moves.items():
             partial_datas["move" + str(move_id)] = {
                 'product_qty': float(move_data['qty']),
                 'product_uom': 1, #TODO FIXME should be not hardcoded
                 }
-        self.do_partial(cr, uid, ids, partial_datas, context=context)
-        return self.print_label(cr, uid, ids, context=context)
+        res = self.do_partial(cr, uid, ids, partial_datas, context=context)
+        picking_id = res[ids[0]]['delivered_picking']
+        if ids[0] != picking_id:
+            context['backorder_id'] = ids[0]
+        return self.print_label(cr, uid, [picking_id], context=context)
 
     def _add_label(self, cr, uid, ids, todo, context=None):
         assert len(ids) == 1, 'Process only one a single id at a time.'
