@@ -17,7 +17,8 @@ class StockPicking(orm.Model):
             'res.partner',
             string='Order Picker',
             domain=[('is_picker', '=', True)]),
-        'date_picked': fields.datetime('Picked Date')
+        'date_picked': fields.datetime('Picked Date'),
+        'week_picked': fields.char('Picked Week'),
     }
 
 
@@ -25,7 +26,7 @@ class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
 
     def __init__(self, pool, cr):
-        for field in ['picker_id', 'date_picked']:
+        for field in ['picker_id', 'date_picked', 'week_picked']:
             self._columns[field] = StockPicking._columns[field]
         super(StockPickingOut, self).__init__(pool, cr)
 
@@ -43,9 +44,10 @@ class StockPickingOut(orm.Model):
                 % picked_name,
                 )
         else:
-            today = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            today = datetime.now()
             self.write(cr, uid, ids, {
                 'picker_id': picker_id,
-                'date_picked': today,
+                'date_picked': today.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                'week_picked': today.strftime("%Y-%W"),
                 })
         return True
