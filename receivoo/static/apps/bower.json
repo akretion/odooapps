@@ -1,0 +1,23 @@
+{
+  "name": "Reception",
+  "private": "true",
+  "version": "1.0.4",
+  "dependencies": {
+    "akaLogin": "akretion/akaLogin#master",
+    "ionic": "driftyco/ionic-bower#1.1.0",
+    "odoo": "hparfr/angular-odoo#develop"
+  },
+  "resolutions": {
+    "angular": "~1.4.4"
+  },
+  "overrides": {
+    "ionic": {
+      "main": [
+        "js/ionic.bundle.js",
+        "css/ionic.css",
+        "fonts/ionicons.woff",
+        "fonts/ionicons.ttf"
+      ]
+    }
+  }
+}

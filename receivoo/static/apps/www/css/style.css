@@ -1,0 +1,186 @@
+/* Empty. Add your own CSS if you like */
+
+.centered-form {
+  display:flex;
+  justify-content:space-around;
+}
+
+.centered-form .list {
+  flex:0 1 400px;
+}
+
+.fixed-right-bottom {
+  position:fixed;
+  bottom:10px;
+  right:20px;
+}
+
+.fixed-left-bottom {
+  position:fixed;
+  bottom:10px;
+  left:20px;
+}
+
+.calc {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background-color: #3e3e3e;
+  color: #f3f3f3;
+  padding: 10px;
+  width:220px;
+}
+
+.display {
+  width:200px;
+  display:flex;
+  flex-direction:row;
+  margin-bottom:10px;
+}
+
+.close-keyboard {
+  background-color:#ef473a;
+  color: #f3f3f3;
+  height: 40px;
+  flex:0 0 40px;
+  text-align:center;
+  line-height:20px;
+  font-size:25px;
+  padding-top:7px;
+  border-radius:50%;
+}
+
+.amount {
+  flex: 0 1 100%;
+  background-color: #f3f3f3;
+  color:#3e3e3e;
+  border-radius:3px;
+  margin-right: 10px;
+  height: 40px;
+  padding:10px;
+  line-height:20px;
+  text-align:right;
+}
+
+.keyboard {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content:space-between;
+}
+
+.key {
+  flex: 0 0 30%;
+  height: 60px;
+  font-size: 24px;
+  line-height: 60px;
+  text-align: center;
+  cursor: pointer;
+  border-radius:3px;
+  margin-bottom:5px;
+}
+
+.key.key-valid {
+  flex: 0 0 66.66666667%;
+  background-color:#33cd5f;
+  border-radius:3px;
+}
+
+.key.key-valid:hover, .key.key-valid:focus, .key.key-valid:active {
+  background-color:#2BA64E;
+}
+
+.key.key-control {
+  flex: 0 0 50%;
+  font-size:15px;
+}
+
+.key:hover, .key:focus, .key:active {
+  background-color:#595959;
+}
+
+.item-content {
+  overflow:visible !important;
+  z-index:auto !important;
+  position:static !important;
+}
+
+.list-with-flex.row {
+  margin-bottom:60px;
+}
+
+.list-with-flex .item {
+  overflow:visible !important;
+  z-index:auto !important;
+  display:flex;
+  flex-flow:row nowrap;
+  padding:0;
+  margin:0;
+}
+
+.list-with-flex .item.ng-move,
+.list-with-flex .item.ng-enter,
+.list-with-flex .item.ng-leave {
+  -webkit-transition:all ease 0.2s;
+  transition:all ease 0.2s;
+}
+
+.list-with-flex .item.ng-leave.ng-leave-active,
+.list-with-flex .item.ng-move,
+.list-with-flex .item.ng-enter {
+  opacity:0;
+  height:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+}
+
+.list-with-flex .item.ng-leave,
+.list-with-flex .item.ng-move.ng-move-active,
+.list-with-flex .item.ng-enter.ng-enter-active {
+  opacity:1;
+  height:74px;
+  padding-top:16px;
+  padding-bottom:16px;
+}
+
+.list-text {
+  text-overflow:ellipsis;
+  overflow:hidden;
+  line-height: 40px;
+  padding-left: 10px;
+  flex: 1 1 100%;
+}
+
+.list-count {
+  font-size: 24px;
+  color: #fefefe;
+  background-color: #387ef5;
+  padding: 10px;
+  flex: 0 0 50px;
+  text-align: center;
+  cursor:pointer;
+}
+
+.list-button-remove {
+  flex:0 0 30px;
+  background-color: #3453ff;
+  color: #f5f5f5;
+  padding: 10px;
+  position: relative;
+  margin-left:5px;
+  background-color:#ef473a;
+  cursor:pointer;
+}
+
+.overboard {
+  background-color:#ffc900;
+  padding:10px;
+  color:#fdfdfd;
+  flex:0 0 120px;
+}
+
+.list-menu-right {
+  margin-top:44px;
+}
