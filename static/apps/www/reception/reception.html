@@ -1,0 +1,61 @@
+<ion-view view-title="Réception - {{ entrepot.name }} - {{ fournisseur.name }}">
+  <ion-nav-title>Réception - {{ entrepot.name }} - {{ fournisseur.name }}</ion-nav-title>
+  <ion-nav-buttons side="primary">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Recherche" ng-model="search.name"></input>
+    </label> 
+    <button ng-click="search.name=''" class="ion-backspace button" title="Effacer la recherche"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="logout()">Déconnexion</button>
+  </ion-nav-buttons>
+	<ion-content class="padding">
+  <h1>Bon de livraison N° {{bonDeLivraison}}</h1>
+  <div class="row list-with-flex">
+    <div class="col col-50">
+      <ion-list>
+      <ion-item>Produits attendus</ion-item>
+      <ion-item ng-show="(stockList | filter:{product_qty: '!0'}) == 0">Tous les produits ont été réceptionnés. Cliquez sur valider pour terminer la réception.</ion-list>
+      <ion-item ng-repeat="item in stockList | filter: search.name | filter:{product_qty: '!0'}" ng-click="putOnValid(item)">
+          <div class="list-count">
+            {{item.product_qty}}
+          </div>
+          <div class="list-text">
+            {{item.lot_id.name}}
+            {{item.customer}}
+            {{item.product_id.name}}
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="col col-50">
+      <ion-list>
+      <ion-item>Produits reçus</ion-item>
+      <ion-item ng-show="validList.length == 0">
+        <div class="card">Cliquez sur les produits que vous souhaitez réceptionner.</div>
+      </ion-item>
+        <ion-item ng-repeat="item in validList">
+          <div class="list-count" ng-click="show = true;">
+            {{item.product_qty}}
+          </div>
+          <div ng-show="item.overboard > 0" class="overboard">
+            {{item.product_qty - item.overboard}} commandés
+          </div>
+          <div class="list-text">
+            {{item.lot_id.name}}
+            {{item.customer}}
+            {{item.product_id.name}}
+          </div>
+          <div class="list-button-remove" ng-click="removeFromValid(item)">
+            <i class="icon ion-close"></i>
+          </div>
+          <div digit-keyboard show="show" item-id="item.id"></div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+	</ion-content>
+  <button class="button button-positive fixed-right-bottom" ng-click="doTransfer()">Valider</button>
+  <button class="button button-energized fixed-left-bottom" ng-click="goBack()">Annuler</button>
+</ion-view>
