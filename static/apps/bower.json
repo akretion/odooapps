@@ -1,0 +1,23 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "version": "1.0.3",
+  "dependencies": {
+    "akaLogin": "akretion/akaLogin#master",
+    "ionic": "driftyco/ionic-bower#~1.1.0",
+    "odoo": "hparfr/angular-odoo#develop"
+  },
+  "resolutions": {
+    "angular": "~1.4.3"
+  },
+  "overrides": {
+    "ionic": {
+      "main": [
+        "css/ionic.css",
+        "js/ionic.bundle.js",
+        "fonts/ionicons.ttf",
+        "fonts/ionicons.woff"
+      ]
+    }
+  }
+}

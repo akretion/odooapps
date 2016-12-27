@@ -1,0 +1,56 @@
+<ion-view view-title="Production">
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click="logout()">Déconnexion</button>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-list>
+
+      <div class="row" style="padding-top: 0px; padding-bottom:0px;">
+        <div class="col" style="padding-top: 0px; padding-bottom:0px;">
+          <div class="row" style="padding: 0;">
+            <div class="col" style="padding-top: 0px; padding-bottom:0px;">
+              <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Recherche" ng-model="search.name">
+              </label>
+            </div>
+            <div class="col" style="padding-top: 0px; padding-bottom:0px;">
+              <button ng-click="search.name=''" class="ion-backspace button button-light" title="Effacer la recherche"></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <label class="item-input item-select">
+            <div class="input-label">
+              Entrepôt
+            </div>
+            <div>
+            <select
+                ng-options="w as w.name for w in warehouses track by w.id"
+                ng-model="search.warehouse">
+            </select>
+          </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="row item" style="font-weight:bold; font-size:90%;">
+        <div class="col">Entrepôt</div>
+        <div class="col">N° commande</div>
+        <div class="col">Code-barre</div>
+        <div class="col">Date demandée</div>
+        <div class="col">Client</div>
+        <div class="col">État</div>
+      </div>
+      <div class="row item" ng-repeat="item in mrpProduction | blFilter: search.name | filter: {warehouse_id: search.warehouse.id}" ui-sref="detail({id: item.id})" style="cursor:pointer;">
+        <div class="col entrepot">{{ warehouses_by_id[item.warehouse_id] }}</div>
+        <div class="col bon">{{ item.name }}</div>
+        <div class="col ean">{{ item.ean13 }}</div>
+        <div class="col reqDate">{{ item.date_requested }}</div>
+        <div class="col client">{{ item.customer }}</div>
+        <div class="col etat">{{ item.state }}</div>
+      </div>
+      <div ng-show="(mrpProduction | blFilter: search.name | filter: { warehouse_id: search.warehouse.id}).length == 0">Aucun résultat</div>
+    </ion-list>
+  </ion-content>
+</ion-view>
