@@ -32,7 +32,8 @@
                             type="object"
                             class="oe_highlight"
                             string="Print Label"
-                            groups="pickadoo.group_delivery_backoffice_direct_print"/>
+                            groups="pickadoo.group_delivery_backoffice_direct_print"
+                            context="{'manual_delivery_order': True}"/>
                 </button>
             </field>
         </record>
