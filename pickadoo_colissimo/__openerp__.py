@@ -30,7 +30,7 @@
  """,
  'depends': [
      'pickadoo',
-     'delivery_carrier_colipostefr',
+     'delivery_roulier_laposte',
  ],
  'data': [
  ],

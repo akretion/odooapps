@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="view_picking_out_form" model="ir.ui.view">
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+        <div class="oe_right oe_button_box" position="replace">
+        </div>
+        <button name="do_print_picking" position="after">
+            <button name="print_label"
+                    type="object"
+                    class="oe_highlight"
+                    string="Print Label"
+                    attrs="{'invisible': ['|', ('state', '!=', 'done'), ('picking_type_code', '!=', 'outgoing')]}"/>
+        </button>
+    </field>
+</record>
+
+<record id="stock_picking_view_tree" model="ir.ui.view">
+    <field name="model">stock.picking</field>
+    <field name="arch" type="xml">
+        <tree string="Process Picking">
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="origin"/>
+            <field name="date_printed"/>
+            <field name="carrier_id"/>
+            <field name="state"/>
+            <button
+                name="process_picking"
+                string="Process"
+                type="object"
+                invisible="context.get('type') != 'outgoing'"/>
+        </tree>
+    </field>
+</record>
+
+    </data>
+</openerp>
