@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<record id="letter_format" model="report.paperformat">
+    <field name="name">Address</field>
+    <field name="format">custom</field>
+    <field name="page_height">89</field>
+    <field name="page_width">36</field>
+    <field name="orientation">Landscape</field>
+    <field name="margin_top">1</field>
+    <field name="margin_bottom">1</field>
+    <field name="margin_left">10</field>
+    <field name="margin_right">1</field>
+    <field name="header_spacing">0</field>
+    <field name="dpi">90</field>
+</record>
+
+
+<template id="report_address_label">
+<t t-name="delivery_letter_label.report_address_label">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'delivery_letter_label.report_address_label_document')"/>
+        </t>
+    </t>
+</t>
+</template>
+
+<template id="report_address_label_document">
+<t t-name="delivery_letter_label.report_address_label_document">
+    <div class="page">
+        <html>
+        <body class="body" >
+            <div id="label">
+                <address
+                    style="font-weight:bold;font-size: 18px;text-transform: uppercase;"
+                    t-field="o.self_id"
+                    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+            </div>
+        </body>
+        </html>
+    </div>
+</t>
+</template>
+
+<report
+    id="report_partner_address"
+    string="Label Address"
+    model="res.partner"
+    report_type="qweb-pdf"
+    file="delivery_letter_label.report_address_label"
+    name="delivery_letter_label.report_address_label"
+/>
+
+</data>
+</openerp>
