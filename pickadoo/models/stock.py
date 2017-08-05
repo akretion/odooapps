@@ -19,11 +19,17 @@ class StockPicking(models.Model):
         todo = []
         for label in self.env['shipping.label'].search([
                 ('res_id', 'in', self.ids)]):
+            if label.name == 'Address Label':
+                printer_name = 'address_label'
+                raw=False
+            else:
+                printer_name = 'label'
+                raw=True
             todo.append(
                 self.env['proxy.action.helper'].get_print_data_action(
                     label.datas,
-                    printer_name='label',
-                    raw=True)
+                    printer_name=printer_name,
+                    raw=False)
                 )
         return todo
 

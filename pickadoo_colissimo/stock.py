@@ -18,7 +18,7 @@ class StockPicking(models.Model):
             ['name', 'ilike', 'CN23%.pdf']])
         if cn23:
             todo.insert(0, helper.get_print_data_action(
-                cn23[0].datas, raw=True))
+                cn23[0].datas, raw=False, printer_name='laser'))
 
             invoice_ids = []
             for invoice in self.sale_id.invoice_ids:
@@ -27,5 +27,5 @@ class StockPicking(models.Model):
                 todo.insert(1,
                     helper.get_print_report_action(
                         invoice, 'account.report_invoice',
-                        copies=3))
+                        copies=4, printer_name='laser'))
         return todo

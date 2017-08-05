@@ -17,6 +17,7 @@
      'delivery',
      'proxy_action',
      'stock_split_menu',
+     'stock_packaging_usability',
  ],
  'data': [
      'views/stock_view.xml',

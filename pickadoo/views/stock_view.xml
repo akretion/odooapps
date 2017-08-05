@@ -32,7 +32,8 @@
                 name="process_picking"
                 string="Process"
                 type="object"
-                invisible="context.get('type') != 'outgoing'"/>
+                invisible="context.get('type') != 'outgoing'"
+                attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
         </tree>
     </field>
 </record>
