@@ -13,6 +13,8 @@ class StockTransferDetails(models.Model):
         'Carrier',
         related="picking_id.carrier_id")
     manual_tracking_ref = fields.Char()
+    mobile = fields.Char(related="picking_id.partner_id.mobile")
+    phone = fields.Char(related="picking_id.partner_id.phone")
 
     @api.multi
     def _set_manual_tracking(self):

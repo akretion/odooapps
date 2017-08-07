@@ -11,9 +11,11 @@ class StockPicking(models.Model):
 
     @api.multi
     def generate_shipping_labels(self, package_ids=None):
+        self.ensure_one()
         if self.carrier_id.type == 'letter':
             data = self.env['report'].get_pdf(
-                self.ids, 'delivery_letter_label.report_address_label')
+                [self.partner_id.id],
+                'delivery_letter_label.report_address_label')
             return [{
                 'name': 'Address Label',
                 'file': data,

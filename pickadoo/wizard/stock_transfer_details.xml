@@ -9,13 +9,16 @@
         <field name="picking_destination_location_id" position="after">
             <field name="carrier_id" widget="radio"/>
 
-            <group>
+            <group col="4">
                 <field name="manual_tracking_ref"/>
                 <button
+                    colspan="2"
                     name="do_detailed_transfer_manual_tracking"
                     type="object"
                     string="Validate Without Print"
                     attrs="{'invisible': [('manual_tracking_ref', '=', False)]}"/>
+                <field name="mobile"/>
+                <field name="phone"/>
             </group>
         </field>
         <button name="do_detailed_transfer" position="attributes">
@@ -27,11 +30,6 @@
                 string="Print and Ship"
                 type="object"
                 class="oe_highlight"
-                invisible="context.get('type') != 'outgoing'"/>
-            <button
-                name="%(stock_split_menu.action_picking_out_tree)d"
-                string="Exit"
-                type="action"
                 invisible="context.get('type') != 'outgoing'"/>
         </button>
     </field>

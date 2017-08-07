@@ -23,17 +23,17 @@
     <field name="arch" type="xml">
         <tree string="Process Picking">
             <field name="name"/>
-            <field name="partner_id"/>
-            <field name="origin"/>
-            <field name="date_printed"/>
-            <field name="carrier_id"/>
-            <field name="state"/>
             <button
                 name="process_picking"
                 string="Process"
                 type="object"
                 invisible="context.get('type') != 'outgoing'"
                 attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
+            <field name="partner_id"/>
+            <field name="origin"/>
+            <field name="date_printed"/>
+            <field name="carrier_id"/>
+            <field name="state"/>
         </tree>
     </field>
 </record>
