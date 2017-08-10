@@ -31,6 +31,7 @@
                 attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
             <field name="partner_id"/>
             <field name="origin"/>
+            <field name="create_date"/>
             <field name="date_printed"/>
             <field name="carrier_id"/>
             <field name="state"/>
