@@ -1,5 +1,6 @@
 # coding: utf-8
 # Copyright 2014 Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2017 Sylvain CALADOR <sylvain.calador@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, models
@@ -31,13 +32,24 @@ class ProxyActionHelper(models.AbstractModel):
             'params': {
                 'args': [printer_name, data],
                 'kwargs': kwargs,
-                }
             }
+        }
+
+    @api.model
+    def get_print_xml_receipt_action(
+            self, receipt,
+            host='https://localhost'):
+        """ Prepare a PyWebdriver.print action """
+
+        return {
+            'url': '%s/hw_proxy/print_xml_receipt' % host,
+            'params': {'params': {'receipt': receipt}},
+        }
 
     def get_print_report_action(self, records, report_name, **kwargs):
         data = self.env['report'].get_pdf(records.ids, report_name)
         data = base64.b64encode(data)
-	return self.get_print_data_action(data, **kwargs)
+        return self.get_print_data_action(data, **kwargs)
 
     def send_proxy(self, todo):
         """ @param todo: list of requests
@@ -46,4 +58,4 @@ class ProxyActionHelper(models.AbstractModel):
         return {
             'type': 'ir.actions.act_proxy',
             'action_list': todo,
-            }
+        }
