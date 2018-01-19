@@ -25,7 +25,8 @@ from openerp.tools.translate import _
 
 
 class StockPicking(orm.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking', 'synchronized.mixin']
+    _name = 'stock.picking'
 
     _columns = {
         'process_in_pickadoo': fields.related(
@@ -43,8 +44,10 @@ class StockPicking(orm.Model):
         'prepared': fields.boolean('Prepared'),
     }
 
+
 class StockPickingOut(orm.Model):
-    _inherit = 'stock.picking.out'
+    _inherit = ['stock.picking.out', 'synchronized.mixin']
+    _name = 'stock.picking.out'
 
     _columns = {
         'process_in_pickadoo': fields.related(

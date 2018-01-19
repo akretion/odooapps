@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, jsonRpc) {
-   
+
     var picking = jsonRpc.syncImportObject({
         model: 'stock.picking.out',
         func_key: 'pickadoo',
@@ -13,7 +13,7 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
                     ['state', '=', 'confirmed'],
                     ['partial', '=', true],
             '|',
-                ['prepared', '=', false], 
+                ['prepared', '=', false],
                 '&',
                     '&',
                         ['prepared', '=', true],
@@ -21,7 +21,7 @@ angular.module('pickadoo').factory('picking', ['$q', 'jsonRpc', function ($q, js
                     ['paid', '=', true]
             ],
         filter_domain: [],
-        limit: 50,
+        limit: 500,
         interval: window.pickingConfig.refresh_interval,
         });
 
