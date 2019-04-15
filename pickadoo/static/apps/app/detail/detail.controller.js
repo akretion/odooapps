@@ -149,7 +149,7 @@ angular.module('pickadoo')
 
         var searchWatch = $rootScope.$watch('search', function (newValue, oldValue) {
             var selectedMove = undefined;
-            if ( angular.isDefined(newValue) && newValue.length > 0 && ! blocked ) {
+            if ( angular.isDefined(newValue) && newValue.length > 0 && ! $scope.item.blocked ) {
                 angular.forEach($scope.todoMoves, function(move){
                     if ( move.product.ean == newValue ) {
                         selectedMove = move;
